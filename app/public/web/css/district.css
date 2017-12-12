@@ -31,7 +31,7 @@ nav ul li{
 	background-color: grey;
 	font-size: 20px;
 }
-div{
+#container{
 	float: left;
 	width: 800px;
 	height: 500px;
@@ -47,7 +47,7 @@ footer p{
 	line-height: 60px;
 	font-size: 18px;
 }
-div button{
+div p button{
 	width: 80px;
 	height: 30px;
 	margin-left: 20px;
@@ -87,4 +87,45 @@ div p span{
 	display: inline-block;
 	width: 100px;
 	text-align: center;
+}
+#addRecord{
+	display: none;
+	border:1px solid grey;
+	background-color: #D8D8D8;
+	margin: 0 auto;
+	width: 500px;
+	height: 300px;
+	z-index: 2;
+	position: absolute;
+	top: 250px;
+	left: 0px;
+	right: 0px;
+}
+
+#addRecord p{
+	height: 30px;
+	line-height: 30px;
+	font-size: 22px;
+	background-color: rgb(91,192,222);
+	color: white;
+	text-align: center;
+}
+
+#addRecord input{
+	display: block;
+	height: 40px;
+	width:80%;
+	margin: 20px auto 0;
+}
+#addRecord button{
+	display: inline-block;
+	background-color: rgb(140,182,192);
+	border-radius: 8px;
+	width: 100px;
+	height: 30px;
+	margin: 20px;
+}
+#addRecord #btn{
+	width: 300px;
+	margin: 0 auto;
 }

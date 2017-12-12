@@ -60,6 +60,10 @@ window.onload = function(){
 			            tooltip : {
 			                trigger: 'axis'
 			            },
+			            grid : {
+					        left : '15%', 
+					        right:   '15%',
+					    },
 			            // legend: {
 			            //     data:['最高气温','最低气温']
 			            // },

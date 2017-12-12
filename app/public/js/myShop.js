@@ -23,6 +23,7 @@ window.onload = function(){
 				p.setAttribute('class','li');
 				var num = results[i].id;
 				p.innerHTML = `门店:<span id='num'>${num}</span>`;
+				p.style.backgroundColor  = 'rgb(93,156,236)';
 				document.getElementById('list').appendChild(p);
 			}
 

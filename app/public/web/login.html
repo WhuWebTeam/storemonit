@@ -5,41 +5,19 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/login.css">
-	<script type="text/javascript">
-
-		function getCookie(name)
-		{
-			var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-			if(arr=document.cookie.match(reg))
-			return unescape(arr[2]);
-			else
-			return null;
-		}
-		function signIn(){
-			var csrf_token = getCookie('csrfToken');
-
-			var url = "/public/web/district.html?_csrf="+csrf_token;
-
-			document.getElementById('form').setAttribute('action',url);
-			
-			return true;  //开控制台会暂停在这一步，点击开发者工具的继续按钮，即可。
-
-		}
-	</script>
 </head>
 <body>
 	<div>
 		<p>微晟防损后台管理系统</p>
-		<form id="form" method="get" action="" onsubmit="signIn()">
-			<input type="text" name="user" placeholder="请输入用户名"><br/>
+		<form id="form" method="post" action="" onsubmit="signIn('/api/v1/userswm/login?_csrf=')">
+			<input type="text" name="id" placeholder="请输入用户名"><br/>
 			<input type="password" name="password" placeholder="请输入密码"><br/>
-			<input type="submit" name="submit" id="submit" value="登录" >
+			<input type="submit"  id="submit" value="登录" >
 		</form>
-			
+		<!-- user :(1-5) ;password : wesine027 -->
 	</div>
 	<script type="text/javascript" src="bootstrap-3.3.7-dist/jquery/jquery.min.js"></script>
 	<script src="js/libs/js.cookie.min.js"></script>
 	<script type="text/javascript" src="js/func.js"></script>
-	<script type="text/javascript" src="bootstrap-3.3.7-dist/jquery/jquery.min.js"></script>
 </body>
 </html>

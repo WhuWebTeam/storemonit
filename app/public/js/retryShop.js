@@ -21,18 +21,18 @@ window.onload = function(){
 				var p = document.createElement('p');
 				p.setAttribute('class','li');
 				var num = results[i].id;
-				p.innerHTML = `门店:<span id='num'>${num}</span><button class="glyphicon glyphicon-ok"></button>`;
+				p.innerHTML = `门店:<span id='num'>${num}</span>`;
 				document.getElementById('list').appendChild(p);
-				var btn = p.getElementsByTagName('button')[0];
+				p.style.backgroundColor  = 'rgb(93,156,236)';
 				isClick[i]=true;
-				btn.onclick = function(){
+				p.onclick = function(){
 					if(!isClick[i]){
-						removeClass(this,'glyphicon-unchecked');
-						addClass(this,'glyphicon-ok');
+						this.style.backgroundColor = 'rgb(93,156,236)';
+						this.style.color = 'white';
 						shops.pop();
 					}else{
-						removeClass(this,'glyphicon-ok');
-						addClass(this,'glyphicon-unchecked');
+						this.style.backgroundColor = 'white';
+						this.style.color = 'black';
 						shops.push({
 							"shopId":results[i].id
 						});

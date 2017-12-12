@@ -196,3 +196,23 @@ function sortFun(arr,attr,upDown){
         }
     })
 }
+
+
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+    return unescape(arr[2]);
+    else
+    return null;
+}
+function signIn(path){
+    var csrf_token = getCookie('csrfToken');
+
+    var url = path+csrf_token;
+
+    document.getElementById('form').setAttribute('action',url);
+    
+    return true;  //开控制台会暂停在这一步，点击开发者工具的继续按钮，即可。
+
+}
