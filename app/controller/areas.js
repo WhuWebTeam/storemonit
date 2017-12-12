@@ -14,15 +14,11 @@ module.exports = app => {
 
         // query info of all areas
         async getAreas() {
-            this.ctx.body = await this.service.areas.query({});
-        }
-
-
-        // query info of some areas with condition query or not
-        async getArea() {
-            const area = this.ctx.request.body;
-
-            this.ctx.body = await this.service.areas.query(area);
+            const areas = await this.service.areas.query({}, ['name', 'details']);
+            this.ctx.body = {
+                code: 200,
+                data: areas
+            };
         }
 
 
@@ -45,13 +41,40 @@ module.exports = app => {
         async addArea() {
             const area = this.ctx.request.body;
 
+            // area id doesn't exist
+            if (!area.id) {
+                this.ctx.body = this.service.generateResponse(403, 'area id required');
+                return;
+            }
+
             // area exists
             if (!await this.service.areas.insert(area)) {
-                this.ctx.body = this.service.util.generateResponse(400, 'area exists');
+                this.ctx.body = this.service.util.generateResponse(403, 'area exists');
                 return;
             }
 
             this.ctx.body = this.service.util.generateResponse(200, 'add area successed');
+        }
+
+        
+        // delete areas specified by id
+        async removeAreas() {
+            const areas = this.ctx.request.body;
+
+            let del = true;
+
+            for (const area of areas.areas) {
+                if (!await this.service.areas.delete(area.id)) {
+                    del = false;
+                }
+            }
+
+            if (!del) {
+                this.ctx.body = this.service.util.generateResponse(403, 'delete some area record failed');
+                return;
+            }
+
+            this.ctx.body = this.service.util.generateResponse(203, 'delete areas satisfied condition successed');
         }
     }
 

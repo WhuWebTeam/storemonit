@@ -143,5 +143,7 @@ module.exports = appInfo => {
         graphShowTime: '6 m',
     }
 
+    Config.password = 'wesine027';
+
     return Config;
 }
