@@ -1,0 +1,154 @@
+@media screen and (max-width: 700px) {
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.no{
+		font-size: 24px;
+		color:green;
+		text-align: center;
+		margin-top: 20px;
+	}
+	
+	#submitAll{
+		width: 100%;
+		background-color: #b94747;
+	}
+	#set{
+		position: absolute;
+		top: 5px;
+		right: 10px;
+	}
+	#title{
+		background-color: #578;
+		text-align: center;
+		height: 30px;
+		font-size: 22px;
+		line-height: 30px;
+		margin: 0;
+	}
+	
+	#event span{
+		display: block;
+		text-align: center;
+		font-size: 40px;
+		height: 57px;
+	}
+	#event p{
+		display: inline-block;
+		width:33.3%;
+		font-size: 20px;
+		background-color: #488922;
+		text-align: center;
+		float: left;
+	}
+	#event .edown{
+		background-color: grey;
+	}
+	
+	#graph{
+		clear: both;
+		margin-top: 110px;
+		border:1px solid #D8D8D8;
+		background-color: white;
+	}
+	#graph .title{
+	    display:inline-block;
+	    line-height: 30px;
+	    width:80px;
+	    height:30px;
+	    font-size: 20px;
+	    position:relative;
+	    top:-15px;
+	    left: 20px;
+	    text-align: center;
+	    background: white;
+	}
+	#graph .sel{
+	    display:inline-block;
+	   /* position:relative;
+	    top:-15px;
+	    left: 40px;*/
+	    float: right;
+	    margin-top: -15px;
+	}
+	#graph .down{
+		background-color: grey;
+	}
+	#content{
+		width: 100%;
+		height: 300px;
+	}
+
+	.view{
+		width: 100%;
+		height: 80px;
+		border:1px solid #7b5252;
+		/*border-radius: 20px;*/
+		margin-top: 10px;
+	}
+	.top{
+		height: 40px;
+		line-height: 40px;
+		margin: 0px;
+		padding: 0px;
+		font-size: 14px;
+		background-color: #ad7b25;
+	}
+	.bottom{
+		height: 40px;
+		line-height: 40px;
+		margin: 0;
+		padding: 0px;
+		font-size: 14px;
+		background-color: #d0c6c6;
+	}
+	.top  span:first-child{
+		display: inline-block;
+		width: 45%;
+		text-align: center;
+	}
+	.top  span:nth-child(2){
+		display: inline-block;
+		width: 28%;
+		text-align: center;
+	}
+	.top  span:nth-child(3){
+		display: inline-block;
+		width: 20%;
+		text-align: center;
+		white-space:nowrap;
+	}
+	.bottom  span:first-child{
+		display: inline-block;
+		width: 28%;
+		text-align: center;
+	}
+	.bottom  span:nth-child(2){
+		display: inline-block;
+		width: 26%;
+		text-align: center;
+	}
+	.bottom  span:nth-child(3){
+		display: inline-block;
+		width: 30%;
+		text-align: left;
+		white-space:nowrap;
+	}
+	ul li{
+		background-color: #E0F2F7;
+		height: 30px;
+		line-height: 30px;
+		border:1px solid #7b5252;
+		font-size: 1.2em;
+		text-align: center;
+		list-style-type: none;
+	}
+	#counter{
+		z-index: 100;
+		width: 30%;
+		right: 0px;
+		position: absolute; 
+	}
+}
+	

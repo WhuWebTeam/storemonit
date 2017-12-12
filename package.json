@@ -1,0 +1,26 @@
+{
+  "name": "storemonitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "egg-bin test",
+    "cov": "egg-bin cov",
+    "dev": "egg-bin dev",
+    "start": "egg-scripts start --daemon --port=7002 --works=4  --env=server ",
+    "stop": "egg-scripts stop"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "egg": "^1.10.0",
+    "egg-scripts": "^2.1.1",
+    "egg-static": "^2.0.0",
+    "pg-promise": "^7.2.0"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.3.5",
+    "egg-mock": "^3.13.1",
+    "should": "^13.1.3"
+  }
+}
