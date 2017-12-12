@@ -12,7 +12,6 @@ window.onload = function(){
 			results = results.data;
 			if(results.length == 0){
 				var mes =document.createElement('p');
-				//addClass(mes,'no');
 				mes.setAttribute('class','no');
 				mes.innerHTML = '您还没有绑定的款台';
 				document.getElementById('list').appendChild(mes);
@@ -21,6 +20,7 @@ window.onload = function(){
 			for(let i=0;i<results.length;i++){
 				var p = document.createElement('p');
 				p.setAttribute('class','li');
+				p.style.backgroundColor  = 'rgb(93,156,236)';
 				var num = results[i].id;
 				p.innerHTML = `款台:<span id='num'>${num}</span>`;
 				document.getElementById('list').appendChild(p);

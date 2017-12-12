@@ -34,14 +34,4 @@ h3{
 	font-size: 20px;
 	line-height: 28px;
 }
-#list button{
-	float: right;
-	height: 24px;
-}
 
-#list .li:nth-child(odd){
-	background-color: #E0F8E0;
-}
-#list .li:nth-child(even){
-	background-color: #d0c6c6;
-}
