@@ -16,18 +16,13 @@ var timeObj = ['week','month','3month','6month'];
 var time = document.getElementById('timeSel').getElementsByTagName('button');
 Array.prototype.forEach.call(time,function(item,index){
     item.onclick = function(){ 
-
         var alr_down = document.getElementsByClassName('tdown')[0];
         if(alr_down !== this){
             removeClass(alr_down,'tdown');
             addClass(item,'tdown');
         }
-
-
         document.getElementById("tbMain").innerHTML=''; 
-
         showTable(timeObj[index]);
-
         drawPie(timeObj[index]);
     }
 })
@@ -82,8 +77,7 @@ function drawPie(freq){
         		},
         	    legend: {
             	   orient: 'vertical',
-            	   left: 'left',
-            	   data: ['事件次数','正确收银']
+            	   left: 'left'
         		},
                 series : [
                     {
