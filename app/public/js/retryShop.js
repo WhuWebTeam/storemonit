@@ -3,7 +3,7 @@ window.onload = function(){
 	const userId = cookie.getItem('userId');
 
 	$.ajax({
-		url:'/api/v1/shops/' + userId,
+		url:'/api/v1/shops/manager/' + userId,
 		type:'GET',
 		success:function(results){
 			var shops=[];
