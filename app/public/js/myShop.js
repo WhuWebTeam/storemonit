@@ -5,7 +5,7 @@ window.onload = function(){
 
 
 	$.ajax({
-		url:'/api/v1/shops/' + userId,
+		url:'/api/v1/shops/manager/' + userId,
 		type:'GET',
 		success:function(results){
 			
