@@ -1,5 +1,5 @@
 module.exports = app => {
-    
+
     // controller.counters test
     app.get('/api/v1/counters/index', 'counters.index');
 
