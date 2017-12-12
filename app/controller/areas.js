@@ -14,7 +14,7 @@ module.exports = app => {
 
         // query info of all areas
         async getAreas() {
-            const areas = await this.service.areas.query({}, ['name', 'details']);
+            const areas = await this.service.areas.query({}, ['id', 'name', 'details']);
             this.ctx.body = {
                 code: 200,
                 data: areas
