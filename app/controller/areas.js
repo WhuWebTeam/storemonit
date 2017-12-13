@@ -60,11 +60,14 @@ module.exports = app => {
         // delete areas specified by id
         async removeAreas() {
             const areas = this.ctx.request.body;
+            console.log('xxxxxxx');
+            console.log(areas);
 
             let del = true;
 
             for (const area of areas.areas) {
-                if (!await this.service.areas.delete(area.id)) {
+                if (!await this.service.areas.delete({ id:area.id })) {
+                    console.log(areas);
                     del = false;
                 }
             }
