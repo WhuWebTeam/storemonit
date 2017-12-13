@@ -1,9 +1,25 @@
 window.onload = function(){
+
+	var select = '';
+	function getAreasInfo(){
+		$.ajax({
+			url:'/api/v1/areas',
+			type:'get',
+			success:function(results){
+				data = results.data;
+				for(let i=0;i<data.length;i++){
+					select += `<option value="${data[i].id}">${data[i].name}</option>`
+				}
+			}
+		})
+	} /* get areas info  */
+	getAreasInfo();
+
 	function getList(){
 		var tbody = document.getElementsByTagName('tbody')[0];
 		tbody.innerHTML='';
 		$.ajax({
-			url:'/api/v1/areas',
+			url:'/api/v1/shops/info/shops',
 			type:'get',
 			success:function(results){
 				data = results.data;
@@ -11,7 +27,8 @@ window.onload = function(){
 					var tr = document.createElement('tr');
 					tr.innerHTML = `
 						<td><input type="checkbox" value="${data[i].id}"></td>
-						<td>${data[i].name}</td>
+						<td>${data[i].shopname}</td>
+						<td>${data[i].areaname}</td>
 						<td>${data[i].details}</td>
 						<td><button class="btn btn-info btn-sm">编辑</button></td>
 					`;
@@ -19,9 +36,17 @@ window.onload = function(){
 
 					var edit = tr.getElementsByTagName('button')[0];
 					edit.onclick = function(){
-						$('#handleRecord p').html('编辑区域');
+						$('#handleRecord p').html('编辑门店');
 						$('#id').val(data[i].id);
-						$('#name').val(data[i].name);
+						$('#shopname').val(data[i].shopname);
+						$('#areaname').html(select);
+
+						$('#areaname').find('option').each(function(){
+							if($(this).text() ==  data[i].areaname){
+								$(this).attr('selected','selected');
+							}
+						})
+
 						$('#details').val(data[i].details);
 						$('#operation').val('edit');
 						$('#handleRecord')[0].style.display = 'block';
@@ -29,30 +54,29 @@ window.onload = function(){
 				}
 			}
 		})
-	}/* show list */  
-
-
+	}
 
 	$('#add').click(function(){
-		$('#handleRecord p').html('新增区域');
+		$('#handleRecord p').html('新增门店');
 		$('#id').val('');
-		$('#name').val('');
+		$('#shopname').val('');
+		$('#areaname').html(select);
 		$('#details').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
 	});
 
 	$('#delete').click(function(){
-		var areas = [];
+		var shops = [];
 		$(':checked').each(function(){ 
-			areas.push({
+			shops.push({
 				'id':this.value
 			});
 		}); 
 		$.ajax({
-			url:'/api/v1/areas',
+			url:'/api/v1/shops',
 			type:'delete',
-			data:{areas},
+			data:{shops},
 			success:function(){
 				getList();
 			}
@@ -63,26 +87,26 @@ window.onload = function(){
 	$('#submit').click(function(){
 		if($('#operation').val()=='add'){
 			$.ajax({
-				url:'/api/v1/areas',
+				url:'/api/v1/shops/info/'+$('#id').val(),
 				type:'POST',
 				data:{
-					'id': $('#id').val(),
-					'name': $('#name').val(),
+					'areaId': $('#areaname').val(),
+					'name': $('#shopname').val(),
 					'details': $('#details').val()
 				},
 				success:function(){
 					$('#handleRecord')[0].style.display = 'none';
 					getList();
-
 				}
 			})
 		}
 		if($('#operation').val()=='edit'){
 			$.ajax({
-				url:'/api/v1/areas/info/'+$('#id').val(),
+				url:'/api/v1/shops/info/'+$('#id').val(),
 				type:'put',
 				data:{
-					'name': $('#name').val(),
+					'areaId': $('#areaname').val(),
+					'name': $('#shopname').val(),
 					'details': $('#details').val()
 				},
 				success:function(){
@@ -93,14 +117,16 @@ window.onload = function(){
 			})
 		}
 	})
+
+
 	$('#back').click(function(){
 		$('#handleRecord')[0].style.display = 'none';
 		getList();
 	})
 
-
-
-
-
 	getList();
+
+
+
+
 }

@@ -31,11 +31,20 @@ nav ul li{
 	background-color: grey;
 	font-size: 20px;
 }
-div{
+#container{
 	float: left;
 	width: 800px;
 	height: 500px;
 	border:1px solid grey;
+}
+#table{
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 10px;
+	background-color: #c8cee1;
+	border:1px solid grey;
+	overflow: auto;
+	height: 200px;
 }
 footer{
 	border:1px solid grey;
@@ -47,7 +56,7 @@ footer p{
 	line-height: 60px;
 	font-size: 18px;
 }
-div button{
+div p button{
 	width: 80px;
 	height: 30px;
 	margin-left: 20px;
@@ -67,17 +76,17 @@ tr th:nth-child(1){
 }
 tr th:nth-child(2){
 	height: 30px;
-	width: 140px;
+	width: 150px;
 	text-align: center;
 }
 tr th:nth-child(3){
 	height: 30px;
-	width: 140px;
+	width: 150px;
 	text-align: center;
 }
 tr th:nth-child(4){
 	height: 30px;
-	width: 400px;
+	width: 300px;
 	text-align: center;
 }
 tr td{
@@ -93,7 +102,57 @@ div p span{
 	width: 100px;
 	text-align: center;
 }
-select{
-	width: 100%;
-	height: 100%;
+
+
+#handleRecord{
+	display: none;
+	border:1px solid grey;
+	background-color: #D8D8D8;
+	margin: 0 auto;
+	width: 500px;
+	height: 300px;
+	z-index: 2;
+	position: absolute;
+	top: 250px;
+	left: 0px;
+	right: 0px;
 }
+
+#handleRecord p{
+	height: 30px;
+	line-height: 30px;
+	font-size: 22px;
+	background-color: rgb(91,192,222);
+	color: white;
+	text-align: center;
+}
+
+#handleRecord label{
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	width: 30%;
+	text-align: center;
+}
+
+#handleRecord input,select{
+	display: inline-block;
+	height: 40px;
+	width: 60%;
+	/*margin: 20px auto 0;*/
+}
+#handleRecord button{
+	display: inline-block;
+	background-color: rgb(140,182,192);
+	border-radius: 8px;
+	width: 100px;
+	height: 30px;
+	margin: 20px;
+}
+#handleRecord #btn{
+	width: 300px;
+	margin: 0 auto;
+}
+
+
+
