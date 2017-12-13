@@ -19,99 +19,51 @@
 			<li>服务器设置</li>
 		</ul>
 	</nav>
-	<div>
+	<div id="container">
 		<p>
-			<button class="btn btn-info">增加</button>
-			<button class="btn btn-info">编辑</button>
-			<button class="btn btn-info">删除</button>
+			<button class="btn btn-info" id="add">新建</button>
+			<button class="btn btn-info" id="delete">删除</button>
 		</p>
 		<table>
 			<thead>
 				<tr>
 					<th>&nbsp;</th>
 					<th>门店名称</th>
-					<th>区域</th>
-					<th>描述</th>
+					<th>所属区域</th>
+					<th>相关描述</th>
+					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
+				<!-- <tr>
 					<td><input type="checkbox"></td>
 					<td>联想桥</td>
-					<td><select>
-						<option>华北</option>
-						<option>华中</option>
-						<option>华南</option>
-						<option>华东</option>
-					</select></td>
+					<td>
+						<select>
+							<option>华北</option>
+							<option>华南</option>
+							<option>华中</option>
+							<option>华东</option>
+						</select>
+					</td>
 					<td>旗舰店</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>联想桥</td>
-					<td><select>
-						<option>华北</option>
-						<option>华中</option>
-						<option>华南</option>
-						<option>华东</option>
-					</select></td>
-					<td>旗舰店</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>联想桥</td>
-					<td><select>
-						<option>华北</option>
-						<option>华中</option>
-						<option>华南</option>
-						<option>华东</option>
-					</select></td>
-					<td>旗舰店</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>联想桥</td>
-					<td><select>
-						<option>华北</option>
-						<option>华中</option>
-						<option>华南</option>
-						<option>华东</option>
-					</select></td>
-					<td>旗舰店</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>联想桥</td>
-					<td><select>
-						<option>华北</option>
-						<option>华中</option>
-						<option>华南</option>
-						<option>华东</option>
-					</select></td>
-					<td>旗舰店</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>联想桥</td>
-					<td><select>
-						<option>华北</option>
-						<option>华中</option>
-						<option>华南</option>
-						<option>华东</option>
-					</select></td>
-					<td>旗舰店</td>
-				</tr>
-				
+					<td><button class="btn btn-info btn-sm">编辑</button></td>
+				</tr> -->
 			</tbody>
 		</table>
 	
-		<p id="page"><span class="glyphicon glyphicon-backward"></span><span>第1页</span><span class="glyphicon glyphicon-forward"></span></p>
 
+		
+
+		<p id="page"><span class="glyphicon glyphicon-backward"></span><span>第1页</span><span class="glyphicon glyphicon-forward"></span></p>
 	</div>
 	<footer>
 		<p>copyright@微晟科技</p>
 	</footer>
 	<script type="text/javascript" src="bootstrap-3.3.7-dist/jquery/jquery.min.js"></script>
+	<script src="js/libs/js.cookie.min.js"></script>
+	<script type="text/javascript" src="js/func.js"></script>
+	<script type="text/javascript" src="js/shop.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 </body>
 </html>

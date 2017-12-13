@@ -44,18 +44,20 @@
 		</table>
 	
 
-		<div id="addRecord">
-			<p>新增区域</p>
+		<div id="handleRecord">
+			<p id="test">新增区域</p>
+			<label>区域id号</label>
 			<input type="text" id="id" placeholder="区域id号">
+			<label>区域名称</label>
 			<input type="text" id="name" placeholder="区域名称">
-			<input type="text" id="details" placeholder="相关描述">	
+			<label>相关描述</label>
+			<input type="text" id="details" placeholder="相关描述">
+			<input type="hidden" id="operation" value="add">		
 			<div id="btn">
 				<button id="submit" >提交</button>
 				<button id="back" >返回</button>
 			</div>
 		</div>
-		
-			
 
 		<p id="page"><span class="glyphicon glyphicon-backward"></span><span>第1页</span><span class="glyphicon glyphicon-forward"></span></p>
 

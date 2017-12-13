@@ -88,7 +88,7 @@ div p span{
 	width: 100px;
 	text-align: center;
 }
-#addRecord{
+#handleRecord{
 	display: none;
 	border:1px solid grey;
 	background-color: #D8D8D8;
@@ -102,7 +102,7 @@ div p span{
 	right: 0px;
 }
 
-#addRecord p{
+#handleRecord p{
 	height: 30px;
 	line-height: 30px;
 	font-size: 22px;
@@ -111,13 +111,21 @@ div p span{
 	text-align: center;
 }
 
-#addRecord input{
-	display: block;
+#handleRecord label{
+	display: inline-block;
 	height: 40px;
-	width:80%;
-	margin: 20px auto 0;
+	line-height: 40px;
+	width: 30%;
+	text-align: center;
 }
-#addRecord button{
+
+#handleRecord input{
+	display: inline-block;
+	height: 40px;
+	width: 60%;
+	/*margin: 20px auto 0;*/
+}
+#handleRecord button{
 	display: inline-block;
 	background-color: rgb(140,182,192);
 	border-radius: 8px;
@@ -125,7 +133,7 @@ div p span{
 	height: 30px;
 	margin: 20px;
 }
-#addRecord #btn{
+#handleRecord #btn{
 	width: 300px;
 	margin: 0 auto;
 }
