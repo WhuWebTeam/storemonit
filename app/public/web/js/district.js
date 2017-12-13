@@ -34,9 +34,10 @@ window.onload = function(){
 
 
 	$('#add').click(function(){
-		$('#id').val();
-		$('#name').val();
-		$('#details').val();
+		$('#handleRecord p').html('新增区域');
+		$('#id').val('');
+		$('#name').val('');
+		$('#details').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
 	});
