@@ -56,6 +56,10 @@ div p button{
 table{
 	border-collapse: collapse;   
 	border: none; 
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 10px;
+	background-color: #c8cee1;
 }
 table td,th{
 	border:1px solid grey;
