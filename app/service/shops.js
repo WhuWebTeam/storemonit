@@ -24,7 +24,7 @@ module.exports = app => {
                 id: undefined,
                 areaId: undefined,
                 name: undefined,
-                detailts: undefined
+                details: undefined
             };
         }
 

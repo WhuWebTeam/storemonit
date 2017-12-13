@@ -109,6 +109,7 @@ module.exports = app => {
             const shop = this.ctx.request.body;
             shop.id = id;
 
+            console.log(shop);
             if (!await this.service.shops.insert(shop)) {
                 this.ctx.body = this.service.util.generateResponse(403, 'add new shop failed');
                 return;
@@ -124,7 +125,7 @@ module.exports = app => {
             let del = true;
 
             for (const shop of shops.shops) {
-                if (!await this.service.shops.delete({ id: shops.id })) {
+                if (!await this.service.shops.delete({ id: shop.id })) {
                     del = false;
                 }
             }
