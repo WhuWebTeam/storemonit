@@ -125,8 +125,6 @@ module.exports = app => {
             let del = true;
 
             for (const shop of shops.shops) {
-                console.log(shops.id);
-                console.log(shop);
                 if (!await this.service.shops.delete({ id: shop.id })) {
                     del = false;
                 }
