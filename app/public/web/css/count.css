@@ -53,6 +53,11 @@ div button{
 	margin-left: 20px;
 	margin-top: 30px;
 }
+#table{
+	border:1px solid grey;
+	overflow: auto;
+	height: 200px;
+}
 table{
 	border-collapse: collapse;   
 	border: none; 
@@ -62,20 +67,25 @@ table td,th{
 }
 tr th{
 	height: 30px;
-	width: 80px;
+	width: 70px;
 	text-align: center;
-	font-size: 12px;
+	font-size: 10px;
 }
-
-tr td{
-	text-align: center;
+tbody td{
 	height: 30px;
+	width: 70px;
+	text-align: center;
 	font-size: 12px;
 }
 div #page{
 	position: relative;
 	top: 100px;
 }
+
+
+
+
+
 div p span{
 	display: inline-block;
 	width: 100px;

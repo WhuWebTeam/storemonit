@@ -37,6 +37,11 @@ nav ul li{
 	height: 500px;
 	border:1px solid grey;
 }
+#table{
+	border:1px solid grey;
+	overflow: auto;
+	height: 200px;
+}
 footer{
 	border:1px solid grey;
 	height: 60px;
@@ -54,11 +59,12 @@ div p button{
 	margin-top: 30px;
 }
 table{
-	border-collapse: collapse;   
-	border: none; 
+	margin-top: 20px;
 	margin-left: 10px;
 	margin-right: 10px;
 	padding: 10px;
+	border-collapse: collapse;   
+	border: none; 
 	background-color: #c8cee1;
 }
 table td,th{

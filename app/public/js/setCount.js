@@ -7,6 +7,8 @@ set.onclick = function(){
 	/*control show and hide*/
 	if(counter.style.display=='none'){
 		counter.style.display='block';
+	}else{
+		counter.style.display='none';
 	}
 	preventBubble(event);
 }

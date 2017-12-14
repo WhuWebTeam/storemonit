@@ -3,7 +3,7 @@ window.onload = function(){
 	var select = '';
 	function getAreasInfo(){
 		$.ajax({
-			url:'/api/v1/areas',
+			url:'/api/v1/areas/info/areas',
 			type:'get',
 			success:function(results){
 				data = results.data;

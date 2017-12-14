@@ -8,6 +8,8 @@ set.onclick = function(){
 	/*control show and hide*/
 	if(shop.style.display=='none'){
 		shop.style.display='block';
+	}else{
+		shop.style.display='none';
 	}
 	preventBubble(event);
 }
