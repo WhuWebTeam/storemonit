@@ -48,8 +48,9 @@ module.exports = app => {
             }
 
             try {
+                // console.log(await this.service.dbHelp.count('counters', id, { id }));
                 // counter exists
-                if (await this.service.dbHelp.count('counters', id, { id })) {
+                if (await this.service.dbHelp.count('counters', 'id', { id })) {
                     return true;
                 }
 
@@ -177,6 +178,9 @@ module.exports = app => {
             counter = this.service.util.setTableValue(this.table, counter);
             wheres = this.service.util.setTableValue(this.table, wheres);
 
+            console.log(counter);
+            console.log(wheres);
+
             // counter doesn't exist
             if (counter.id && !await this.exists(counter.id)) {
                 return false;
@@ -184,6 +188,7 @@ module.exports = app => {
 
             // shop's id doesn't exists when shopId attributes included by counter
             if (counter.shopId && !await this.service.shops.exists(counter.shopId)) {
+                console.log(2);
                 return false;
             }
 

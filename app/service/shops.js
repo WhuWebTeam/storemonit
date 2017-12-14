@@ -48,6 +48,7 @@ module.exports = app => {
 
             // parameter exists
             try {
+                console.log(await this.service.dbHelp.count('Shops', 'id', { id }));
                 // shop exists
                 if (await this.service.dbHelp.count('Shops', 'id', { id })) {
                     return true;

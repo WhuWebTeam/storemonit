@@ -13,7 +13,7 @@ module.exports = app => {
             };
         }
 
-        
+
         // get user's shop
         async getMyShops() {
             const user = this.ctx.params.userId;
@@ -25,7 +25,7 @@ module.exports = app => {
                 this.ctx.body = this.service.util.generateResponse(400, `user doesn.t exist`);
                 return;
             }
-        
+
             try {
                 const shops = await this.app.db.query(str, [user]);
                 this.ctx.body = {
@@ -43,7 +43,7 @@ module.exports = app => {
             const str = `select s.id, s.name, s.type from shops s
                         where s.id not in
                             (select shopId from shopUser)`;
-            
+
             try {
                 const shops = await this.app.db.query(str, []);
                 this.ctx.body = {
@@ -61,7 +61,7 @@ module.exports = app => {
             const str = `select s.id, s.name, s.type from shops s
                         where s.id in
                             (select shopId from shopUser)`;
-            
+
             try {
                 const shops = await this.app.db.query(str, []);
                 this.ctx.body = {

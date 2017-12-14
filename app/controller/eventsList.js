@@ -198,15 +198,12 @@ module.exports = app => {
                       where userId = $1 and to_timestamp(ts) > now() - interval '$2 day'`;
                 let events = await this.app.db.query(str, values);
                 events = events[0] && events[0].count || 0;
-                let rate = 0;
-                if (bills) {
-                    rate = events / bills;
-                }
 
                 this.ctx.body = {
                     code: 200,
                     data: {
-                        rate
+                        bills,
+                        events
                     }
                 }
             } catch(err) {

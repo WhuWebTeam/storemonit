@@ -83,7 +83,12 @@ module.exports = app => {
             // add attribute id to counter object
             counter.id = id;
 
-            this.ctx.body = await this.service.counters.update(counter);
+            if (!await this.service.counters.update(counter)) {
+                this.ctx.body = this.service.util.generateResponse(403, 'update counter info failed');
+                return;
+            }
+
+            this.ctx.body = this.service.util.generateResponse(203, 'update counter info successed');
         }
 
 
