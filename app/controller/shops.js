@@ -74,7 +74,7 @@ module.exports = app => {
 
         // get all shop info
         async getShops() {
-            const str = `select s.id, s.name, a.name, s.details from shops s inner join areas a on s.areaId = a.id`;
+            const str = `select s.id, s.name shopName, a.name areaName, s.details from shops s inner join areas a on s.areaId = a.id`;
 
             try {
                 const shops = await this.app.db.query(str, []);
