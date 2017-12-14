@@ -86,8 +86,8 @@ function drawPie(freq){
                         radius : '55%',
                         center: ['50%', '50%'],
                         data:[
-                            {value:+(results.data.rate), name:'事件次数'},
-                            {value:1-(results.data.rate), name:'正确收银'},   
+                            {value:(results.data.events), name:'事件次数'},
+                            {value:(results.data.bills-results.data.events), name:'正确收银'},   
                         ],
                         itemStyle: {
                             emphasis: {
