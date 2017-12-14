@@ -42,7 +42,7 @@ window.onload = function(){
 		        var data = results.data;
 		        $('#date').html(handleTime(data.createat));
 		        $('#status').html(pairs[data.status]);
-		        $("source")[0].src = data.videourl;
+		        $("video")[0].src = data.videourl+'?'+Math.random();
 		        $('#name').val(data.cashiername?data.cashiername:data.cashierid?data.cashierid:'pos机');
 		        $('#id').val(data.transid);
 		        $('#note').val(data.comments);
