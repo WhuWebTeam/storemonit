@@ -137,8 +137,9 @@ module.exports = app => {
             const shops = this.ctx.request.body;
             let del = true;
 
+            console.log(shops);
             for (const shop of shops.shops) {
-                if (!await this.service.shopUser.delete({ shopId: shop.id }) || !await this.service.shops.delete({ id: shop.id })) {
+                if (!await this.service.shops.delete({ id: shop.id })) {
                     del = false;
                 }
             }

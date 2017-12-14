@@ -178,9 +178,6 @@ module.exports = app => {
             counter = this.service.util.setTableValue(this.table, counter);
             wheres = this.service.util.setTableValue(this.table, wheres);
 
-            console.log(counter);
-            console.log(wheres);
-
             // counter doesn't exist
             if (counter.id && !await this.exists(counter.id)) {
                 return false;
@@ -188,7 +185,6 @@ module.exports = app => {
 
             // shop's id doesn't exists when shopId attributes included by counter
             if (counter.shopId && !await this.service.shops.exists(counter.shopId)) {
-                console.log(2);
                 return false;
             }
 
@@ -218,6 +214,11 @@ module.exports = app => {
 
             // counter doen't exist
             if (counter.id && !await this.exists(counter.id)) {
+                return false;
+            }
+
+            // retrieve counters assigned
+            if (!await this.service.counterUser.delete({ counterId: counter.id })) {
                 return false;
             }
 

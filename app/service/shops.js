@@ -208,13 +208,32 @@ module.exports = app => {
          * @since 1.0.0
          */
         async delete(shop) {
-
             // format shop's attributes
             shop = this.service.util.setTableValue(this.table, shop);
 
             // shop doesn't exist
             if (shop.id && !await this.exists(shop.id)){
                 return false;
+            }
+
+            // get all shops id satisfied condition
+            const shopIds = await this.service.dbHelp.query('shops', ['id'], shop);
+
+            // recurse delete all info releated the shops satisfied condition
+            for (const shopId of shopIds) {
+
+                // delete all counters belongs to shops satisfied condition
+                const counters = await this.service.counters.query({ shopId: shopId.id }, ['id']);
+                for (const counter of counters) {
+                    if (!await this.service.counters.delete({ id: counter.id })) {
+                        return false;
+                    }
+                }
+
+                // retrieve all shops specified 
+                if (!await this.service.shopUser.delete({ shopId: shopId.id })) {
+                    return false;
+                }
             }
 
             try {

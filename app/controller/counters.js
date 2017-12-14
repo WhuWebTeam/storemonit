@@ -112,10 +112,8 @@ module.exports = app => {
             const counters = this.ctx.request.body;
             let del = true;
 
-
             for (const counter of counters.counters) {
-                if (!await this.service.counterUser.delete({ counterId: counters.id }) ||
-                    !await this.service.counters.delete({ id: counterId })) {
+                if (!await this.service.counters.delete({ id: counter.id })) {
                         del = false;
                     }
             }
