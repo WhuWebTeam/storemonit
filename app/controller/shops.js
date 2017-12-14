@@ -93,6 +93,7 @@ module.exports = app => {
             const id = this.ctx.params.shopId;
             const shop = this.ctx.request.body;
             shop.id = id;
+            console.log(shop);
 
             if (!await this.service.shops.update(shop, { id })) {
                 this.ctx.body = this.service.util.generateResponse(403, 'modify shop info failed');
