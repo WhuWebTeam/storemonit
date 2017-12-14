@@ -16,7 +16,7 @@ module.exports = app => {
 
 
 
-// app.put('/api/v1/counters/:counterId', 'counters.modifyCounter'); // modify info of some counter specified by id
+// app.put('/api/v1/counters/info/:counterId', 'counters.modifyCounter'); // modify info of some counter specified by id
 // :counterId counter's serial number
 // {
 //     shopId,
@@ -26,10 +26,21 @@ module.exports = app => {
 
 
 
-// app.post('/api/v1/counters', 'counters.addCounter'); // add a new counter
+// app.post('/api/v1/counters/info/:counterId', 'counters.addCounter'); // add a new counter
 // attributes belongs to the following object, id must exists
 // {
 //     shopId,
 //     type,
 //     details
+// }
+
+
+
+// app.delete('/api/v1/counters', 'counters.deleteCounters'); // delete counters specified by counter ids
+// {
+//     shops:
+//     [
+//         { id },
+//         { id }
+//     ]
 // }

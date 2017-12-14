@@ -15,8 +15,8 @@ module.exports = app => {
 }
 
 
-// app.put('/api/v1/shops', 'shops.modifyShop'); // modify some shop's info
-// attributes belongs to the following object
+
+// app.put('/api/v1/shops/info/:shopId', 'shops.modifyShop'); // modify some shop's info
 // {
 //     areaId,
 //     name,
@@ -26,7 +26,7 @@ module.exports = app => {
 
 
 
-// app.post('/api/v1/shops', 'shops.addShop'); // add a new shop
+// app.post('/api/v1/shops/info/:shopId', 'shops.addShop'); // add a new shop
 // attributes belongs to the following object
 // {
 //     areaId,
@@ -34,7 +34,6 @@ module.exports = app => {
 //     details,
 //     type
 // }
-
 
 
 

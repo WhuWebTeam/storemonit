@@ -9,7 +9,7 @@ module.exports = app => {
 }
 
 
-// app.put('/api/v1/areas/:areaId', 'areas.modifyAreaById'); // modify info of some area specified by area id
+// app.put('/api/v1/areas/info/:areaId', 'areas.modifyArea'); // modify info of some area specified by area id
 // subset of area, means name and details can exists or not
 // :areaId serial number of area
 // {
@@ -19,11 +19,10 @@ module.exports = app => {
 
 
 
-// app.post('/api/v1/areas', 'areas.addArea'); // add a new area info
+// app.post('/api/v1/areas/info/:areaId', 'areas.addArea'); // add a new area info
 // attributes belongs to the following object, id must exists
 // :areaName name of area
 // {
-//     id,
 //     name,
 //     details
 // }

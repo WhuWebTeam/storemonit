@@ -205,6 +205,11 @@ module.exports = app => {
             // format the area's attribute
             area = this.service.util.setTableValue(this.table, area);
 
+            // deleta all shops belonging to area satisfied area condition
+            if (!await this.service.shops.delete({ areaId: area.id })) {
+                return false;
+            }
+
             // area doesn't exist
             if (area.id && !await this.exists(area.id)) {
                 return false;
