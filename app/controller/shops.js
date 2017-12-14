@@ -1,3 +1,5 @@
+
+
 module.exports = app => {
     class Shops extends app.Controller {
 
@@ -72,6 +74,17 @@ module.exports = app => {
         }
 
 
+        async getShopsByAreaId() {
+            const areaId = this.ctx.params.areaId;
+
+            const shops = await this.service.shops.query({ areaId }, ['id', 'name']);
+            this.ctx.body = {
+                code: 200,
+                data: shops
+            };
+        }
+
+
         // get all shop info
         async getShops() {
             const str = `select s.id, s.name shopName, a.name areaName, s.details from shops s inner join areas a on s.areaId = a.id`;
@@ -126,7 +139,7 @@ module.exports = app => {
             let del = true;
 
             for (const shop of shops.shops) {
-                if (!await this.service.shops.delete({ id: shop.id })) {
+                if (!await this.service.shopUser.delete({ shopId: shop.id }) || !await this.service.shops.delete({ id: shop.id })) {
                     del = false;
                 }
             }

@@ -27,12 +27,17 @@ module.exports = app => {
             const id = this.ctx.params.areaId;
 
             // area without id attribute
-            let area = this.ctx.request.body;
+            const area = this.ctx.request.body;
             
             // add attribute id to area
             area.id = id;
 
-            this.ctx.body = await this.service.areas.update(area);
+            if (!await this.service.areas.update(area)) {
+                this.ctx.body = this.service.util.generateResponse(403, 'update area info failed')
+                return;
+            }
+
+            this.ctx.body = this.service.util.generateResponse(203, 'update area info successed');
         }
 
 
@@ -40,6 +45,8 @@ module.exports = app => {
         // add a area record to areas
         async addArea() {
             const area = this.ctx.request.body;
+            const id = this.ctx.params.areaId;
+            area.id = id;
 
             // area id doesn't exist
             if (!area.id) {
@@ -60,14 +67,11 @@ module.exports = app => {
         // delete areas specified by id
         async removeAreas() {
             const areas = this.ctx.request.body;
-            console.log('xxxxxxx');
-            console.log(areas);
 
             let del = true;
 
             for (const area of areas.areas) {
-                if (!await this.service.areas.delete({ id:area.id })) {
-                    console.log(areas);
+                if (await this.service.shops.update({ areaId: '' }, { areaId: areas.id }) || !await this.service.areas.delete({ id: area.id })) {
                     del = false;
                 }
             }

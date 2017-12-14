@@ -1,10 +1,13 @@
+
+
 module.exports = app => {
     // app.controller.shops' index test
     app.get('/api/v1/shops/index', 'shops.index');
 
     app.get('/api/v1/shops/manager/:userId', 'shops.getMyShops'); // get district manager's shops
-    app.get('/api/v1/shops/notAssigned', 'shops.getShopsNotAssainged'); // get shops not assined
-    app.get('/api/v1/shops/assigned', 'shops.getShopsAssigned'); // get shops assigned
+    app.get('/api/v1/shops/checker/notAssigned', 'shops.getShopsNotAssainged'); // get shops not assined
+    app.get('/api/v1/shops/checker/assigned', 'shops.getShopsAssigned'); // get shops assigned
+    app.get('/api/v1/shops/area/:areaId', 'shops.getShopsByAreaId'); // get shops through area id
     app.get('/api/v1/shops/info/shops', 'shops.getShops'); // get all shops info
     app.put('/api/v1/shops/info/:shopId', 'shops.modifyShop'); // modify some shop's info
     app.post('/api/v1/shops/info/:shopId', 'shops.addShop'); // add a new shop

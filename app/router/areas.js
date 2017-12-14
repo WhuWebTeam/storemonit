@@ -4,7 +4,7 @@ module.exports = app => {
 
     app.get('/api/v1/areas', 'areas.getAreas'); // get all areas' info
     app.put('/api/v1/areas/info/:areaId', 'areas.modifyArea'); // modify info of some area specified by area id
-    app.post('/api/v1/areas', 'areas.addArea'); // add a new area info
+    app.post('/api/v1/areas/info/:areaId', 'areas.addArea'); // add a new area info
     app.delete('/api/v1/areas', 'areas.removeAreas'); // remove areas specified by id
 }
 

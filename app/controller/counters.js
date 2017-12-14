@@ -1,3 +1,5 @@
+
+
 module.exports = app => {
     class Counters extends app.Controller {
         
@@ -61,6 +63,16 @@ module.exports = app => {
         }
 
 
+        async getCounterByShopId() {
+            const shopId = this.ctx.params.shopId;
+
+            const counters = await this.service.counters.query({ shopId });
+            this.ctx.body = {
+                code: 200,
+                data: counters
+            };
+        }
+
         // modify info of some counter specified by id
         async modifyCounter() {
             const id = this.ctx.params.counterId;
@@ -78,6 +90,8 @@ module.exports = app => {
         // add a new counter
         async addCounter() {
             const counter = this.ctx.request.body;
+            const id = this.ctx.params.counterId;
+            counter.id = id;
 
             // counter exists
             if (!await this.service.counters.insert(counter)) {
@@ -86,6 +100,27 @@ module.exports = app => {
             }
 
             this.ctx.body = this.service.util.generateResponse(200, 'add counter successed');
+        }
+
+
+        async deleteCounters() {
+            const counters = this.ctx.request.body;
+            let del = true;
+
+
+            for (const counter of counters.counters) {
+                if (!await this.service.counterUser.delete({ counterId: counters.id }) ||
+                    !await this.service.counters.delete({ id: counterId })) {
+                        del = false;
+                    }
+            }
+
+            if (!del) {
+                this.ctx.body = this.service.util.generateResponse(403, 'delete some counters failed');
+                return;
+            }
+
+            this.ctx.body = this.service.util.generateResponse(203, 'delete counters satisfied condition successed');
         }
     }
 
