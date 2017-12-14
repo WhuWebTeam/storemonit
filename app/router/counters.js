@@ -6,8 +6,10 @@ module.exports = app => {
     app.get('/api/v1/counters/myCounter/:userId', 'counters.getMyCounter'); // get counters' info assigned to some user
     app.get('/api/v1/counters/assigned', 'counters.getCountersAssigned'); // get info of counters assigned
     app.get('/api/v1/counters/notAssaigned', 'counters.getCountersNotAssigned'); // get info of counters not assigned
+    // app.get('/api/v1/counters', 'counter.get')
     app.put('/api/v1/counters/:counterId', 'counters.modifyCounter'); // modify info of some counter specified by id
     app.post('/api/v1/counters', 'counters.addCounter'); // add a new counter
+    // app.delete('/api/v1/counters', '')
 }
 
 
