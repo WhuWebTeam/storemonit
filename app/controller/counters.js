@@ -25,12 +25,21 @@ module.exports = app => {
                 return;
             }
 
-            const str = `select c.id, shopId, c.type from counters c
+            const str = `select c.id, shopId, c.typeId from counters c
                         inner join counterUser cu on c.id = cu.counterId
                         where cu.userId =  $1 order by c.id`;
 
             try {
                 const counters = await this.app.db.query(str, [user]);
+                for (const counter of counters) {
+                    const countersTemp = [];
+                    counter.type = null;
+                    if (counter.typeid) {
+                        const type = await this.service.dbHelp.query('counterTypeConf', ['type'], { id: counter.typeid });
+                        counter.type = type[0].type || null;
+                    }
+                    countersTemp.push(counter);
+                }
                 this.ctx.body = {
                     code: 200,
                     data: counters
