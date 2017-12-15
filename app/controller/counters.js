@@ -69,7 +69,11 @@ module.exports = app => {
             const countersTemp = [];
             const counters = await this.service.counters.query({ shopId });
             for (const counter of counters) {
-                counter.type = await this.service.dbHelp.query('counterTypeConf', ['type'], { id: counter.typeId })[0] || null;
+                counter.type = null;
+                if (counter.typeid) {
+                    const type = await this.service.dbHelp.query('counterTypeConf', ['type'], { id: counter.typeid });
+                    counter.type = type[0].type || null;
+                }
                 countersTemp.push(counter);
             }
             this.ctx.body = {
