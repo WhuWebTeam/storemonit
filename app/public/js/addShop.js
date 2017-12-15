@@ -12,7 +12,7 @@ window.onload = function(){
 	}
 	
 	$.ajax({
-		url:'/api/v1/shops/notAssigned',
+		url:'/api/v1/shops/checker/notAssigned',
 		type:'GET',
 		success:function(results){
 

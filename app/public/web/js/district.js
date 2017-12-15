@@ -3,7 +3,7 @@ window.onload = function(){
 		var tbody = document.getElementsByTagName('tbody')[0];
 		tbody.innerHTML='';
 		$.ajax({
-			url:'/api/v1/areas',
+			url:'/api/v1/areas/info/areas',
 			type:'get',
 			success:function(results){
 				data = results.data;
@@ -63,10 +63,9 @@ window.onload = function(){
 	$('#submit').click(function(){
 		if($('#operation').val()=='add'){
 			$.ajax({
-				url:'/api/v1/areas',
+				url:'/api/v1/areas/info/'+$('#id').val(),
 				type:'POST',
 				data:{
-					'id': $('#id').val(),
 					'name': $('#name').val(),
 					'details': $('#details').val()
 				},
