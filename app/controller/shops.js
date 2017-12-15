@@ -13,14 +13,6 @@ module.exports = app => {
             };
         }
 
-        async getShopsAreaName(shops, temp) {
-            shops.map(async shop => {
-                const areaName = await this.service.areas.query({ id: shop.areaId }, ['name']);
-                shop.areaName = areaName.name;
-                temp.push(shop);           
-            });
-        }
-
 
         // get user's shop
         async getMyShops() {
@@ -99,13 +91,15 @@ module.exports = app => {
             const temp = [];
 
             const shops = await this.service.shops.query({}, ['id', 'name', 'details', 'areaId']);
-            console.log(shops);
             
-            await this.getShopsAreaName(shops, temp);
+            for (let i = 0; i < shops.length; i++) {
+                const areaName = await this.service.areas.query({ id: shops[i].areaId }, ['name']);
+                shops[i].areaName = areaName.name;
+            }
             
             this.ctx.body = {
                 code: 200,
-                data: temp
+                data: shops
             };
         }
 
@@ -131,7 +125,6 @@ module.exports = app => {
             const shop = this.ctx.request.body;
             shop.id = id;
 
-            console.log(shop);
             if (!await this.service.shops.insert(shop)) {
                 this.ctx.body = this.service.util.generateResponse(403, 'add new shop failed');
                 return;
