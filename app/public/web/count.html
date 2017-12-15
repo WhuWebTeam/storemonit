@@ -53,6 +53,41 @@
 			</table>
 		</div>
 		
+
+		<div id="handleRecord">
+			<p>新增款台</p>
+			<label>款台id号</label>
+			<input type="text" id="id" placeholder="款台id号">
+			<label>款台名称</label>
+			<input type="text" id="name" placeholder="款台名称">
+
+
+			<label>款台类型</label>
+			<select id="type"></select>
+
+			<label>摄像头IP</label>
+			<input type="text" id="cameraip" placeholder="摄像头IP">
+			<label>报警器IP</label>
+			<input type="text" id="alarmip" placeholder="报警器IP">
+			<label>报警器端口</label>
+			<input type="text" id="alarmport" placeholder="报警器端口">
+			<label>POS-IP</label>
+			<input type="text" id="posip" placeholder="POS-IP">
+			<label>POS控制端口</label>
+			<input type="text" id="posctlport" placeholder="POS控制端口">
+			<label>POS数据端口</label>
+			<input type="text" id="posbillport" placeholder="POS数据端口">
+			<label>POS报警端口</label>
+			<input type="text" id="posalarmport" placeholder="POS报警端口">
+
+
+
+			<input type="hidden" id="operation" value="add">		
+			<div id="btn">
+				<button id="submit" >提交</button>
+				<button id="back" >返回</button>
+			</div>
+		</div>
 	
 		<p id="page"><span class="glyphicon glyphicon-backward"></span><span>第1页</span><span class="glyphicon glyphicon-forward"></span></p>
 

@@ -94,7 +94,6 @@ window.onload = function(){
 	})
 	$('#back').click(function(){
 		$('#handleRecord')[0].style.display = 'none';
-		getList();
 	})
 
 
