@@ -131,7 +131,7 @@ window.onload = function(){
 			type:'delete',
 			data:{counters},
 			success:function(){
-				getList();
+				getCountsInfo( $("#shops").val() );
 			}
 		})
 	})
@@ -144,14 +144,15 @@ window.onload = function(){
 				type:'POST',
 				data:{
 					'shopId': $("#shops").val(),
-				    'type':  $('#type').val(),
-				    'cameraIp': $('#cameraIp').val(),
-				    'alarmIp': $('#alarmIp').val(),
-				    'alarmPort': $('#alarmPort').val(),
-				    'posIp': $('#posIp').val(),
-				    'posCtlPort': $('#posCtlPort').val(),
-				    'posBillPort': $('#posBillPort').val(),
-				    'posAlarmPort': $('#posAlarmPort').val()
+				    'typeId':  $('#type').val(),
+				    'name': $('#name').val(),
+				    'cameraIp': $('#cameraip').val(),
+				    'alarmIp': $('#alarmip').val(),
+				    'alarmPort': $('#alarmport').val(),
+				    'posIp': $('#posip').val(),
+				    'posCtlPort': $('#posctlport').val(),
+				    'posBillPort': $('#posbillport').val(),
+				    'posAlarmPort': $('#posalarmport').val()
 				},
 				success:function(){
 					$('#handleRecord')[0].style.display = 'none';
@@ -164,15 +165,16 @@ window.onload = function(){
 				url:'/api/v1/counters/info/'+$('#id').val(),
 				type:'put',
 				data:{
-						'shopId': $("#shops").val(),
-					    'type':  $('#type').val(),
-					    'cameraIp': $('#cameraIp').val(),
-					    'alarmIp': $('#alarmIp').val(),
-					    'alarmPort': $('#alarmPort').val(),
-					    'posIp': $('#posIp').val(),
-					    'posCtlPort': $('#posCtlPort').val(),
-					    'posBillPort': $('#posBillPort').val(),
-					    'posAlarmPort': $('#posAlarmPort').val()
+					'shopId': $("#shops").val(),
+				    'typeId':  $('#type').val(),
+				    'name': $('#name').val(),
+				    'cameraIp': $('#cameraip').val(),
+				    'alarmIp': $('#alarmip').val(),
+				    'alarmPort': $('#alarmport').val(),
+				    'posIp': $('#posip').val(),
+				    'posCtlPort': $('#posctlport').val(),
+				    'posBillPort': $('#posbillport').val(),
+				    'posAlarmPort': $('#posalarmport').val()	
 				},
 				success:function(){
 					$('#handleRecord')[0].style.display = 'none';
