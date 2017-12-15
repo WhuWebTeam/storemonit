@@ -23,7 +23,7 @@ module.exports = app => {
             this.table = {
                 id: undefined,
                 shopId: undefined,
-                type: undefined,
+                typeId: undefined,
                 details: undefined,
                 assigned: undefined,
                 cameraIp: undefined,
@@ -32,7 +32,8 @@ module.exports = app => {
                 posIp: undefined,
                 posCtlPort: undefined,
                 posBillPort: undefined,
-                posAlarmPort: undefined      
+                posAlarmPort: undefined,
+                name: undefined
             };
         }
 
@@ -143,10 +144,10 @@ module.exports = app => {
          * @since 1.0.0
          */
         async insert(counter) {
-            
+
             // format counter record's attributes
             counter = this.service.util.setTableValue(this.table, counter);
-            
+
             // counter.id doesn't exist
             if (!counter.id) {
                 return false;

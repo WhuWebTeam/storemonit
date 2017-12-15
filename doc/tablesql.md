@@ -17,7 +17,7 @@ WITH (
 ALTER TABLE public.users
 OWNER TO company;
 
-  ````
+````
 
 
 
@@ -93,7 +93,7 @@ CREATE TABLE public.counters
 (
     id varchar(50) primary key,
     shopId varchar(50),
-    type varchar(50) default '',
+    typeId varchar(50),
     details varchar(500),
     assigned boolean default false,
     cameraIp varchar(50),
@@ -102,7 +102,8 @@ CREATE TABLE public.counters
     posIp varchar(50),
     posCtlPort varchar(50),
     posBillPort varchar(50),
-    posAlarmPort varchar(50)
+    posAlarmPort varchar(50),
+    name varchar(50)
 )
 WITH (
   OIDS = FALSE
