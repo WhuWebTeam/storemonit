@@ -72,7 +72,6 @@ module.exports = app => {
             
 
             for (const area of areas.areas) {
-                console.log(area);
                 if (!await this.service.areas.delete({ id: area.id })) {
                     del = false;
                 }

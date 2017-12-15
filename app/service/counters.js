@@ -55,7 +55,6 @@ module.exports = app => {
             }
 
             try {
-                // console.log(await this.service.dbHelp.count('counters', id, { id }));
                 // counter exists
                 if (await this.service.dbHelp.count('counters', 'id', { id })) {
                     return true;

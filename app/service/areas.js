@@ -72,7 +72,6 @@ module.exports = app => {
          * @since 1.0.0
          */
         async query(area, attributes = ['*']) {
-
             //format area's attributes and query attributes
             area = this.service.util.setTableValue(this.table, area);
             attributes = this.service.util.setQueryAttributes(this.table, attributes);

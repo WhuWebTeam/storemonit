@@ -88,18 +88,27 @@ module.exports = app => {
         // get all shop info
         async getShops() {
 
-            const temp = [];
+            const temps = [];
 
             const shops = await this.service.shops.query({}, ['id', 'name', 'details', 'areaId']);
-            
-            for (let i = 0; i < shops.length; i++) {
-                const areaName = await this.service.areas.query({ id: shops[i].areaId }, ['name']);
-                shops[i].areaName = areaName.name;
+            for (const shop of shops) {
+                let areaName = null;
+                if (shop.areaid) {
+                    areaName = await this.service.areas.query({ id: shop.areaid }, ['name']);
+                    areaName = areaName.name;
+                }
+                temps.push({
+                    id: shop.id,
+                    shopname: shop.name,
+                    areaid: shop.areaId || null,
+                    details: shop.details,
+                    areaname: areaName
+                });
             }
             
             this.ctx.body = {
                 code: 200,
-                data: shops
+                data: temps
             };
         }
 
