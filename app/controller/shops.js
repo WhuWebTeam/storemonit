@@ -13,6 +13,14 @@ module.exports = app => {
             };
         }
 
+        async getShopsAreaName(shops, temp) {
+            shops.map(async shop => {
+                const areaName = await this.service.areas.query({ id: shop.areaId }, ['name']);
+                shop.areaName = areaName.name;
+                temp.push(shop);           
+            });
+        }
+
 
         // get user's shop
         async getMyShops() {
@@ -87,17 +95,18 @@ module.exports = app => {
 
         // get all shop info
         async getShops() {
-            const str = `select s.id, s.name shopName, a.name areaName, s.details from shops s inner join areas a on s.areaId = a.id`;
 
-            try {
-                const shops = await this.app.db.query(str, []);
-                this.ctx.body = {
-                    code: 200,
-                    data: shops
-                };
-            } catch (err) {
-                this.ctx.body = this.service.util.generateResponse(400, `get all shops' info failed`);
-            }
+            const temp = [];
+
+            const shops = await this.service.shops.query({}, ['id', 'name', 'details', 'areaId']);
+            console.log(shops);
+            
+            await this.getShopsAreaName(shops, temp);
+            
+            this.ctx.body = {
+                code: 200,
+                data: temp
+            };
         }
 
 

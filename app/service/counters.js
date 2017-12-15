@@ -25,7 +25,14 @@ module.exports = app => {
                 shopId: undefined,
                 type: undefined,
                 details: undefined,
-                assigned: undefined
+                assigned: undefined,
+                cameraIp: undefined,
+                alarmIp: undefined,
+                alarmPort: undefined,
+                posIp: undefined,
+                posCtlPort: undefined,
+                posBillPort: undefined,
+                posAlarmPort: undefined      
             };
         }
 

@@ -21,7 +21,14 @@ module.exports = app => {
 // {
 //     shopId,
 //     type,
-//     details
+//     details,
+//     cameraIp
+//     alarmIp
+//     alarmPort
+//     posIp
+//     posCtlPort
+//     posBillPort
+//     posAlarmPort
 // }
 
 
@@ -31,8 +38,16 @@ module.exports = app => {
 // {
 //     shopId,
 //     type,
-//     details
+//     details,
+//     cameraIp
+//     alarmIp
+//     alarmPort
+//     posIp
+//     posCtlPort
+//     posBillPort
+//     posAlarmPort
 // }
+
 
 
 
