@@ -66,7 +66,12 @@ module.exports = app => {
         async getCounterByShopId() {
             const shopId = this.ctx.params.shopId;
 
+            const countersTemp = [];
             const counters = await this.service.counters.query({ shopId });
+            for (const counter of counters) {
+                counter.type = await this.service.dbHelp.query('counterTypeConf', ['type'], { id: counter.typeId })[0] || null;
+                countersTemp.push(counter);
+            }
             this.ctx.body = {
                 code: 200,
                 data: counters
