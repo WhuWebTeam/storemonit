@@ -31,6 +31,20 @@ window.onload = function(){
 		})
 	} /* get shops info  by area id*/
 
+	// function getCounterTypes(){
+	// 	$.ajax({
+	// 		url:'/api/v1/areas/info/areas',
+	// 		type:'get',
+	// 		success:function(results){
+	// 			var CounterTypes = `<option disabled selected style='display:none;'>款台类型选择</option>`;
+	// 			data = results.data;
+	// 			for(let i=0;i<data.length;i++){
+	// 				CounterTypes += `<option value="${data[i].id}">${data[i].name}</option>`
+	// 			}
+	// 		}
+	// 	})
+	// }
+
 
 	function getCountsInfo(shopId){
 		$.ajax({
@@ -41,7 +55,7 @@ window.onload = function(){
 				tbody.innerHTML='';
 				data = results.data;
 
-				for(let i=0;i<1;i++){
+				for(let i=0;i<data.length;i++){
 					var tr = document.createElement('tr');
 					tr.innerHTML = `
 						<td><input type="checkbox" value="${data[i].id}"></td>
