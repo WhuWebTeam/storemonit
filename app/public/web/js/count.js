@@ -31,19 +31,22 @@ window.onload = function(){
 		})
 	} /* get shops info  by area id*/
 
-	// function getCounterTypes(){
-	// 	$.ajax({
-	// 		url:'/api/v1/areas/info/areas',
-	// 		type:'get',
-	// 		success:function(results){
-	// 			var CounterTypes = `<option disabled selected style='display:none;'>款台类型选择</option>`;
-	// 			data = results.data;
-	// 			for(let i=0;i<data.length;i++){
-	// 				CounterTypes += `<option value="${data[i].id}">${data[i].name}</option>`
-	// 			}
-	// 		}
-	// 	})
-	// }
+
+	var CounterTypes = `<option disabled selected style='display:none;'>款台类型选择</option>`;
+	function getCounterTypes(){
+		$.ajax({
+			url:'/api/v1/counterTypeConf/info',
+			type:'get',
+			success:function(results){	
+				data = results.data;
+				for(let i=0;i<data.length;i++){
+					CounterTypes += `<option value="${data[i].id}">${data[i].type}</option>`
+				}
+			}
+		})
+	} /* get all counter types*/
+	getCounterTypes()
+
 
 
 	function getCountsInfo(shopId){
@@ -60,7 +63,7 @@ window.onload = function(){
 					tr.innerHTML = `
 						<td><input type="checkbox" value="${data[i].id}"></td>
 						<td>${data[i].name}</td>
-						<td>${data[i].typeid}</td>
+						<td>${data[i].type}</td>
 						<td>${data[i].cameraip}</td>
 						<td>${data[i].alarmip}</td>
 						<td>${data[i].alarmport}</td>
@@ -73,19 +76,118 @@ window.onload = function(){
 					tbody.appendChild(tr);
 
 				
-					// var edit = tr.getElementsByTagName('span')[0];
-					// edit.onclick = function(){
-					// 	$('#handleRecord p').html('编辑区域');
-					// 	$('#id').val(data[i].id);
-					// 	$('#name').val(data[i].name);
-					// 	$('#details').val(data[i].details);
-					// 	$('#operation').val('edit');
-					// 	$('#handleRecord')[0].style.display = 'block';
-					// }
+					var edit = tr.getElementsByTagName('span')[0].parentNode;
+					edit.onclick = function(){
+						$('#handleRecord p').html('编辑款台');
+						$('#id').val(data[i].id);
+						$('#name').val(data[i].name);
+						$('#type').html(CounterTypes);
+						$('#type').find('option').each(function(){
+							if($(this).text() ==  data[i].type){
+								$(this).attr('selected','selected');
+							}
+						})
+						$('#cameraip').val(data[i].cameraip);
+						$('#alarmip').val(data[i].alarmip);
+						$('#alarmport').val(data[i].alarmport);
+						$('#posip').val(data[i].posip);
+						$('#posctlport').val(data[i].posctlport);
+						$('#posbillport').val(data[i].posbillport);
+						$('#posalarmport').val(data[i].posalarmport);
+						$('#operation').val('edit');
+						$('#handleRecord')[0].style.display = 'block';
+					}
 				}
 			}
 		})
 	} /* get shops info  by area id*/
+
+
+	$('#add').click(function(){
+		$('#handleRecord p').html('新增款台');
+		$('#id').val('');
+		$('#name').val('');
+		$('#type').html(CounterTypes);
+		$('#cameraip').val('');
+		$('#alarmip').val('');
+		$('#alarmport').val('');
+		$('#posip').val('');
+		$('#posctlport').val('');
+		$('#posbillport').val('');
+		$('#posalarmport').val('');
+		$('#operation').val('add');
+		$('#handleRecord')[0].style.display = 'block';
+	});
+
+	$('#delete').click(function(){
+		var counters = [];
+		$(':checked').each(function(){ 
+			counters.push({
+				'id':this.value
+			});
+		}); 
+		$.ajax({
+			url:'/api/v1/counters',
+			type:'delete',
+			data:{counters},
+			success:function(){
+				getList();
+			}
+		})
+	})
+
+
+	$('#submit').click(function(){
+		if($('#operation').val()=='add'){
+			$.ajax({
+				url:'/api/v1/counters/info/'+$('#id').val(),
+				type:'POST',
+				data:{
+					'shopId': $("#shops").val(),
+				    'type':  $('#type').val(),
+				    'cameraIp': $('#cameraIp').val(),
+				    'alarmIp': $('#alarmIp').val(),
+				    'alarmPort': $('#alarmPort').val(),
+				    'posIp': $('#posIp').val(),
+				    'posCtlPort': $('#posCtlPort').val(),
+				    'posBillPort': $('#posBillPort').val(),
+				    'posAlarmPort': $('#posAlarmPort').val()
+				},
+				success:function(){
+					$('#handleRecord')[0].style.display = 'none';
+					getCountsInfo( $("#shops").val() );
+				}
+			})
+		}
+		if($('#operation').val()=='edit'){
+			$.ajax({
+				url:'/api/v1/counters/info/'+$('#id').val(),
+				type:'put',
+				data:{
+						'shopId': $("#shops").val(),
+					    'type':  $('#type').val(),
+					    'cameraIp': $('#cameraIp').val(),
+					    'alarmIp': $('#alarmIp').val(),
+					    'alarmPort': $('#alarmPort').val(),
+					    'posIp': $('#posIp').val(),
+					    'posCtlPort': $('#posCtlPort').val(),
+					    'posBillPort': $('#posBillPort').val(),
+					    'posAlarmPort': $('#posAlarmPort').val()
+				},
+				success:function(){
+					$('#handleRecord')[0].style.display = 'none';
+					getCountsInfo( $("#shops").val() );
+				}
+			})
+		}
+	})
+
+
+	$('#back').click(function(){
+		$('#handleRecord')[0].style.display = 'none';
+		getCountsInfo( $("#shops").val() );
+	})
+
 
 
 	getAreasInfo();
