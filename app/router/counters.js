@@ -20,8 +20,9 @@ module.exports = app => {
 // :counterId counter's serial number
 // {
 //     shopId,
-//     type,
+//     typeId,
 //     details,
+//     name,
 //     cameraIp
 //     alarmIp
 //     alarmPort
@@ -37,8 +38,9 @@ module.exports = app => {
 // attributes belongs to the following object, id must exists
 // {
 //     shopId,
-//     type,
+//     typeId,
 //     details,
+//     name,
 //     cameraIp
 //     alarmIp
 //     alarmPort
@@ -47,6 +49,7 @@ module.exports = app => {
 //     posBillPort
 //     posAlarmPort
 // }
+
 
 
 
