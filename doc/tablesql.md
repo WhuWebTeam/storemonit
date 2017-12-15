@@ -93,9 +93,16 @@ CREATE TABLE public.counters
 (
     id varchar(50) primary key,
     shopId varchar(50),
-    type varchar(50) default 'pos',
+    type varchar(50) default '',
     details varchar(500),
-    assigned boolean default false 
+    assigned boolean default false,
+    cameraIp varchar(50),
+    alarmIp varchar(50),
+    alarmPort varchar(50),
+    posIp varchar(50),
+    posCtlPort varchar(50),
+    posBillPort varchar(50),
+    posAlarmPort varchar(50)
 )
 WITH (
   OIDS = FALSE
