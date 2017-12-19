@@ -8,45 +8,51 @@
 	<link rel="stylesheet" type="text/css" href="css/checker.css">
 </head>
 <body>
-	<p id="title">
-		防损复核
-		<span id="set" class="glyphicon glyphicon-list"></span>
-		<!-- <button id="counter" class="btn btn-info btn-xs">关联款台</button> -->
-	</p>
+	<header id="title">
+		防损事件管理
+		<img id="set" src="imgs/menu.svg" />
+		<!-- <span id="set" class="glyphicon glyphicon-list"></span> -->
+	</header>
 
-	<div id="counter" style="display: none">
+	<aside id="counter" style="display: none">
 		<ul>
 			<li id="myCounter">我的款台</li>
 			<li id="addCounter">新增绑定</li>
 			<li id="retryCounter">解除绑定</li>
 			<li id="oneKeyRetry">解除所有</li>
 		</ul>
-	</div>
+	</aside>
 
-	<div id="event">
-		<p id="left">
-			<span></span>
-			未处理
-		</p>
-		<p id="middle">
-			<span></span>
-			暂存
-		</p>
-		<p id="right">
-			<span></span>
-			完成
-		</p>
-	</div>
-	<div id="graph">
-		 <span class="title">防损事件</span>
-		 <span class="sel">
-		 	<button class="day   btn btn-success btn-sm down">按天</button>
-		 	<button class="week  btn btn-success btn-sm">按周</button>
-		 	<button class="month btn btn-success btn-sm">按月</button>
-		 </span>
-		 <div id="content"></div>
-	</div>
-	<div id="list"></div>
+	
+	<section>
+		<nav id="event">
+			<p>
+				<span></span>
+				未处理
+			</p>
+			<p>
+				<span></span>
+				暂存
+			</p>
+			<p>
+				<span></span>
+				完成
+			</p>
+		</nav>
+	
+		
+		<div id="graph">
+			<span class="title">防损事件</span>
+			<span class="sel">
+				<button class="day   btn btn-success btn-sm down">按天</button>
+				<button class="week  btn btn-success btn-sm">按周</button>
+				<button class="month btn btn-success btn-sm">按月</button>
+			</span>
+			<div id="content"></div>
+		</div>
+		<article id="list"></div>
+	</section>
+
 
 	
 	<script type="text/javascript" src="bootstrap-3.3.7-dist/jquery/jquery.min.js"></script>
