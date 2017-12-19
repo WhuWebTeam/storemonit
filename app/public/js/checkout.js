@@ -35,6 +35,8 @@ window.onload = function(){
 				for(let i=0;i<results.length;i++){
 					var p = document.createElement('p');
 					p.setAttribute('class','li');
+					p.style.backgroundColor = 'white';
+					p.style.color = 'black';
 					var num = results[i].id;
 					p.innerHTML = `款台:<span id='num'>${num}</span>`;
 					document.getElementById('list').appendChild(p);

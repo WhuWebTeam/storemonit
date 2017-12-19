@@ -201,7 +201,7 @@ window.onload = function(){
 
 			option = {
 			            title : {
-			                text: '防损事件统计表',
+			                // text: '防损事件统计表',
 			                subtext: '次数'
 			            },
 			            grid : {
@@ -211,15 +211,15 @@ window.onload = function(){
 			            tooltip : {
 			                trigger: 'axis'
 			            },
-			            toolbox: {
-			                show : true,
-			                feature : {
-			                    mark : {show: true},
-			                    dataView : {show: true, readOnly: false},
-			                    magicType : {show: true, type: ['line', 'bar']},
-			                    restore : {show: true}
-			                }
-			            },
+			            // toolbox: {
+			            //     show : true,
+			            //     feature : {
+			            //         mark : {show: true},
+			            //         dataView : {show: true, readOnly: false},
+			            //         magicType : {show: true, type: ['line', 'bar']},
+			            //         restore : {show: true}
+			            //     }
+			            // },
 			            calculable : true,
 			            xAxis : [
 			                {
@@ -301,10 +301,9 @@ window.onload = function(){
    	})
    	/* add press event of event */
 
-
-
    	getNum();
    	getList(listType||0); 
-   	getGraph('day');	
+	getGraph('day');
+	   	
 
 }

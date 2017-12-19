@@ -38,6 +38,8 @@ window.onload = function(){
 				p.setAttribute('class','li');
 				var num = results[i].id;
 				p.innerHTML = `店号:<span id='num'>${num}</span>`;
+				p.style.backgroundColor = 'white';
+				p.style.color = 'black';
 				document.getElementById('list').appendChild(p);
 				isClick[i]=false;
 				p.onclick = function(){

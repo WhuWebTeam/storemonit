@@ -199,6 +199,7 @@ window.onload = function(){
 	});
 	$("#shops").bind('input propertychange',function(){ 
 		getCountsInfo( $("#shops").val() );
+		if($('#add').attr('disabled')) $('#add').removeAttr('disabled');
 	});
 
 }

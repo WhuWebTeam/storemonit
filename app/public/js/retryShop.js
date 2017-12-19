@@ -23,7 +23,8 @@ window.onload = function(){
 				var num = results[i].id;
 				p.innerHTML = `门店:<span id='num'>${num}</span>`;
 				document.getElementById('list').appendChild(p);
-				p.style.backgroundColor  = 'rgb(93,156,236)';
+				p.style.backgroundColor = 'rgb(93,156,236)';
+				p.style.color = 'white';
 				isClick[i]=true;
 				p.onclick = function(){
 					if(!isClick[i]){
