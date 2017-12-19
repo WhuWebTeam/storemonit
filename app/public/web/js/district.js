@@ -11,6 +11,7 @@ window.onload = function(){
 					var tr = document.createElement('tr');
 					tr.innerHTML = `
 						<td><input type="checkbox" value="${data[i].id}"></td>
+						<td>${data[i].id}</td>
 						<td>${data[i].name}</td>
 						<td>${data[i].details}</td>
 						<td><button class="btn btn-info btn-sm">编辑</button></td>
