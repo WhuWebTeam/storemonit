@@ -62,6 +62,7 @@ window.onload = function(){
 					var tr = document.createElement('tr');
 					tr.innerHTML = `
 						<td><input type="checkbox" value="${data[i].id}"></td>
+						<td>${data[i].id}</td>
 						<td>${data[i].name}</td>
 						<td>${data[i].type}</td>
 						<td>${data[i].cameraip}</td>

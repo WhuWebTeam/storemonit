@@ -55,16 +55,16 @@ window.onload = function(){
 			            // legend: {
 			            //     data:['最高气温','最低气温']
 			            // },
-			            toolbox: {
-			                show : true,
-			                feature : {
-			                    mark : {show: true},
-			                    dataView : {show: true, readOnly: false},
-			                    magicType : {show: true, type: ['line', 'bar']},
-			                    restore : {show: true},
-			                    //saveAsImage : {show: true}
-			                }
-			            },
+			            // toolbox: {
+			            //     show : true,
+			            //     feature : {
+			            //         mark : {show: true},
+			            //         dataView : {show: true, readOnly: false},
+			            //         magicType : {show: true, type: ['line', 'bar']},
+			            //         restore : {show: true},
+			            //         //saveAsImage : {show: true}
+			            //     }
+			            // },
 			            calculable : true,
 			            xAxis : [
 			                {
@@ -173,15 +173,15 @@ window.onload = function(){
 			            }
 			        }
 			    },
-			    toolbox: {
-			        show : true,
-			        feature : {
-			            mark : {show: true},
-			            dataZoom : {show: true},
-			            dataView : {show: true, readOnly: false},
-			            restore : {show: true}
-			        }
-			    },
+			    // toolbox: {
+			    //     show : true,
+			    //     feature : {
+			    //         mark : {show: true},
+			    //         dataZoom : {show: true},
+			    //         dataView : {show: true, readOnly: false},
+			    //         restore : {show: true}
+			    //     }
+			    // },
 			    xAxis : [
 			        {
 			            type : 'value',

@@ -27,6 +27,7 @@ window.onload = function(){
 					var tr = document.createElement('tr');
 					tr.innerHTML = `
 						<td><input type="checkbox" value="${data[i].id}"></td>
+						<td>${data[i].id}</td>
 						<td>${data[i].shopname}</td>
 						<td>${data[i].areaname}</td>
 						<td>${data[i].details}</td>
