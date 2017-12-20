@@ -62,29 +62,35 @@ module.exports = app => {
 
 
 // app.put('/api/v1/eventsList/status/commit', 'eventsList.commitEventsList'); // commit some eventsList, set their status to 2
-// [
-//     {
-//         sysKey
-//     },
-//     {
-//         sysKey
-//     },
-//     {
-//         sysKey
-//     }
-// ]
+// {
+//     sysArr:
+//     [
+//         {
+//             sysKey
+//         },
+//         {
+//             sysKey
+//         },
+//         {
+//             sysKey
+//         }
+//     ]
+// }
 
 
 
 // app.put('/api/v1/eventsList/status/store/:sysKey', 'eventsList.storeEventList'); // store some eventList, set its status to 1
-// [
-//     {
-//         sysKey,
-//     },
-//     {
-//         sysKey,
-//     },
-//     {
-//         sysKey,
-//     }
-// ]
+// {
+//     sysArr:
+//     [
+//         {
+//             sysKey
+//         },
+//         {
+//             sysKey
+//         },
+//         {
+//             sysKey
+//         }
+//     ]
+// }
