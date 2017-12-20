@@ -133,9 +133,8 @@ module.exports = app => {
                 dealing = dealing[0] && dealing[0].count || 0;
                 
                 // get count of events completed the last day
-                str = `select count(distinct et.sysKey) from eventTAT et
-                      inner join eventsList e on e.sysKey = et.sysKey
-                      inner join shopUser su on e.shopId = su.shopId
+                str = `select count(et.sysKey) from eventTAT et
+                      inner join shopUser su on et.shopId = su.shopId
                       where su.userId = $1 and et.type = 2 and to_timestamp(createAt) > now() - interval '1 d'`;
 
             
