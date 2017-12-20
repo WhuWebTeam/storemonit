@@ -1,76 +1,6 @@
-body{
-	width: 1000px;
-	margin: 0 auto;
-	margin-top: 100px;
-}
-h1{
-	text-align: center;
-	font-size: 26px;
-	font-weight: bold;
-	color: rgb(153,0,153);
-	border:1px solid grey;
-	height: 60px;
-	line-height: 60px;
-}
-nav{
-	width: 200px;
-	border:1px solid grey;
-	height: 500px;
-	float: left;
-}
-nav ul{
-	padding: 0px;
-	margin:0px;
-}
-nav ul li{
-	text-align: center;
-	list-style-type: none;
-	height: 40px;
-	line-height: 40px;
-	margin-top: 10px;
-	background-color: grey;
-	font-size: 20px;
-}
-#container{
-	float: left;
-	width: 800px;
-	height: 500px;
-	border:1px solid grey;
-}
-#table{
-	
-	border:1px solid grey;
-	overflow: auto;
-	height: 200px;
-}
-footer{
-	border:1px solid grey;
-	height: 60px;
-	clear: both;
-}
-footer p{
-	text-align: center;
-	line-height: 60px;
-	font-size: 18px;
-}
-div p button{
-	width: 80px;
-	height: 30px;
-	margin-left: 20px;
-	margin-top: 30px;
-}
-table{
-	margin-top: 20px;
-	margin-left: 10px;
-	margin-right: 10px;
-	padding: 10px;
-	background-color: #c8cee1;
-	border-collapse: collapse;   
-	border: none; 
-}
-table td,th{
-	border:1px solid grey;
-}
+@import "common.css";
+
+
 tr th:nth-child(1){
 	height: 30px;
 	width: 50px;
@@ -100,21 +30,11 @@ tr td{
 	text-align: center;
 	height: 30px;
 }
-div #page{
-	position: relative;
-	top: 100px;
-}
-div p span{
-	display: inline-block;
-	width: 100px;
-	text-align: center;
-}
-
 
 #handleRecord{
 	display: none;
-	border:1px solid grey;
-	background-color: #D8D8D8;
+	border:1px solid #f1f1f1;
+	background-color: #f1f1f1;
 	margin: 0 auto;
 	width: 500px;
 	height: 300px;
@@ -125,11 +45,14 @@ div p span{
 	right: 0px;
 }
 
+
+
 #handleRecord p{
 	height: 30px;
 	line-height: 30px;
 	font-size: 22px;
-	background-color: rgb(91,192,222);
+	background-color: #5bc0de;
+    border-color: #46b8da;
 	color: white;
 	text-align: center;
 }
@@ -142,15 +65,15 @@ div p span{
 	text-align: center;
 }
 
-#handleRecord input,select{
+#handleRecord input,#handleRecord select{
 	display: inline-block;
 	height: 40px;
 	width: 60%;
-	/*margin: 20px auto 0;*/
 }
 #handleRecord button{
 	display: inline-block;
-	background-color: rgb(140,182,192);
+	background-color: #5bc0de;
+    border-color: #46b8da;
 	border-radius: 8px;
 	width: 100px;
 	height: 30px;
@@ -159,7 +82,7 @@ div p span{
 #handleRecord #btn{
 	width: 300px;
 	margin: 0 auto;
+	color:white;
 }
-
 
 

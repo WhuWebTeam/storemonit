@@ -1,6 +1,6 @@
 window.onload = function(){
 
-	var select = '';
+	var select = `<option disabled selected style='display:none;'>所属区域选择</option>`;;
 	function getAreasInfo(){
 		$.ajax({
 			url:'/api/v1/areas/info/areas',
