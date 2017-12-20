@@ -83,18 +83,53 @@ module.exports = app => {
                       order by checkerId`;
                 const count3 = await this.app.db.query(str, [time, this.app.config.time.checkerResponseTime[2], user]);
                 
-                
+                const temp = {};
+                count1.map(obj => {
+                    if (!temp[obj.checkerid]) {
+                        temp[obj.checkerid] = {
+                            checkerId: obj.checkerid,
+                            checkerName: obj.checkername,
+                            count1: +obj.count,
+                            count2: 0,
+                            count3: 0,
+                        }
+                    }
+                });
+
+                count2.map(obj => {
+                    if (!temp[obj.checkerid]) {
+                        temp[obj.checkerid] = {
+                            checkerId: obj.checkerid,
+                            checkerName: obj.checkername,
+                            count1: 0,
+                            count2: +obj.count,
+                            count3: 0
+                        }
+                    } else {
+                        temp[obj.checkerid].count2 =  +obj.count;
+                    }
+                });
+
+
+                count3.map(obj => {
+                    if (!temp[obj.checkerid]) {
+                        temp[obj.checkerid] = {
+                            checkerId: obj.checkerid,
+                            checkerName: obj.checkername,
+                            count1: 0,
+                            count2: 0,
+                            count3: +obj.count,
+                        }
+                    } else {
+                        temp[obj[checkerid]].count3 =  +obj.count;
+                    }
+                });
 
                 this.ctx.body = {
                     code: 200,
-                    data: {
-                        count1,
-                        count2,
-                        count3
-                    }
+                    data: Object.values(temp)
                 };
             } catch (err) {
-                console.log(err);
                 this.ctx.body = this.service.util.generateResponse(400, 'get checker response time failed');
             }
         }
