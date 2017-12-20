@@ -31,21 +31,21 @@ module.exports = app => {
         async getResponseTime() {
 
             const user = this.ctx.params.userId;
-            const time = this.ctx.params.day;
+            let time = this.ctx.params.day;
 
             // set the duration time
             switch(time.toLowerCase()) {
                 case 'week':
-                    values.push(7);
+                    time = 7;
                     break;
                 case 'month':
-                    values.push(30);
+                    time = 30;
                     break;
                 case '3month':
-                    values.push(90);
+                    time = 90;
                     break;
                 default:
-                    values.push(180);
+                    time = 180;
                     break;
             }
 
@@ -67,11 +67,11 @@ module.exports = app => {
                       and type = 2 and duration > 1000 * 60 * $2 and duration < 1000 * 60 * $3
                       and shopId in (
                           select shopId from shopUser
-                          where userId = $3)
+                          where userId = $4)
                       group by checkerId, checkerName
                       order by checkerId`;
                 const count2 = await this.app.db.query(str, [time, this.app.config.time.checkerResponseTime[0], this.app.config.time.checkerResponseTime[1], user]);
-                
+
                 str = `select checkerId, checkerName, count(id)
                       from eventTAT
                       where now() - interval '$1 d'  < to_timestamp(createAt / 1000) 
@@ -94,6 +94,7 @@ module.exports = app => {
                     }
                 };
             } catch (err) {
+                console.log(err);
                 this.ctx.body = this.service.util.generateResponse(400, 'get checker response time failed');
             }
         }
@@ -179,7 +180,7 @@ module.exports = app => {
             let commit = 1;
 
             for (const eventTAT of commits.sysArr) {
-                if(!await this.service.eventTAT.eventLog(eventTAT.sysKey, 2)) {
+                if(!await this.service.eventTAT.eventLog(eventTAT, 2)) {
                     commit = 0;
                 };
             }

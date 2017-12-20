@@ -84,7 +84,7 @@ module.exports = app => {
             attributes = this.service.util.setQueryAttributes(this.table, attributes);
 
             // eventTAT doesn't exist
-            if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey)) {
+            if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey, eventTAT.type || 0)) {
                 return {};
             }
 
@@ -150,7 +150,7 @@ module.exports = app => {
             }
 
             // eventTAT exists
-            if (await this.exists(eventTAT.sysKey)) {
+            if (await this.exists(eventTAT.sysKey, eventTAT.type || 0)) {
                 return false;
             }
 
@@ -182,7 +182,7 @@ module.exports = app => {
             wheres = this.service.util.setTableValue(this.table, wheres);
 
             // eventTAT doesn't exist
-            if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey)) {
+            if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey,  eventTAT.type || 0)) {
                 return false;
             }
 
@@ -212,7 +212,7 @@ module.exports = app => {
             eventTAT = this.service.util.setTableValue(this.table, eventTAT);
 
             // eventTAT doesn't exist
-            if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey)) {
+            if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey,  eventTAT.type || 0)) {
                 return false;
             }
 
