@@ -21,10 +21,14 @@ module.exports = app => {
 
             // attributes of table eventTAT
             this.table = {
-                id: undefined,
+                id:  undefined,
                 sysKey: undefined,
-                type: 0,
-                actionTime: undefined
+                shopId: undefined,
+                checkerId: undefined,
+                checkerName: undefined,
+                type: undefined,
+                createAt: undefined,
+                duration: undefined
             };
         }
 
@@ -34,21 +38,22 @@ module.exports = app => {
          * @public
          * @function exists
          * @param {String} sysKey - eventTAT's register number
+         * @param {Number} type - the type number of eventTAT
          * @return {Promise<Boolean>}
          * true when eventTAT specified by sysKey exists
          * false when eventTAT specified by sysKey does't exist
          * @since 1.0.0
          */
-        async exists(sysKey) {
+        async exists(sysKey, type) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(sysKey)) {
+            if (!this.service.util.parameterExists(sysKey) || !this.service.util.parameterExists(type)) {
                 return false;
             }
 
             try {
                 // eventTAT exists
-                if (await this.service.dbHelp.count('eventTAT', 'sysKey', { sysKey })) {
+                if (await this.service.dbHelp.count('eventTAT', 'sysKey', { sysKey, type })) {
                     return true;
                 }
 
@@ -254,14 +259,14 @@ module.exports = app => {
          * log event action time with mutiply type
          * @public
          * @method eventTAT#eventLog
-         * @param {String} sysKey - eventTAT record's unique id but not table's primary key
+         * @param {Object} eventTAT - eventTAT record
          * @param {Number} type - the event log's type
          * @return {Promise<Boolean>}
          * true when log successed
          * false when log failed
          * @since 1.0.0
          */
-        async eventLog(sysKey, type) {
+        async eventLog(eventTAT, type) {
 
             // format event log to 0, 1, 2
             // 0: eventOpen log
@@ -271,12 +276,19 @@ module.exports = app => {
                 type = 1;
             }
             
-            const eventTAT = {};
-            eventTAT.sysKey = sysKey;
             eventTAT.type = type;
-            eventTAT.actionTime = Date.parse(new Date());
+            eventTAT.createAt = Date.parse(new Date());
 
-            if (eventTAT.type === 0) {
+            const checkerName = await this.service.userswm.query({ wmUserId: eventTAT. checkerId }, ['userName']);
+            eventTAT.checkerName = checkerName.username || '';
+
+            if (type === 2) {
+                const str = `select max(createAt) tim from eventTAT where sysKey = $1 and type = $2`;
+                const openTime = await this.app.db.query(str, [eventTAT.sysKey, 0]);
+                eventTAT.duration = eventTAT.createAt - (openTime[0].tim || eventTAT.createAt); 
+            }
+
+            if (eventTAT.type === 0 || eventTAT.type === 2) {
                 return await this.insert(eventTAT);
             }
 

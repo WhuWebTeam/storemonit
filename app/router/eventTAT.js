@@ -21,7 +21,8 @@ module.exports = app => {
 // app.post('/api/v1/eventTAT/openTime/:sysKey', 'eventTAT.eventOpenTime'); // log open event's time(type:0)
 // no attributes need
 // {
-
+//     shopId,
+//     checkerId
 // }
 
 
@@ -29,7 +30,8 @@ module.exports = app => {
 // app.post('/api/v1/eventTAT/storeTime/:sysKey', 'eventTAT.eventStoreTime'); // log store event's time(type:1)
 // no attributes needed
 // {
-
+//     shopId,
+//     checkerId
 // }
 
 
@@ -37,8 +39,10 @@ module.exports = app => {
 // app.post('/api/v1/eventTAT/commitTime/:sysKey', 'eventTAT.eventCommitTime'); // log commit event's time(type:2)
 // no attributes needed
 // {
-
+//     shopId,
+//     checkerId
 // }
+
 
 
 
@@ -46,8 +50,12 @@ module.exports = app => {
 // [
 //     {
 //         sysKey,
+//         shopId,
+//         checkerId   
 //     },
 //     {
-//         sysKey
+//         sysKey,
+//         shopId,
+//         checkerId    
 //     }
 // ]

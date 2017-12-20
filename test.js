@@ -1,9 +1,32 @@
+select minute_3, minute_5, minute_other
+from
+    (select checkerId, checkerName, count(id) minute_3
+    from eventTAT
+    where duration < 3),
+    
+    select checkerId, checkerName, count(id) minute_3
+    from eventTAT
+    where duration < 3 and shopId = '1'
+    group by checkerId, checkerName
 
 
-shops:
-app.get('/api/v1/shops/checker/notAssigned', 'shops.getShopsNotAssainged'); // get shops not assined
-app.get('/api/v1/shops/checker/assigned', 'shops.getShopsAssigned'); // get shops assigned
 
-counters:
-app.get('/api/v1/counters/checker/assigned', 'counters.getCountersAssigned'); // get info of counters assigned
-app.get('/api/v1/counters/checker/notAssaigned', 'counters.getCountersNotAssigned'); // get info of counters not assigned
+    select t1.checkerId, t1.checkerName, minute_3, minute_5, minute_other
+    from
+        (select checkerId, checkerName, count(id) minute_3
+        from eventTAT
+        where type = 2 and duration < 3 and shopId = '1'
+        group by checkerId, checkerName) t1,
+        (select checkerId, checkerName, count(id) minute_5
+        from eventTAT
+        where duration > 3 and duration < 5 and shopId = '1'
+        group by checkerId, checkerName) t2,
+        (select checkerId, checkerName, count(id) minute_other
+        from eventTAT
+        where duration > 5 and shopId = '1'
+        group by checkerId, checkerName) t3
+    where t1.checkerId = t2.checkerId and t2.checkerId = t3.checkerId
+        
+        
+    
+    
