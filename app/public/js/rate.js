@@ -13,7 +13,7 @@ function headTable(ths){
 
 
 const cashList =["收银员","收银次数","事件次数","出错率"];
-const checkerList = ["防损员","事件次数","3分钟内","5分钟内","5分钟以内"];
+const checkerList = ["防损员","事件次数","3分钟内","5分钟内","5分钟以上"];
 const timeObj = ['week','month','3month','6month'];
 
 var time = document.getElementById('timeSel').getElementsByTagName('span');
@@ -53,11 +53,36 @@ function showTable(freq) {
                     `
                       tbody.appendChild(tr);  
                 } 
-           }
+            }
         }); 
     }
     if(role == "checker"){
-        
+        $.ajax({
+            url:"/api/v1/eventTAT/responseTime/"+userId+'/'+freq,
+            type:'GET',
+            success:function(results){     
+                var tbody = document.getElementById('tbMain'); 
+                tbody.innerHTML="";  
+                  for(let i = 0;i < results.data.length; i++){ 
+                    var tr = document.createElement('tr');
+    
+                    let name = results.data[i].checkerName||results.data[i].checkerId;
+                    let total = parseInt(results.data[i].count1) + parseInt(results.data[i].count2) + parseInt(results.data[i].count3);
+                    let time1Rate = total? 100 * parseFloat(results.data[i].count1/total) + '%' : 0 ;
+                    let time2Rate = total? 100 * parseFloat(results.data[i].count2/total) + '%' : 0 ;
+                    let time3Rate = total? 100 * parseFloat(results.data[i].count3/total) + '%' : 0 ;
+    
+                    tr.innerHTML = `
+                        <td class="text-center">${name}</td>
+                        <td class="text-center">${total}</td>
+                        <td class="text-center">${time1Rate}</td>
+                        <td class="text-center">${time2Rate}</td>
+                        <td class="text-center">${time3Rate}</td>
+                    `
+                      tbody.appendChild(tr);  
+                } 
+            }
+        });
     }
 	
 }
