@@ -141,6 +141,7 @@ module.exports = appInfo => {
      */
     Config.time = {
         graphShowTime: '6 m',
+        checkerResponseTime: [3, 5]
     }
 
     Config.password = 'wesine027';

@@ -38,21 +38,22 @@ module.exports = app => {
          * @public
          * @function exists
          * @param {String} sysKey - eventTAT's register number
+         * @param {Number} type - the type number of eventTAT
          * @return {Promise<Boolean>}
          * true when eventTAT specified by sysKey exists
          * false when eventTAT specified by sysKey does't exist
          * @since 1.0.0
          */
-        async exists(sysKey) {
+        async exists(sysKey, type) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(sysKey)) {
+            if (!this.service.util.parameterExists(sysKey) || !this.service.util.parameterExists(type)) {
                 return false;
             }
 
             try {
                 // eventTAT exists
-                if (await this.service.dbHelp.count('eventTAT', 'sysKey', { sysKey })) {
+                if (await this.service.dbHelp.count('eventTAT', 'sysKey', { sysKey, type })) {
                     return true;
                 }
 
@@ -278,18 +279,16 @@ module.exports = app => {
             eventTAT.type = type;
             eventTAT.createAt = Date.parse(new Date());
 
-            const checkerName = this.service.userswm.query({ wmUserId: eventTAT. checkerId }, ['userName']);
-            console.log(checkerName);
-            eventTAT.checkerName = checkerName[0].username || ''; 
+            const checkerName = await this.service.userswm.query({ wmUserId: eventTAT. checkerId }, ['userName']);
+            eventTAT.checkerName = checkerName.username || '';
 
             if (type === 2) {
-                const str = `select max(createAt) time from eventTAT where sysKey = $1 and type = $2`;
+                const str = `select max(createAt) tim from eventTAT where sysKey = $1 and type = $2`;
                 const openTime = await this.app.db.query(str, [eventTAT.sysKey, 0]);
-                console.log('openTime:', openTime);
-                eventTAT.duration = eventTAT.createAt - (openTime[0].time || eventTAT.createAt); 
+                eventTAT.duration = eventTAT.createAt - (openTime[0].tim || eventTAT.createAt); 
             }
 
-            if (eventTAT.type === 0 || eventTAT === 2) {
+            if (eventTAT.type === 0 || eventTAT.type === 2) {
                 return await this.insert(eventTAT);
             }
 
