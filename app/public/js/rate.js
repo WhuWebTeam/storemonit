@@ -43,7 +43,7 @@ function showTable(freq) {
                     let name = results.data[i].name||results.data[i].id;
                     let total = results.data[i].total;
                     let error = results.data[i].error;
-                    let errorrate = results.data[i].errorrate;
+                    let errorrate = (100 * parseInt(error) / parseInt(total)).toFixed(2) + "%";
     
                     tr.innerHTML = `
                         <td class="text-center">${name}</td>
@@ -87,16 +87,16 @@ function showTable(freq) {
 	
 }
 
+var myPie;
 function drawPie(freq){
 	$.ajax({      
         url:"/api/v1/eventsList/rate/"+userId+'/'+freq,
         type:'GET', 
         success:function(results){   
-    		var myChart;
-            if (myChart != null && myChart != "" && myChart != undefined) {
-                    myChart.dispose();
+            if (myPie != null && myPie != "" && myPie != undefined) {
+                    myPie.dispose();
             }
-    		myChart = echarts.init(document.getElementById('pie'));
+    		myPie = echarts.init(document.getElementById('pie'));
     		option = {
         	    title : {
                 	text: '',
@@ -131,7 +131,7 @@ function drawPie(freq){
                     }
                 ]
             };
-    	    myChart.setOption(option);	
+    	    myPie.setOption(option);	
 		}        
 	});  //内容需要跟换
 }
