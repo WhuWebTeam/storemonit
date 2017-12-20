@@ -74,6 +74,10 @@ window.onload = function(){
 	            	'price' : price
         		},
           		success:function(data){
+					$.ajax({
+						url:'/api/v1/eventsList/status/store/'+ syskey,
+						type:'put'
+					})
             		$.ajax({
 						url:'/api/v1/eventTAT/storeTime/'+syskey,
 						data:{
