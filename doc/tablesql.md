@@ -332,8 +332,12 @@ CREATE TABLE public.eventTAT
 (
   id serial primary key,
   sysKey varchar(50),
+  shopId varchar(50),
+  checkerId varchar(50),
+  checkerName varchar(50),
   type int,
-  actionTime bigint
+  createAt bigint,
+  duration bigint
 )
 WITH (
   OIDS = FALSE
