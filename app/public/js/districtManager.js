@@ -54,7 +54,6 @@ window.onload = function(){
 
 			option = {
 			            title : {
-			                text: '防损事件统计表',
 			                subtext: '次数'
 			            },
 			            tooltip : {
@@ -171,7 +170,7 @@ window.onload = function(){
 
 			option = {
 			    title : {
-			        text: '差错率',
+					subtext: '错误次数'
 			    },
 			    tooltip : {
 			        trigger: 'axis',
@@ -193,7 +192,11 @@ window.onload = function(){
 			    //         dataView : {show: true, readOnly: false},
 			    //         restore : {show: true}
 			    //     }
-			    // },
+				// },
+				grid : {
+					left : '15%', 
+					right:   '15%',
+				},
 			    xAxis : [
 			        {
 			            type : 'value',

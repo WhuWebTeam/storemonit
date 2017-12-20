@@ -13,7 +13,7 @@ function headTable(ths){
 
 var cashList =["收银员","收银次数","事件次数","出错率"];
 var timeObj = ['week','month','3month','6month'];
-var time = document.getElementById('timeSel').getElementsByTagName('button');
+var time = document.getElementById('timeSel').getElementsByTagName('span');
 Array.prototype.forEach.call(time,function(item,index){
     item.onclick = function(){ 
         var alr_down = document.getElementsByClassName('tdown')[0];
