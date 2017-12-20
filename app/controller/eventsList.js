@@ -310,7 +310,7 @@ module.exports = app => {
             const status = +this.ctx.params.status || 0;
             const during = this.app.config.time.graphShowTime;
 
-            const str = `select sysKey, cashierId, cashierName, e.counterId, counterType, transId, createAt, editResult
+            const str = `select sysKey, cashierId, cashierName, e.counterId, counterType, transId, createAt, editResult, shopId
                         from eventsList e
                         inner join counterUser cu on cu.counterId = e.counterId
                         where cu.userId = $1 and to_timestamp(createAt) > now() - interval $2 and status = $3`;
@@ -405,7 +405,7 @@ module.exports = app => {
 
             // get eventsList and price
             const eventList = await this.service.eventsList.query({ sysKey }, ['transId', 'createAt', 'editResult', 'status', 'videoUrl',
-            'comments', 'productName','cashierId', 'cashierName']);
+            'comments', 'productName','cashierId', 'cashierName', 'shopId']);
             const price = await this.service.bills.query( { sysKey }, ['price']);
             eventList.price = price && price.price || 0;
 
