@@ -47,15 +47,18 @@ module.exports = app => {
 
 
 // app.post('/api/v1/eventTAT/oneKeyCommit', 'eventTAT.eventCommitTimes'); // log many commit events' time
-// [
-//     {
-//         sysKey,
-//         shopId,
-//         checkerId   
-//     },
-//     {
-//         sysKey,
-//         shopId,
-//         checkerId    
-//     }
-// ]
+// {
+//     sysArr:
+//     [
+//         {
+//             sysKey,
+//             shopId,
+//             checkerId   
+//         },
+//         {
+//             sysKey,
+//             shopId,
+//             checkerId    
+//         }
+//     ]
+// }

@@ -179,7 +179,7 @@ module.exports = app => {
             let commit = 1;
 
             for (const eventTAT of commits.sysArr) {
-                if(!await this.service.eventTAT.eventLog(eventTAT.sysKey, 2)) {
+                if(!await this.service.eventTAT.eventLog(eventTAT, 2)) {
                     commit = 0;
                 };
             }
