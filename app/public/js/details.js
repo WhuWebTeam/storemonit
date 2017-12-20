@@ -1,6 +1,7 @@
 window.onload = function(){
 	
 	var status = getSearchString('status') ;
+	var shopId = getSearchString('shopId');
 	var syskey = getSearchString('syskey') ;
 
 	var cookie = new CookieStorage('/');
@@ -73,8 +74,16 @@ window.onload = function(){
 	            	'price' : price
         		},
           		success:function(data){
+					$.ajax({
+						url:'/api/v1/eventsList/status/store/'+ syskey,
+						type:'put'
+					})
             		$.ajax({
-	                	url:'/api/v1/eventTAT/storeTime/'+syskey,
+						url:'/api/v1/eventTAT/storeTime/'+syskey,
+						data:{
+							"shopId":shopId,
+							"checkerId":userId
+						},
 	                	type:'POST'
 		            })
 		            window.location=`checker.html?listType=1`;

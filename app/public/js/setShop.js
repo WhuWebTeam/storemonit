@@ -19,6 +19,7 @@ document.body.onclick = function(){
 	}
 }
 
+
 /*bind button to achive page jump*/
 
 $('#myShop').click(function(){
