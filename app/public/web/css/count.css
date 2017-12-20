@@ -1,69 +1,23 @@
-body{
-	width: 1000px;
-	margin: 0 auto;
-	margin-top: 100px;
-}
-h1{
-	text-align: center;
-	font-size: 26px;
-	font-weight: bold;
-	color: rgb(153,0,153);
-	border:1px solid grey;
-	height: 60px;
-	line-height: 60px;
-}
-nav{
-	width: 200px;
-	border:1px solid grey;
-	height: 500px;
-	float: left;
-}
-nav ul{
-	padding: 0px;
-	margin:0px;
-}
-nav ul li{
-	text-align: center;
-	list-style-type: none;
-	height: 40px;
-	line-height: 40px;
+@import "common.css";
+
+
+#areas,#shops{
+	display: inline-block;
+	background-color: #f1f1f1;
+	border-color:#f1f1f1;
+	margin-left: 30px;
 	margin-top: 10px;
-	background-color: grey;
-	font-size: 20px;
-}
-footer{
-	border:1px solid grey;
-	height: 60px;
-	clear: both;
-}
-footer p{
+	width: 150px;
 	text-align: center;
-	line-height: 60px;
-	font-size: 18px;
-}
-div button{
-	width: 80px;
 	height: 30px;
-	margin-left: 20px;
-	margin-top: 30px;
 }
-#table{
-	border:1px solid grey;
-	overflow: auto;
-	height: 200px;
-}
-table{
-	border-collapse: collapse;   
-	border: none; 
-}
-table td,th{
-	border:1px solid grey;
-}
+
+
 tr th{
 	height: 30px;
-	width: 70px;
+	width: 100px;
 	text-align: center;
-	font-size: 10px;
+	font-size: 12px;
 }
 tbody td{
 	height: 30px;
@@ -71,31 +25,12 @@ tbody td{
 	text-align: center;
 	font-size: 12px;
 }
-div #page{
-	position: relative;
-	top: 100px;
-}
 
-
-div p span{
-	display: inline-block;
-	width: 100px;
-	text-align: center;
-}
-div p select{
-	width: 150px;
-	text-align: center;
-	height: 30px;
-}
-table select{
-	width: 100%;
-	height: 100%;
-}
 
 #handleRecord{
 	display: none;
-	border:1px solid grey;
-	background-color: #D8D8D8;
+	border:1px solid #f1f1f1;
+	background-color: #f1f1f1;
 	margin: 0 auto;
 	width: 500px;
 	height: 600px;
@@ -110,7 +45,8 @@ table select{
 	height: 30px;
 	line-height: 30px;
 	font-size: 22px;
-	background-color: rgb(91,192,222);
+	background-color: #5bc0de;
+    border-color: #46b8da;
 	color: white;
 	text-align: center;
 }
@@ -123,7 +59,7 @@ table select{
 	text-align: center;
 }
 
-#handleRecord input,select{
+#handleRecord input,#handleRecord select{
 	display: inline-block;
 	height: 40px;
 	width: 60%;
@@ -131,7 +67,8 @@ table select{
 }
 #handleRecord button{
 	display: inline-block;
-	background-color: rgb(140,182,192);
+	background-color: #5bc0de;
+    border-color: #46b8da;
 	border-radius: 8px;
 	width: 100px;
 	height: 30px;

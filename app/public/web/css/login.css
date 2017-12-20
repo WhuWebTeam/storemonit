@@ -7,32 +7,42 @@ body{
 	
 }
 header{
-
 	height: 300px;
 }
-span{
-	font-size: 26px;
-	font-weight: bold;
-	color: rgb(153,0,153);
+header img{
+    display: inline-block;
+    position: relative;
+    left: 50px;
+    top: 50px;
+}
+header p{
+	font-size: 44px;
+    font-weight: bold;
+	color: white;
+	text-align: center;
 }
 
 form{
 	margin: 0 auto;
 	width: 300px;
 	position: relative;
-	top: 210px;
+	top: 120px;
 }
 input{
 	height: 40px;
-	width:100%;
-	margin-top: 10px;
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 24px;
 }
 #submit{
 	height: 40px;
-	width: 60%;
-	position: relative;
-	left: 60px;
-	margin-top: 20px;
-	background-color: #848484;
-	border-radius: 8px;
+    width: 60%;
+    position: relative;
+    left: 60px;
+    margin-top: 20px;
+    background-color: #c7af52;
+    border-radius: 8px;
+    color: white;
 }
+input::-ms-input-placeholder{text-align: center;} 
+input::-webkit-input-placeholder{text-align: center;} 

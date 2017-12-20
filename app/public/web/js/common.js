@@ -6,3 +6,4 @@ Array.prototype.forEach.call(navLists,function(Item,index){
 		window.location =  pages[index] + '.html';
 	}
 })
+
