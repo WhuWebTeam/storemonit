@@ -1,5 +1,6 @@
 function headTable(ths){
     var tableHead = document.getElementById('tbHead');
+    tableHead.innerHTML="";
     var tr = document.createElement('tr');     
     for (var i = 0; i < ths.length; i++) {  
         var td = document.createElement('th');  
@@ -11,8 +12,10 @@ function headTable(ths){
 }
 
 
-var cashList =["收银员","收银次数","事件次数","出错率"];
-var timeObj = ['week','month','3month','6month'];
+const cashList =["收银员","收银次数","事件次数","出错率"];
+const checkerList = ["防损员","事件次数","3分钟内","5分钟内","5分钟以内"];
+const timeObj = ['week','month','3month','6month'];
+
 var time = document.getElementById('timeSel').getElementsByTagName('span');
 Array.prototype.forEach.call(time,function(item,index){
     item.onclick = function(){ 
@@ -26,33 +29,37 @@ Array.prototype.forEach.call(time,function(item,index){
         drawPie(timeObj[index]);
     }
 })
-
-
-
 function showTable(freq) {
-	$.ajax({
-        url:"/api/v1/eventsList/errorRate/list/"+userId+'/'+freq,
-        type:'GET',
-        success:function(results){     
-			var tbody = document.getElementById('tbMain');   
-      		for(let i = 0;i < results.data.length; i++){ 
-                var tr = document.createElement('tr');
-
-                let name = results.data[i].name||results.data[i].id;
-                let total = results.data[i].total;
-                let error = results.data[i].error;
-                let errorrate = results.data[i].errorrate;
-
-                tr.innerHTML = `
-                    <td class="text-center">${name}</td>
-                    <td class="text-center">${total}</td>
-                    <td class="text-center">${error}</td>
-                    <td class="text-center">${errorrate}</td>
-                `
-          		tbody.appendChild(tr);  
-    		} 
-       }
-    }); 
+    if(role == "cashier"){
+        $.ajax({
+            url:"/api/v1/eventsList/errorRate/list/"+userId+'/'+freq,
+            type:'GET',
+            success:function(results){     
+                var tbody = document.getElementById('tbMain'); 
+                tbody.innerHTML="";  
+                  for(let i = 0;i < results.data.length; i++){ 
+                    var tr = document.createElement('tr');
+    
+                    let name = results.data[i].name||results.data[i].id;
+                    let total = results.data[i].total;
+                    let error = results.data[i].error;
+                    let errorrate = results.data[i].errorrate;
+    
+                    tr.innerHTML = `
+                        <td class="text-center">${name}</td>
+                        <td class="text-center">${total}</td>
+                        <td class="text-center">${error}</td>
+                        <td class="text-center">${errorrate}</td>
+                    `
+                      tbody.appendChild(tr);  
+                } 
+           }
+        }); 
+    }
+    if(role == "checker"){
+        
+    }
+	
 }
 
 function drawPie(freq){
@@ -105,9 +112,25 @@ function drawPie(freq){
 }
 
 
+$('#cashier').click(function(){
+    $('#checker').removeClass('rdown');
+    $('#cashier').addClass('rdown');
+    role = "cashier";
+    headTable(cashList);
+    time[0].click();
+})
+$('#checker').click(function(){
+    $('#cashier').removeClass('rdown');
+    $('#checker').addClass('rdown');
+    role = "checker";
+    headTable(checkerList);
+    time[0].click();
+})
 
-headTable(cashList);
-time[0].click();
+$('#cashier').click();
+
+
+
 
 
      
