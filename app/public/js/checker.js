@@ -76,7 +76,7 @@ window.onload = function(){
 				for(let i=0;i<results.length;i++){
 
 					var syskey = results[i].syskey;
-					var shopId = results[i].shopId;
+					var shopId = results[i].shopid;
 					sysArr.push({
 						"sysKey":syskey
 					});
