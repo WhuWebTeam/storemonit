@@ -136,7 +136,7 @@ module.exports = app => {
                 str = `select count(distinct et.sysKey) from eventTAT et
                       inner join eventsList e on e.sysKey = et.sysKey
                       inner join shopUser su on e.shopId = su.shopId
-                      where su.userId = $1 and et.type = 2 and to_timestamp(actionTime) > now() - interval '1 d'`;
+                      where su.userId = $1 and et.type = 2 and to_timestamp(createAt) > now() - interval '1 d'`;
 
             
                 let completed = await this.app.db.query(str, [user]);
