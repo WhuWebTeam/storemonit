@@ -1,7 +1,6 @@
 var set = document.getElementById('set');
 var shop = document.getElementById('shop');
-var cookie = new CookieStorage('/');
-var userId = cookie.getItem('userId');
+var userId = getSearchString('userId');
 
 function headTable(ths){
     var tableHead = document.getElementById('tbHead');
