@@ -73,6 +73,7 @@
 
     [delete] (delete some record info)
 
+    ```js
     // request successed
     {
         "code": 204,
@@ -87,7 +88,7 @@
         "code": 404,
         "message": "xxxxxxx failed"
     }
-    
+
     ```
    
 
