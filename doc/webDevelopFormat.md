@@ -48,48 +48,48 @@
 
 
 
-    put | post (modify record info | add new record info)
+        put | post (modify record info | add new record info)
 
-    ```js
+        ```js
 
-    // request successed
-    {
-        "code": 203,
-        "data": {
-            "info": "xxxxxx successed"
+        // request successed
+        {
+            "code": 203,
+            "data": {
+                "info": "xxxxxx successed"
+            }
         }
-    }
 
-    
-    // request failed
-    {
-        "code": 403,
-        "message": "xxxxxx failed"
-    }
-
-    ```
-
-
-
-    delete (delete some record info)
-
-    ```js
-    // request successed
-    {
-        "code": 204,
-        "data": {
-            "info": "xxxxxx successed"
+        
+        // request failed
+        {
+            "code": 403,
+            "message": "xxxxxx failed"
         }
-    }
+
+        ```
 
 
-    // request failed
-    {
-        "code": 404,
-        "message": "xxxxxxx failed"
-    }
 
-    ```
+        delete (delete some record info)
+
+        ```js
+        // request successed
+        {
+            "code": 204,
+            "data": {
+                "info": "xxxxxx successed"
+            }
+        }
+
+
+        // request failed
+        {
+            "code": 404,
+            "message": "xxxxxxx failed"
+        }
+
+        ```
    
 
 
