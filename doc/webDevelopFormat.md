@@ -1,1 +1,1 @@
-<h1 style = "center"><strong>WEB DEVELOP STYLE</strong></h1>
+<center><h1>WEB DEVELOP STYLE</h1></center>
