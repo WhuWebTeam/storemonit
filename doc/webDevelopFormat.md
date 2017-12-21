@@ -1,3 +1,1 @@
-<center> ### WEB DEVELOP STYLE </center>
-
-<center> ssss</center >
+<h1 style = "center"><strong>WEB DEVELOP STYLE</strong></h1>
