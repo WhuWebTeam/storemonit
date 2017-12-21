@@ -162,7 +162,7 @@ window.onload = function(){
 							$.ajax({
 								url:'/api/v1/eventsList/status/commit',
 								type:'put',
-								data:{sysArr1},
+								data:{sysArr:sysArr1},
 								success:function(results){
 									getNum();
 									getList(1);
@@ -171,7 +171,7 @@ window.onload = function(){
 							$.ajax({
 								url:'/api/v1/eventTAT/oneKeyCommit',
 								type:'POST',
-								data:{sysArr2},
+								data:{sysArr:sysArr2},
 								success:function(){
 									//console.log(this.url);
 								}
