@@ -1,5 +1,3 @@
-var set = document.getElementById('set');
-var shop = document.getElementById('shop');
 var userId = getSearchString('userId');
 
 function headTable(ths){
