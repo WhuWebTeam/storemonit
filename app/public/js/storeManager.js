@@ -1,6 +1,6 @@
 window.onload = function(){
 
-	var userId = getSearchString('userId');
+	
 	/* get num of events */
 	function getNum(){
 		$.ajax({
@@ -113,10 +113,6 @@ window.onload = function(){
 	}
 	
     /*draw graph*/
-
-
-
-
 
 
     /* add press event of day week and month */

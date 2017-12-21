@@ -52,7 +52,8 @@ window.onload = function(){
 			type:'get',
 			success:function(results){
 				var results = results.data;
-				var sysArr=[];
+				var sysArr1=[];
+				var sysArr2=[];
 				if(results.length == 0){
 					var mes =document.createElement('p');
 					//addClass(mes,'no');
@@ -76,8 +77,13 @@ window.onload = function(){
 
 					var syskey = results[i].syskey;
 					var shopId = results[i].shopid;
-					sysArr.push({
+					sysArr1.push({
 						"sysKey":syskey
+					});
+					sysArr2.push({
+						"sysKey":syskey,
+						"shopId":shopId,
+						"checkerId":userId
 					});
 					var div = document.createElement('div');
 					div.setAttribute('class','view');
@@ -150,13 +156,13 @@ window.onload = function(){
 				}
 
 				if(type==1&&results.length){
-					document.getElementById('submitAll').onclick = function(sysArr){
+					document.getElementById('submitAll').onclick = function(sysArr1,sysArr2){
 						
 						return function(){
 							$.ajax({
 								url:'/api/v1/eventsList/status/commit',
 								type:'put',
-								data:{sysArr},
+								data:{sysArr1},
 								success:function(results){
 									getNum();
 									getList(1);
@@ -165,13 +171,13 @@ window.onload = function(){
 							$.ajax({
 								url:'/api/v1/eventTAT/oneKeyCommit',
 								type:'POST',
-								data:{sysArr},
+								data:{sysArr2},
 								success:function(){
 									//console.log(this.url);
 								}
 							})
 						}
-					}(sysArr);
+					}(sysArr1,sysArr2);
 				}
 				
 			}
