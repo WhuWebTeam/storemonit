@@ -2,24 +2,20 @@
 	margin: 0px;
 	padding: 0px;
 }
-div{
-	margin: 0px;
-	padding: 0px;
-	width: 800px;
-	height: 600px;
-	position: absolute;
-	left: 125px;
-	top: 125px;
-	border:1px solid grey;
+body{
+	background-color:rgb(93,156,236); 
+	
 }
-p{
-	text-align: center;
-	position: relative;
-	top: 160px;
+header{
+
+	height: 300px;
+}
+span{
 	font-size: 26px;
 	font-weight: bold;
 	color: rgb(153,0,153);
 }
+
 form{
 	margin: 0 auto;
 	width: 300px;

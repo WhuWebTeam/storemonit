@@ -1,5 +1,6 @@
 function headTable(ths){
     var tableHead = document.getElementById('tbHead');
+    tableHead.innerHTML="";
     var tr = document.createElement('tr');     
     for (var i = 0; i < ths.length; i++) {  
         var td = document.createElement('th');  
@@ -11,9 +12,11 @@ function headTable(ths){
 }
 
 
-var cashList =["收银员","收银次数","事件次数","出错率"];
-var timeObj = ['week','month','3month','6month'];
-var time = document.getElementById('timeSel').getElementsByTagName('button');
+const cashList =["收银员","收银次数","事件次数","出错率"];
+const checkerList = ["防损员","事件次数","3分钟内","5分钟内","5分钟以上"];
+const timeObj = ['week','month','3month','6month'];
+
+var time = document.getElementById('timeSel').getElementsByTagName('span');
 Array.prototype.forEach.call(time,function(item,index){
     item.onclick = function(){ 
         var alr_down = document.getElementsByClassName('tdown')[0];
@@ -26,33 +29,62 @@ Array.prototype.forEach.call(time,function(item,index){
         drawPie(timeObj[index]);
     }
 })
-
-
-
 function showTable(freq) {
-	$.ajax({
-        url:"/api/v1/eventsList/errorRate/list/"+userId+'/'+freq,
-        type:'GET',
-        success:function(results){     
-			var tbody = document.getElementById('tbMain');   
-      		for(let i = 0;i < results.data.length; i++){ 
-                var tr = document.createElement('tr');
-
-                let name = results.data[i].name||results.data[i].id;
-                let total = results.data[i].total;
-                let error = results.data[i].error;
-                let errorrate = results.data[i].errorrate;
-
-                tr.innerHTML = `
-                    <td class="text-center">${name}</td>
-                    <td class="text-center">${total}</td>
-                    <td class="text-center">${error}</td>
-                    <td class="text-center">${errorrate}</td>
-                `
-          		tbody.appendChild(tr);  
-    		} 
-       }
-    }); 
+    if(role == "cashier"){
+        $.ajax({
+            url:"/api/v1/eventsList/errorRate/list/"+userId+'/'+freq,
+            type:'GET',
+            success:function(results){     
+                var tbody = document.getElementById('tbMain'); 
+                tbody.innerHTML="";  
+                  for(let i = 0;i < results.data.length; i++){ 
+                    var tr = document.createElement('tr');
+    
+                    let name = results.data[i].name||results.data[i].id;
+                    let total = results.data[i].total;
+                    let error = results.data[i].error;
+                    let errorrate = results.data[i].errorrate;
+    
+                    tr.innerHTML = `
+                        <td class="text-center">${name}</td>
+                        <td class="text-center">${total}</td>
+                        <td class="text-center">${error}</td>
+                        <td class="text-center">${errorrate}</td>
+                    `
+                      tbody.appendChild(tr);  
+                } 
+            }
+        }); 
+    }
+    if(role == "checker"){
+        $.ajax({
+            url:"/api/v1/eventTAT/responseTime/"+userId+'/'+freq,
+            type:'GET',
+            success:function(results){     
+                var tbody = document.getElementById('tbMain'); 
+                tbody.innerHTML="";  
+                  for(let i = 0;i < results.data.length; i++){ 
+                    var tr = document.createElement('tr');
+    
+                    let name = results.data[i].checkerName||results.data[i].checkerId;
+                    let total = parseInt(results.data[i].count1) + parseInt(results.data[i].count2) + parseInt(results.data[i].count3);
+                    let time1Rate = total? 100 * parseFloat(results.data[i].count1/total) + '%' : 0 ;
+                    let time2Rate = total? 100 * parseFloat(results.data[i].count2/total) + '%' : 0 ;
+                    let time3Rate = total? 100 * parseFloat(results.data[i].count3/total) + '%' : 0 ;
+    
+                    tr.innerHTML = `
+                        <td class="text-center">${name}</td>
+                        <td class="text-center">${total}</td>
+                        <td class="text-center">${time1Rate}</td>
+                        <td class="text-center">${time2Rate}</td>
+                        <td class="text-center">${time3Rate}</td>
+                    `
+                      tbody.appendChild(tr);  
+                } 
+            }
+        });
+    }
+	
 }
 
 function drawPie(freq){
@@ -105,9 +137,25 @@ function drawPie(freq){
 }
 
 
+$('#cashier').click(function(){
+    $('#checker').removeClass('rdown');
+    $('#cashier').addClass('rdown');
+    role = "cashier";
+    headTable(cashList);
+    time[0].click();
+})
+$('#checker').click(function(){
+    $('#cashier').removeClass('rdown');
+    $('#checker').addClass('rdown');
+    role = "checker";
+    headTable(checkerList);
+    time[0].click();
+})
 
-headTable(cashList);
-time[0].click();
+$('#cashier').click();
+
+
+
 
 
      

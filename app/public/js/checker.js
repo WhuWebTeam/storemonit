@@ -76,6 +76,7 @@ window.onload = function(){
 				for(let i=0;i<results.length;i++){
 
 					var syskey = results[i].syskey;
+					var shopId = results[i].shopid;
 					sysArr.push({
 						"sysKey":syskey
 					});
@@ -98,25 +99,29 @@ window.onload = function(){
 					}
 					
 					document.getElementById('list').appendChild(div);
-					div.onclick = function(sys){
+					div.onclick = function(sys,shopId){
 						return function(){
 							$.ajax({
 								url:'/api/v1/eventTAT/openTime/'+sys,
 								type:'POST',
+								data:{
+									"shopId":shopId,
+									"checkerId":userId
+								},
 								success:function(){
 									
 								}
 							})
-							window.location = `details.html?syskey=${sys}&status=${type}`;
+							window.location = `details.html?syskey=${sys}&status=${type}&shopId=${shopId}`;
 						}
-					}(syskey);	
+					}(syskey,shopId);	
 
 
 					/*submit*/ 
 					if(type == 1){
 						var btn = div.getElementsByTagName('button')[0];
 						
-						btn.onclick = ((sys)=>{
+						btn.onclick = ((sys,shopId)=>{
 							return function(event){
 								// window.event? window.event.cancelBubble = true : event.stopPropagation();
 								preventBubble(event);
@@ -131,12 +136,16 @@ window.onload = function(){
 								$.ajax({
 									url:'/api/v1/eventTAT/commitTime/'+sys,
 									type:'POST',
+									data:{
+										"shopId":shopId,
+										"checkerId":userId
+									},
 									success:function(){
 										//console.log(this.url);
 									}
 								})
 							};
-						})(syskey);
+						})(syskey,shopId);
 					}
 					
 				}

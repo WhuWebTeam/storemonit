@@ -50,11 +50,20 @@ input,select{
 	border-radius: 4px;
 	margin-left: 15px;
 }
-.narrow{
+
+
+/* .narrow{
 	width: 35%;
-}
+} */
 
 #scan{
+	
+/*************hide scan button for test*********************/	
+	display: none;
+/*
+	需要回复的话，删除display:'none',回复narrow类的宽度
+*/	
+
 	width: 80px;
 	background-color:  #5d9cec;
 	border-radius: 50%;
