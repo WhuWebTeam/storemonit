@@ -1,4 +1,6 @@
 window.onload = function(){
+
+	var userId = getSearchString('userId');
 	/* get num of events */
 	function getNum(){
 		$.ajax({
@@ -13,9 +15,6 @@ window.onload = function(){
 	}
 	/* get num of events */
 
-
-
-
 	function getGraph(type){
 		//console.log(type);
 		$.ajax({
@@ -23,14 +22,20 @@ window.onload = function(){
 			type:'get',
 			success:function(results){
 				var graphData = results.data;
-				sortFun(graphData,'t',true);
-				draw(graphData);
+				if(type=='week'){
+					sortFun(graphData,'y',true);
+					sortFun(graphData,'w',true);
+					draw(graphData,'y','w');
+				}else{
+					sortFun(graphData,'t',true);
+					draw(graphData,'t');
+				}
 			}
 		})
 	}
 	/*draw graph*/
 	var myChart;
-	function draw(graphData){
+	function draw(graphData,attr1,attr2){
 			if (myChart != null && myChart != "" && myChart != undefined) {
 			        myChart.dispose();
 			}
@@ -38,12 +43,15 @@ window.onload = function(){
 
 			option = {
 			            title : {
-			                text: '防损事件统计表',
 			                subtext: '次数'
 			            },
 			            tooltip : {
 			                trigger: 'axis'
 			            },
+			            grid : {
+					        left : '15%', 
+					        right:   '15%',
+					    },
 			            // legend: {
 			            //     data:['最高气温','最低气温']
 			            // },
@@ -95,16 +103,18 @@ window.onload = function(){
 			                 
 			            ]
 			        };
-		    option.xAxis[0].data =graphData.map(function(x){
-		    	return x.t;
+		    option.xAxis[0].data =graphData.map(function(Item){
+		    	return Item[attr1] + (attr2?'第'+Item[attr2]+'周':'');
 		    })
-		    option.series[0].data =graphData.map(function(x){
-		    	return x.count;
+		    option.series[0].data =graphData.map(function(Item){
+		    	return Item.count;
 		    })
 		    myChart.setOption(option);
 	}
 	
     /*draw graph*/
+
+
 
 
 
