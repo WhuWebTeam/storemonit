@@ -191,3 +191,9 @@ function sortFun(arr,attr,upDown=1){
         return a[attr]>b[attr]?upDown:-upDown;
     })
 }
+
+const pairs = {
+    '0' :'未处置',
+    '1' :'待提交',
+    '2' :'已完成'
+}

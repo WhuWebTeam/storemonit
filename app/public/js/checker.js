@@ -9,7 +9,7 @@ window.onload = function(){
 		var cookie = new CookieStorage('/');
 		var userId = cookie.getItem('userId');
 	}
-
+	
 	
 	/* get num of events */
 	function getNum(){
@@ -29,7 +29,6 @@ window.onload = function(){
 
 
 	function getList(type){
-
 		var alr_down = document.getElementsByClassName('edown')[0];
 		var elem = document.getElementById('event').getElementsByTagName('p')[type];
    		if(alr_down && alr_down!== elem){
@@ -58,7 +57,7 @@ window.onload = function(){
 					var mes =document.createElement('p');
 					//addClass(mes,'no');
 					mes.setAttribute('class','no');
-					mes.innerHTML = '没有待处理的事件';
+					mes.innerHTML = `没有${pairs[type]}的事件`;
 					//$('#list').prepend(mes);
 					document.getElementById('list').appendChild(mes);
 				}

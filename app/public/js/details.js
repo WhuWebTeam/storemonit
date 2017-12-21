@@ -31,11 +31,6 @@ window.onload = function(){
 	}  /*handle select menu*/
 
 	function getInfo(){
-	    var pairs = {
-	      	'0' :'未处置',
-	      	'1' :'待提交',
-	      	'2' :'完成'
-	    }
 	    $.ajax({
 	      	url:"/api/v1/eventsList/editInfo/"+syskey,
 	      	type:'GET',
