@@ -5,7 +5,7 @@
     
     * back-end => front-end:
         
-        [get] (query info): 
+        get (query info): 
 
         ```js
         
@@ -48,7 +48,7 @@
 
 
 
-    [put | post] (modify record info | add new record info)
+    put | post (modify record info | add new record info)
 
     ```js
 
@@ -71,7 +71,7 @@
 
 
 
-    [delete] (delete some record info)
+    delete (delete some record info)
 
     ```js
     // request successed
