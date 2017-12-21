@@ -5,7 +5,7 @@
     
     * back-end => front-end:
         
-        get: 
+        [get] (query info): 
 
         ```js
         
@@ -47,6 +47,48 @@
         ```
 
 
+
+    [put | post] (modify record info | add new record info)
+
+    ```js
+
+    // request successed
+    {
+        "code": 203,
+        "data": {
+            "info": "xxxxxx successed"
+        }
+    }
+
+    
+    // request failed
+    {
+        "code": 403,
+        "message": "xxxxxx failed"
+    }
+
+    ```
+
+
+
+    [delete] (delete some record info)
+
+    // request successed
+    {
+        "code": 204,
+        "data": {
+            "info": "xxxxxx successed"
+        }
+    }
+
+
+    // request failed
+    {
+        "code": 404,
+        "message": "xxxxxxx failed"
+    }
+    
+    ```
    
 
 
