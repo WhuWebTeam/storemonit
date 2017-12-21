@@ -39,12 +39,11 @@ $('#oneKeyRetry').click(function(){
 			url:'/api/v1/counterUser/onKeyRetrive/'+userId,
 			type:'delete',
 			success:function(){
-				if(confirm('成功删除所有绑定！,点击确定进入新增款台页，点击取消回到主页')){
-					window.location = 'checkout.html';
-				}else{
+				// if(confirm('成功删除所有绑定！,点击确定进入新增款台页，点击取消回到主页')){
+				// 	window.location = 'checkout.html';
+				// }else{
 					window.location.reload();
-				}
-				
+				//}
 			}
 		})
 	}

@@ -10,10 +10,14 @@ header{
 	height: 300px;
 }
 header img{
-    display: inline-block;
+    /* display: inline-block;
     position: relative;
     left: 50px;
-    top: 50px;
+    top: 50px; */
+    display: block;
+    width: 150px;
+    margin: 100px auto;
+
 }
 header p{
 	font-size: 44px;
@@ -26,7 +30,7 @@ form{
 	margin: 0 auto;
 	width: 300px;
 	position: relative;
-	top: 120px;
+	top: 30px;
 }
 input{
 	height: 40px;
@@ -46,3 +50,4 @@ input{
 }
 input::-ms-input-placeholder{text-align: center;} 
 input::-webkit-input-placeholder{text-align: center;} 
+

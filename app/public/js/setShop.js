@@ -40,12 +40,11 @@ $('#oneKeyRetry').click(function(){
 			url:'/api/v1/shopUser/oneKeyRetrive/'+userId,
 			type:'delete',
 			success:function(){
-				if(confirm('成功删除所有绑定！,点击确定进入新增门店页，点击取消回到主页')){
-					window.location = 'addShop.html';
-				}else{
+				// if(confirm('成功删除所有绑定！,点击确定进入新增门店页，点击取消回到主页')){
+				// 	window.location = 'addShop.html';
+				// }else{
 					window.location.reload();
-				}
-				
+				//}
 			}
 		})
 	}
