@@ -1,11 +1,3 @@
-if(getSearchString('userId')){
-	var userId = getSearchString('userId');
-	var cookie = new CookieStorage('/');
-	cookie.setItem('userId',userId);
-}else{
-	var cookie = new CookieStorage('/');
-	var userId = cookie.getItem('userId');
-}
 window.onload = function(){
 	/* get num of events */
 	function getNum(){
