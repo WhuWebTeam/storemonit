@@ -36,15 +36,10 @@ module.exports = app => {
             const userId = this.ctx.params.userId;
             const during = this.app.config.time.graphShowTime;
 
-            const str = `select count(cu.counterId)
-                        from (
-                            select counterId
-                            from counterUser
-                            where userId = $1) cu
-                        inner join (
-                            select counterId, status, createAt
-                            from eventsList) e on e.counterId = cu.counterId
-                        where e.status = $2 and to_timestamp(e.createAt) > now() - interval $3`;
+            const str = `select count(e.id) from eventsList e
+                        inner join counters c on e.counterId = c.id and c.shopId = e.shopId
+                        inner join counterUser cu on c.id = cu.counterId
+                        where userId = $1 and e.status = $2 and to_timestamp(e.createAt) > now() - interval $3`;
                         
             try {
                 let working = await this.app.db.query(str, [userId, 0, during]);
@@ -126,7 +121,7 @@ module.exports = app => {
             try {
                 let str = `select count(transId) from eventsList e
                         inner join shopUser su on e.shopId = su.shopId
-                        where su.userId = $1 and e.status = 0`;
+                        where su.userId = $1 and e.status != 2`;
                 
                 
                 let dealing = await this.app.db.query(str, [user]);
@@ -310,8 +305,9 @@ module.exports = app => {
             const status = +this.ctx.params.status || 0;
             const during = this.app.config.time.graphShowTime;
 
-            const str = `select sysKey, cashierId, cashierName, e.counterId, counterType, transId, createAt, editResult, shopId
+            const str = `select sysKey, cashierId, cashierName, e.counterId, counterType, transId, createAt, editResult, e.shopId
                         from eventsList e
+                        inner join counters c on e.counterId = c.id and e.shopId = c.shopId
                         inner join counterUser cu on cu.counterId = e.counterId
                         where cu.userId = $1 and to_timestamp(createAt) > now() - interval $2 and status = $3`;
 
