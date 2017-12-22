@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <meta charset  "utf-8">
+        <script src = "https://unpkg.com/vue"></script>
+    </head>
+    <body>
+        <div id = "test">
+            <p>{{ info }}</p>
+        </div>
+    </body>
+</html>
+
+<script>
+    const test = new Vue({
+        el: '#test',
+        data: {
+            info: 'I am the message waited to display'
+        }
+    });
+</script>
