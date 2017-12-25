@@ -1,8 +1,14 @@
 module.exports = app => {
     class Test extends app.Controller {
         async ctxLength() {
-            console.log(this.ctx.length);
-            this.ctx.body = this.service.util.generateResponse(200, 'test successed');
+            this.ctx.body = {
+                code: 200,
+                data: {
+                    database: this.app.config.database,
+                    env: this.app.config.env
+
+                }
+            }
         }
     }
 
