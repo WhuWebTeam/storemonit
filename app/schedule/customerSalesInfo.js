@@ -4,7 +4,7 @@ module.exports = app => {
             interval: '1m',
             type: 'all',
             // immediate: true,
-            // disable: app.config.env === 'server'
+            // disable: app.config.env === 'prod'
             disable: true
         },
 
