@@ -12,15 +12,23 @@ module.exports = app => {
 
         // get users info
         async getUsers() {
-            this.ctx.body = await this.service.users.query({});
+            const users = await this.service.users.query({});
+            this.ctx.body = {
+                code: 200,
+                data: users
+            };
         }
 
 
         // get some user's info
         async getUser() {
             const user = this.ctx.request.body;
+            const users = await this.service.users.query(user);
 
-            this.ctx.body = await this.service.users.query(user);
+            this.ctx.body = {
+                code: 200,
+                data: users
+            };
         }
 
 
@@ -73,7 +81,12 @@ module.exports = app => {
 
             const user = this.ctx.request.body;
 
-            this.ctx.body = await this.service.users.update(user);
+            if (!await this.service.users.update(user)) {
+                this.ctx.body = this.service.util.generateResponse(403, `update user's info failed`);
+                return;
+            }
+
+            this.ctx.body = this.service.util,generateResponse(203, `update user's info successed`);
         }
 
 
