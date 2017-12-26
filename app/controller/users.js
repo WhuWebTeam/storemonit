@@ -40,16 +40,15 @@ module.exports = app => {
 
             // modify user's authority
             const user = this.ctx.request.body;
-            const result = await this.service.users.update(user);
             
             // user doesn't exist
-            if (result.code >= 400) {
-                this.ctx.body = result;
+            if (!await this.service.users.update(user)) {
+                this.ctx.body = this.service.util.generateResponse(403, `set user's priority failed`);
                 return;
             }
 
             // modify user's authority successed
-            this.ctx.body = this.service.util.generateResponse(200, `set user's priority successed`);
+            this.ctx.body = this.service.util.generateResponse(203, `set user's priority successed`);
         }
 
 
@@ -60,16 +59,15 @@ module.exports = app => {
            
             
             const user = this.ctx.request.body;
-            const result = await this.service.users.update(user);
 
             // user doesn't exist
-            if (result.code >= 400) {
-                this.ctx.body = result;
+            if (!await this.service.users.update(user)) {
+                this.ctx.body = this.service.util.generateResponse(403, `set user's password failed`)
                 return;
             }
 
             // modify user's password successed
-            this.ctx.body = this.service.util.generateResponse(200, `set user's password successed`);                       
+            this.ctx.body = this.service.util.generateResponse(203, `set user's password successed`);                       
         }
 
 
@@ -86,7 +84,7 @@ module.exports = app => {
                 return;
             }
 
-            this.ctx.body = this.service.util,generateResponse(203, `update user's info successed`);
+            this.ctx.body = this.service.util.generateResponse(203, `update user's info successed`);
         }
 
 
@@ -118,11 +116,11 @@ module.exports = app => {
 
             // user exists
             if (!await this.service.users.insert(user)) {
-                this.ctx.body = this.service.util.generateResponse(400, 'user exists');
+                this.ctx.body = this.service.util.generateResponse(403, 'user exists');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'add user successed');
+            this.ctx.body = this.service.util.generateResponse(203, 'add user successed');
         }
 
 
@@ -133,12 +131,12 @@ module.exports = app => {
 
 
             const user = this.ctx.request.body;
-            if (!await this.service.users.delete(user.id)) {
-                this.ctx.body = this.service.util.generateResponse(400, `suere doesn't exist`);
+            if (!await this.service.users.delete(user)) {
+                this.ctx.body = this.service.util.generateResponse(404, `user doesn't exist`);
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'delete user successed');
+            this.ctx.body = this.service.util.generateResponse(204, 'delete user successed');
         }
     }
 
