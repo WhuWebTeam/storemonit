@@ -1,7 +1,5 @@
 var set = document.getElementById('set');
 var counter = document.getElementById('counter');
-var cookie = new CookieStorage('/');
-const userId = cookie.getItem('userId');
 
 set.onclick = function(){
 	/*control show and hide*/
@@ -35,6 +33,7 @@ $('#retryCounter').click(function(){
 
 $('#oneKeyRetry').click(function(){
 	if(confirm('您将解除与所有款台的绑定！')){
+		console.log(document.cookie);
 		$.ajax({
 			url:'/api/v1/counterUser/onKeyRetrive/'+userId,
 			type:'delete',
