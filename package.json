@@ -6,6 +6,7 @@
   "scripts": {
     "test": "egg-bin test",
     "cov": "egg-bin cov",
+    "debug": "egg-bin debug",
     "dev": "egg-bin dev --port 7001",
     "start": "egg-scripts start --daemon --port=7002 --works=4  --env=prod",
     "stop": "egg-scripts stop"

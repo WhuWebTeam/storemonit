@@ -55,8 +55,8 @@ module.exports = app => {
             str = str.substr(0, str.length - 2);
 
             if(JSON.stringify(wheres) === '{}') {
-                console.log(str);
-                console.log(values);
+                // console.log(str);
+                // console.log(values);
                 await this.app.db.query(str, values);
                 return;
             }
@@ -68,8 +68,8 @@ module.exports = app => {
                 values.push(entries[j][1]);
             }
             str = str.substr(0, str.length - 5);
-            console.log(str);
-            console.log(values);
+            // console.log(str);
+            // console.log(values);
             await this.app.db.query(str, values);
         }
 
@@ -102,8 +102,8 @@ module.exports = app => {
             temp = temp.substr(0, temp.length - 2) + ')';
             str = str + ' values ' + temp;
 
-            console.log(str);
-            console.log(values);
+            // console.log(str);
+            // console.log(values);
             await this.app.db.query(str, values);
         }
 

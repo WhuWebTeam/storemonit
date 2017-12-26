@@ -144,7 +144,6 @@ module.exports = app => {
                     }
                 };
             } catch(err) {
-                console.log(err);
                 this.ctx.body = this.service.util.generateResponse(400, 'get count statisitc of today failed');
             }
         }
