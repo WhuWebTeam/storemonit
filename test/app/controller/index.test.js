@@ -8,7 +8,5 @@ describe('test/app/controller/index.test.js', () => {
             .get('/')
             .expect(302)
         });
-
-
     });
 });

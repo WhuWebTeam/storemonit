@@ -115,7 +115,6 @@ describe('test app/controller/users.js', () => {
             assert.strictEqual(body.code, 204, `user doesn't exist`);
         });
 
-        
         // delete user which doesn't exists
         it('should status 200 and return an object with code 404, and object message', async () => {
             app.mockCsrf();

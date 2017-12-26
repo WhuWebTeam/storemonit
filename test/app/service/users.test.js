@@ -1,6 +1,5 @@
 const { app, mock, assert } = require('egg-mock/bootstrap');
 
-
 describe('test app/service/users.js', () => {
 
     // add a user which doesn't exist
@@ -37,6 +36,7 @@ describe('test app/service/users.js', () => {
         });
     });
 
+    
     // delete user 10001
     describe('delete /api/v1/users/10001', () => {
         
