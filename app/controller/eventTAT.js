@@ -169,7 +169,6 @@ module.exports = app => {
             const sysKey = this.ctx.params.sysKey;
             const eventTAT = this.ctx.request.body;
             eventTAT.sysKey = sysKey;
-            console.log(eventTAT);
 
             if (!await this.service.eventTAT.eventLog(eventTAT, 1)) {
                 this.ctx.body = this.service.util.generateResponse(403, 'log event store time failed');
