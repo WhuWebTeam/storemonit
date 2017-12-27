@@ -1,6 +1,6 @@
 const { app, mock, assert } = require('egg-mock/bootstrap');
 
-describe('test/app/controller/index.test.js', () => {
+describe('test app/controller/index.js', () => {
     describe('get /', () => {
         
         it('should status 302 and redirect to home page', () => {
@@ -8,7 +8,5 @@ describe('test/app/controller/index.test.js', () => {
             .get('/')
             .expect(302)
         });
-
-
     });
 });
