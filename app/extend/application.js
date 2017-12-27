@@ -27,9 +27,11 @@ module.exports = {
      * @public
      * @method application#demo
      * @param {Object} param - parameter of function extendTest
+     * @return {Object}
+     * Object of param
      * @since 1.0.0 
      */
     demo(param) {
-        console.log(`I am application extend demo, param values: ${param}`)
+        return param;
     }
 }
