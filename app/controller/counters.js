@@ -1,16 +1,14 @@
 
 
 module.exports = app => {
-    class Counters extends app.Controller {
-        
+
+    const BaseController = require('./baseController')(app);
+
+    class Counters extends BaseController {
+
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
@@ -21,7 +19,7 @@ module.exports = app => {
             const user = this.ctx.params.userId;
 
             if (!await this.service.userswm.exists(user)) {
-                this.ctx.body = this.service.util.generateResponse(400, `user doesn't exists`);
+                this.response(400, `user doesn't exist`);
                 return;
             }
 
@@ -40,43 +38,35 @@ module.exports = app => {
                     }
                     countersTemp.push(counter);
                 }
-                this.ctx.body = {
-                    code: 200,
-                    data: counters
-                };
+                this.response(200, counters);
             } catch (err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get mycounter info failed');
+                this.response(400, `get my counter's info failed`);
             }
         }
 
 
         // get counters have been assigned
         async getCountersAssigned() {
-            
+
             const counters = await this.service.counters.query({ assigned: true }, ['id', 'shopId']);
 
-            this.ctx.body = {
-                code: 200,
-                data: counters
-            };
+            this.response(200, counters);
         }
 
 
         // get counters haven't been assigned
         async getCountersNotAssigned() {
             const counters = await this.service.counters.query({ assigned: false }, ['id', 'shopId', 'type']);
-            this.ctx.body = {
-                code: 200,
-                data: counters
-            };
+            this.response(200, counters);
         }
 
 
         async getCounterByShopId() {
-            const shopId = this.ctx.params.shopId;
 
+            const shopId = this.ctx.params.shopId;
             const countersTemp = [];
             const counters = await this.service.counters.query({ shopId });
+
             for (const counter of counters) {
                 counter.type = null;
                 if (counter.typeid) {
@@ -85,48 +75,44 @@ module.exports = app => {
                 }
                 countersTemp.push(counter);
             }
-            this.ctx.body = {
-                code: 200,
-                data: counters
-            };
+            this.response(200, counters);
         }
 
         // modify info of some counter specified by id
         async modifyCounter() {
+
             const id = this.ctx.params.counterId;
-
-            // counter without id attribute
             let counter = this.ctx.request.body;
-
-            // add attribute id to counter object
             counter.id = id;
 
             if (!await this.service.counters.update(counter)) {
-                this.ctx.body = this.service.util.generateResponse(403, 'update counter info failed');
+                this.response(403, `update counter's info failed`);
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(203, 'update counter info successed');
+            this.response(203, 'update counter info successed');
         }
 
 
         // add a new counter
         async addCounter() {
+
             const counter = this.ctx.request.body;
             const id = this.ctx.params.counterId;
             counter.id = id;
 
             // counter exists
             if (!await this.service.counters.insert(counter)) {
-                this.ctx.body = this.service.util.generateResponse(400, 'counter exists');
+                this.response(400, 'counter exists');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'add counter successed');
+            this.response(203, 'add a new counter successed');
         }
 
 
         async deleteCounters() {
+
             const counters = this.ctx.request.body;
             let del = true;
 
@@ -137,11 +123,11 @@ module.exports = app => {
             }
 
             if (!del) {
-                this.ctx.body = this.service.util.generateResponse(403, 'delete some counters failed');
+                this.response(403, 'delete some counter failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(203, 'delete counters satisfied condition successed');
+            this.response(203, 'delete counters satisfied condition successed');
         }
     }
 

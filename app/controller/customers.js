@@ -1,42 +1,44 @@
+
+
 module.exports = app => {
-    class Customer extends app.Controller {
-        
+
+    const BaseController = require('./baseController')(app);
+
+    class Customer extends BaseController {
+
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
         // get customers' info
         async getCustomers() {
-            this.ctx.body = await this.service.customers.query({});
+            const customers = await this.service.customers.query({});
+            this.response(200, customers);
         }
 
 
         // get some customers info  specified by id or name
         async getCustomer() {
             const customer = this.ctx.request.body;
-
-            this.ctx.body = await this.service.customers.query(customer);
+            customer = await this.service.customers.query(customer);
+            this.response(200, customer);
         }
 
 
         // add a new customer info
         async addCustomer() {
+
             const customer = this.ctx.request.body;
 
             // customer exists
             if (!await this.service.customers.insert(customer)) {
-                this.ctx.body = this.service.util.generateResponse(400, 'customer exists');
+                this.response(203, 'customer exists');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'add customer record successed');
+            this.response(203, 'add a new customer successed');
         }
     }
 

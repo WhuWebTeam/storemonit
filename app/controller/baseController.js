@@ -7,16 +7,16 @@
  */
 module.exports = app => {
     class BaseController extends app.Controller {
-        
+
         /**
          * Response request of the system
          * @public
          * @method BaseController#response
-         * @param {Number} code - status code of response to request 
-         * @param {[Object | String]} message - response body 
+         * @param {number} code - status code of response to request
+         * @param {object} message - response body
          */
         response(code, message) {
-            
+
             // failed to response request
             if(+code >= 399) {
                 this.ctx.body = {
