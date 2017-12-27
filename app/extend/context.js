@@ -27,9 +27,11 @@ module.exports = {
      * @public
      * @method Context#demo
      * @param {Object} param
+     * @return {Object}
+     * Object of parameter pass to demo
      * @since 1.0.0
      */
     demo(param) {
-        console.log(`I am context extend demo, param value: ${param}`);
+        return param;
     },
 }
