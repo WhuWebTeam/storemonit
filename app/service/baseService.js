@@ -1,24 +1,8 @@
 
+
 module.exports = app => {
-
-    class Util extends app.Service {
-
-        // used to generate response formated by some information
-        generateResponse(code, message) {
-            if(code >= 400) {
-                return {
-                    code,
-                    message
-                };
-            } else {
-                return {
-                    code,
-                    data: { info: message }
-                };
-            }
-        }
-
-
+    class BaseService extends app.Service {
+        
         // get table attribute value to avoid parameter attack
         setTableValue(tableObj, paramObj) {
             
@@ -101,5 +85,5 @@ module.exports = app => {
         }
     }
 
-    return Util;
+    return BaseService;
 }
