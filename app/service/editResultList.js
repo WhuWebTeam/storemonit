@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class EditResultList extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class EditResultList extends BaseService {
 
         /**
          * Constructor of class EditResultList
@@ -41,7 +44,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -74,8 +77,8 @@ module.exports = app => {
         async query(editResultList, attributes = ['*']) {
 
             //format editResultList's attributes and query attributes
-            editResultList = this.service.util.setTableValue(this.table, editResultList);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            editResultList = this.setTableValue(this.table, editResultList);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // editResultList doesn't exist
             if (editResultList.id && !await this.exists(editResultList.id)) {
@@ -112,8 +115,8 @@ module.exports = app => {
         async count(editResultList, attributes = ['*']) {
 
             // format editResultList's attributes and query attributes
-            editResultList = this.service.util.setTableValue(this.table, editResultList);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            editResultList = this.setTableValue(this.table, editResultList);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dhHelp.count('editResultList', attribute[0], editResultList);
@@ -136,7 +139,7 @@ module.exports = app => {
         async insert(editResultList) {
 
             // format editResultList record's attributes
-            editResultList = this.service.util.setTableValue(this.table, editResultList);
+            editResultList = this.setTableValue(this.table, editResultList);
 
             // editResultList.id doesn't exist
             if (!editResultList.id) {
@@ -172,8 +175,8 @@ module.exports = app => {
         async update(editResultList, wheres = { id: editResultList.id }) {
 
             // format the editResultList's attributes and where's attributes
-            editResultList = this.service.util.setTableValue(this.table, editResultList);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            editResultList = this.setTableValue(this.table, editResultList);
+            wheres = this.setTableValue(this.table, wheres);
 
             // editResultList doesn't exist
             if (editResultList.id && !await this.exists(editResultList.id)) {
@@ -203,7 +206,7 @@ module.exports = app => {
         async delete(editResultList) {
 
             // format the editResultList's attribute
-            editResultList = this.service.util.setTableValue(this.table, editResultList);
+            editResultList = this.setTableValue(this.table, editResultList);
 
             // editResultList doesn't exist
             if (editResultList.id && !await this.exists(editResultList.id)) {

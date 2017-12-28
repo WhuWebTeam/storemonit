@@ -1,21 +1,17 @@
+const path = require('path');
+
 /**
  * enclosure of some opration releated to StoreMonitor's log
  * @module logger
- * 
+ *
  * @file StoreMonitor
  * @version 0.0.1
  */
-
-const path = require('path');
-
-/** logger */
 module.exports = app => {
-    /**
-     * used to complete module logger's function
-     * @class
-     * @extends app.Service
-     */
-    class Logger extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Logger extends BaseService {
 
         async logPath(path, type, message) {
             const logInfo = `\n\n[${type} | ${new Date}]: ${message}`;
@@ -26,7 +22,7 @@ module.exports = app => {
             }
         }
 
-        
+
         async logDefault(type, message) {
             let logPath = this.app.config.path.logDir;
 

@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Areas extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Areas extends BaseService {
 
         /**
          * Constructor of class Area
@@ -41,7 +44,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -72,9 +75,10 @@ module.exports = app => {
          * @since 1.0.0
          */
         async query(area, attributes = ['*']) {
+
             //format area's attributes and query attributes
-            area = this.service.util.setTableValue(this.table, area);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            area = this.setTableValue(this.table, area);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // area doesn't exist
             if (area.id && !await this.exists(area.id)) {
@@ -111,8 +115,8 @@ module.exports = app => {
         async count(area, attributes = ['*']) {
 
             // format area's attributes and query attributes
-            area = this.service.util.setTableValue(this.table, area);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            area = this.setTableValue(this.table, area);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dhHelp.count('areas', attribute[0], area);
@@ -135,7 +139,7 @@ module.exports = app => {
         async insert(area) {
 
             // format area record's attributes
-            area = this.service.util.setTableValue(this.table, area);
+            area = this.setTableValue(this.table, area);
 
             // area.id doesn't exist
             if (!area.id) {
@@ -171,8 +175,8 @@ module.exports = app => {
         async update(area, wheres = { id: area.id }) {
 
             // format the area's attributes and where's attributes
-            area = this.service.util.setTableValue(this.table, area);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            area = this.setTableValue(this.table, area);
+            wheres = this.setTableValue(this.table, wheres);
 
             // area doesn't exist
             if (area.id && !await this.exists(area.id)) {
@@ -202,7 +206,7 @@ module.exports = app => {
         async delete(area) {
 
             // format the area's attribute
-            area = this.service.util.setTableValue(this.table, area);
+            area = this.setTableValue(this.table, area);
 
             // deleta all shops belonging to area satisfied area condition
             if (!await this.service.shops.delete({ areaId: area.id })) {

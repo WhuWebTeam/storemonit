@@ -1,35 +1,36 @@
+
+
 module.exports = app => {
-    class WuMartUsers extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class WuMartUsers extends BaseController {
 
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successful'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
         async signIn() {
+
             const user = this.ctx.request.body;
 
             // user id and password dosen't exist
             if (!user.id || !user.password) {
-                this.ctx.body = this.service.util.generateResponse(403, 'username and password required');
+                this.response(403, 'username and password required');
                 return;
             }
 
             // user doesn't exist
             if (!await this.service.userswm.exists(user.id)) {
-                this.ctx.body = this.service.util.generateResponse(403, 'user does not exist');
+                this.response(403, `user doesn't exist`);
                 return;
             }
 
             // password error
             if (user.password != this.app.config.password) {
-                this.ctx.body = this.service.util.generateResponse(403, 'password error');
+                this.response(403, 'password error');
                 return;
             }
 

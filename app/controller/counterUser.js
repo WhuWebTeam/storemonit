@@ -1,20 +1,20 @@
+
+
 module.exports = app => {
-    class CounterUser extends app.Controller {
-        
+
+    const BaseController = require('./baseController')(app);
+
+    class CounterUser extends BaseController {
+
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
         // assign some counter specified by counter id to some users specified by userId
         async assignCounters() {
-            
+
             // get userId and counterIds
             const userId = this.ctx.params.userId;
             const counters = this.ctx.request.body;
@@ -30,11 +30,11 @@ module.exports = app => {
             }
 
             if (!assigned) {
-                this.ctx.body = this.service.util.generateResponse(403, 'assign some counters failed');
+                this.response(403, 'assign some counters failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'assigned counters successed');
+            this.response(203, 'assign counters successed');
         }
 
 
@@ -43,10 +43,10 @@ module.exports = app => {
 
             const userId = this.ctx.params.userId;
             const counters = this.ctx.request.body;
-    
+
             let retrive = true;
             for (const counter of counters.counters) {
-                if (!await this.service.counterUser.delete({ userId, counterId: counter.counterId }) 
+                if (!await this.service.counterUser.delete({ userId, counterId: counter.counterId })
                     || await this.service.counters.update({ assigned: false}, { id: counter.counterId})) {
                     retrive = false;
                 }
@@ -54,11 +54,11 @@ module.exports = app => {
 
             // retrive some counter failed
             if (!retrive) {
-                this.ctx.body = this.service.util.generateResponse(404, 'retrive some counter failed');
+                this.response(404, 'retrieve some counter failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(204, 'retrivw counter successed');
+            this.response(204, 'retrieve counter successed');
         }
 
 
@@ -78,13 +78,13 @@ module.exports = app => {
 
                 // retrive counters from some user
                 if (!await this.service.counterUser.delete({ userId: user })) {
-                    this.ctx.body = this.service.util.generateResponse(404, 'delete counterUser record failed');
+                    this.response(404, 'retrieve some counter failed');
                     return;
                 }
 
-                this.ctx.body = this.service.util.generateResponse(204, 'delete counterUser record successed');
+                this.response(204, 'retrieve counter satisfied condition successed');
             } catch (err) {
-                this.ctx.body = this.service.util.generateResponse(203, 'set assigned status of counters assigned to some user failed');
+                this.response(404, 'retrieve some counter satisfied condition failed');
             }
         }
     }

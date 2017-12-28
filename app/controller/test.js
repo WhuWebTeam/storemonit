@@ -1,15 +1,42 @@
 
 
 module.exports = app => {
-    class Test extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class Test extends BaseController {
+
         async test1() {
-            this.ctx.helper.demo('helper');
-            this.ctx.body = this.service.util.generateResponse(200, 'test successed');
+            this.response(203, 'insert record successed');
         }
 
         async test2() {
-            this.ctx.response.responseTime = Date.parse(new Date());
-            this.ctx.body = this.service.util.generateResponse(200, 'test successed');
+            this.response(400, 'get recode failed');
+        }
+
+        async test3() {
+            const student = {
+                id: '001',
+                name: 'xx',
+                sex: 'man'
+            };
+            this.response(200, student);
+        }
+
+        async test4() {
+            const students = [
+                {
+                    id: '001',
+                    name: 'xx',
+                    sex: 'man'
+                },
+                {
+                    id: '002',
+                    name: 'jj',
+                    sex: 'woman'
+                }
+            ];
+            this.response(200, students);
         }
     }
 

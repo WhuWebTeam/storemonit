@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Customers extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Customers extends BaseService {
 
         /**
          * Constructor of class Customers
@@ -41,7 +44,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -75,8 +78,8 @@ module.exports = app => {
         async query(customer, attributes = ['*']) {
 
             // format customer's attributes and query attributes
-            customer = this.service.util.setTableValue(this.table, customer);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            customer = this.setTableValue(this.table, customer);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // customer doesn't exists
             if (customer.id && !await this.exists(customer.id)) {
@@ -113,8 +116,8 @@ module.exports = app => {
         async count(customer, attributes = { id: customer.id }) {
 
             // format customer's attributes and query attributes
-            customer = this.service.util.setTableValue(this.table, customer);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            customer = this.setTableValue(this.table, customer);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('customers', attributes[0], customer);
@@ -137,7 +140,7 @@ module.exports = app => {
         async insert(customer) {
 
             // format customer's attributes
-            customer = this.service.util.setTableValue(this.table, customer);
+            customer = this.setTableValue(this.table, customer);
 
             // customer.id doesn't exist
             if (!customer.id) {
@@ -173,8 +176,8 @@ module.exports = app => {
         async update(customer, wheres = { id: customer.id }) {
 
             // format customer's attributes and where's attributes
-            customer = this.service.util.setTableValue(this.table, customer);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            customer = this.setTableValue(this.table, customer);
+            wheres = this.setTableValue(this.table, wheres);
 
             // customer doesn't exist
             if (customer.id && !await this.exists(customer.id)) {
@@ -204,7 +207,7 @@ module.exports = app => {
         async delete(customer) {
 
             // format customer's attributes
-            customer = this.service.util.setTableValue(this.table, customer);
+            customer = this.setTableValue(this.table, customer);
 
             // customer doesn't exist
             if (customer.id && !await this.exists(customer.id)) {

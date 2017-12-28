@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class WuMartUsers extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class WuMartUsers extends BaseService {
 
         /**
          * Constructor of class Userswm
@@ -44,7 +47,7 @@ module.exports = app => {
         async exists(wmUserId) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(wmUserId)) {
+            if (!this.parameterExists(wmUserId)) {
                 return false;
             }
 
@@ -77,8 +80,8 @@ module.exports = app => {
         async query(userwm, attributes = ['*']) {
 
             // format userwm's attributes and query attributes
-            userwm = this.service.util.setTableValue(this.table, userwm);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            userwm = this.setTableValue(this.table, userwm);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // user doesn't exist
             if (userwm.wmUserId && !await this.exists(userwm.wmUserId)) {
@@ -115,8 +118,8 @@ module.exports = app => {
         async count(userwm, attributes = ['*']) {
 
             // formate userwm's attributes and query attributes
-            userwm = this.service.util.setTableValue(this.table, userwm);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            userwm = this.setTableValue(this.table, userwm);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('userswm', attributes[0], userwm);
@@ -139,7 +142,7 @@ module.exports = app => {
         async insert(userwm) {
 
             // format userwm record's attributes
-            userwm = this.service.util.setTableValue(this.table, userwm);
+            userwm = this.setTableValue(this.table, userwm);
 
             // userwm.wmUserId doesn't exist
             if (!userwm.wmUserId) {
@@ -206,7 +209,7 @@ module.exports = app => {
         async delete(userwm) {
 
             // format userwm's attributes
-            userwm = this.service.util.setTableValue(this.table, userwm);
+            userwm = this.setTableValue(this.table, userwm);
 
             // userwm doesn't exist
             if (userwm.wmUserId && !await this.exists(userwm.wmUserId)) {

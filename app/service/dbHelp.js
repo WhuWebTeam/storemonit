@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class DbHelp extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class DbHelp extends BaseService {
 
         /**
          * a inner function used to judge te entry's sencond value is exist or not
@@ -33,10 +36,10 @@ module.exports = app => {
          * @public
          * @function update
          * @param {String} tableName - name of table which will be oprated
-         * @param {object} obj - attributes will be update in database and 
+         * @param {object} obj - attributes will be update in database and
          * must consistant with database's attributes name, attributes doesn't explicit
-         * @param {object} wheres - condition of where 
-         * @return {Promise<>} do not return value 
+         * @param {object} wheres - condition of where
+         * @return {Promise<>} do not return value
          */
         async update(tableName, obj, wheres) {
             const _this = this;
@@ -78,8 +81,8 @@ module.exports = app => {
          * used to deal insert opration of database
          * @public
          * @function insert
-         * @param {string} tableName - name of table which will be oprated 
-         * @param {object} obj - attributes will be insert into database and 
+         * @param {string} tableName - name of table which will be oprated
+         * @param {object} obj - attributes will be insert into database and
          * must constant with database's attributes name, attributes doesn't explicit
          * @return {Promise<>} do not return value
          */
@@ -90,7 +93,7 @@ module.exports = app => {
             const values = [];
             let str = 'insert into ' + tableName + '(';
             let temp = '(';
-            
+
             // change object to array
             const entries = Object.entries(obj).filter(entry => _this._judge(entry));
             for (let i = 0; i < entries.length; i++) {
@@ -112,12 +115,12 @@ module.exports = app => {
          * used to deal with query opration of database
          * @public
          * @function query
-         * @param {string} tableName - name of table which will be oprated 
+         * @param {string} tableName - name of table which will be oprated
          * @param {string[]} attributes - attributes wanted to query
          * attributes must consistant with database's attributes name
          * @param {object} wheres - where condition of query
          * attributes must consistant with database's attributes name
-         * @return {Promise<object[]>} the result of query 
+         * @return {Promise<object[]>} the result of query
          */
         async query(tableName, attributes, wheres) {
             const _this = this;
@@ -130,7 +133,7 @@ module.exports = app => {
             }
             str = str.substr(0, str.length - 2);
             str = str + ' from ' + tableName;
-        
+
             // when query without where condition(wheres is a {})
             if (JSON.stringify(wheres) === '{}') {
                 const result = await this.app.db.query(str, values);
@@ -163,18 +166,18 @@ module.exports = app => {
             const result = await this.app.db.query(str, values);
             return result;
         }
-        
+
 
         /**
          * used to count some attribute
          * @public
          * @function count
-         * @param {string} tableName - name of table which will be oprated 
+         * @param {string} tableName - name of table which will be oprated
          * @param {string} attribute - attribute which will be counted when count
          * attributes must consistant with database's attributes name
-         * @param {object} wheres - where condition of query 
+         * @param {object} wheres - where condition of query
          * attributes must consistant with database's attributes name
-         * @return {Promise<int>} the amount of count 
+         * @return {Promise<int>} the amount of count
          */
         async count(tableName, attribute, wheres) {
             attribute = 'count(' + attribute +')';

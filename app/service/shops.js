@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Shops extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Shops extends BaseService {
 
         /**
          * Constructor of class Shops
@@ -42,7 +45,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -76,8 +79,8 @@ module.exports = app => {
         async query(shop, attributes = ['*']) {
 
             // format shop's attributes and query attributes
-            shop = this.service.util.setTableValue(this.table, shop);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            shop = this.setTableValue(this.table, shop);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // shop doesn't exist
             if (shop.id && !await this.exists(shop.id)) {
@@ -114,8 +117,8 @@ module.exports = app => {
         async count(shop, attributes = ['*']) {
 
             // format shops' attributes and query attributes
-            shop = this.service.util.setTableValue(this.table, shop);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            shop = this.setTableValue(this.table, shop);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('shops', attributes[0], shop);
@@ -137,7 +140,7 @@ module.exports = app => {
         async insert(shop) {
 
             // format shop record's attributes
-            shop = this.service.util.setTableValue(this.table, shop);
+            shop = this.setTableValue(this.table, shop);
 
             // shop.id doesn't exist
             if (!shop.id) {
@@ -173,8 +176,8 @@ module.exports = app => {
         async update(shop, wheres = { id: shop.id }) {
 
             // format shop's attributes and wheres' attribute
-            shop = this.service.util.setTableValue(this.table, shop);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            shop = this.setTableValue(this.table, shop);
+            wheres = this.setTableValue(this.table, wheres);
 
             // shop doesn't exist
             if (shop.id && !await this.exists(shop.id)) {
@@ -208,7 +211,7 @@ module.exports = app => {
          */
         async delete(shop) {
             // format shop's attributes
-            shop = this.service.util.setTableValue(this.table, shop);
+            shop = this.setTableValue(this.table, shop);
 
             // shop doesn't exist
             if (shop.id && !await this.exists(shop.id)){
@@ -229,7 +232,7 @@ module.exports = app => {
                     }
                 }
 
-                // retrieve all shops specified 
+                // retrieve all shops specified
                 if (!await this.service.shopUser.delete({ shopId: shopId.id })) {
                     return false;
                 }
