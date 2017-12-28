@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class EventTAT extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class EventTAT extends BaseController {
 
         /**
          * Index test
@@ -15,13 +18,7 @@ module.exports = app => {
          * @since 1.0.0
          */
         async index() {
-
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            }
+            this.response(200, 'index test successed');
         }
 
 
@@ -52,7 +49,7 @@ module.exports = app => {
             try {
                 let str = `select checkerId, checkerName, count(id)
                           from eventTAT
-                          where now() - interval '$1 d'  < to_timestamp(createAt / 1000) 
+                          where now() - interval '$1 d'  < to_timestamp(createAt / 1000)
                           and type = 2 and duration < 1000 * 60 * $2
                           and shopId in (
                               select shopId from shopUser
@@ -63,7 +60,7 @@ module.exports = app => {
 
                 str = `select checkerId, checkerName, count(id)
                       from eventTAT
-                      where now() - interval '$1 d'  < to_timestamp(createAt / 1000) 
+                      where now() - interval '$1 d'  < to_timestamp(createAt / 1000)
                       and type = 2 and duration > 1000 * 60 * $2 and duration < 1000 * 60 * $3
                       and shopId in (
                           select shopId from shopUser
@@ -74,7 +71,7 @@ module.exports = app => {
 
                 str = `select checkerId, checkerName, count(id)
                       from eventTAT
-                      where now() - interval '$1 d'  < to_timestamp(createAt / 1000) 
+                      where now() - interval '$1 d'  < to_timestamp(createAt / 1000)
                       and type = 2 and duration > 1000 * 60 * $2
                       and shopId in (
                           select shopId from shopUser
@@ -82,7 +79,7 @@ module.exports = app => {
                       group by checkerId, checkerName
                       order by checkerId`;
                 const count3 = await this.app.db.query(str, [time, this.app.config.time.checkerResponseTime[2], user]);
-                
+
                 const temp = {};
                 count1.map(obj => {
                     if (!temp[obj.checkerid]) {
@@ -125,12 +122,9 @@ module.exports = app => {
                     }
                 });
 
-                this.ctx.body = {
-                    code: 200,
-                    data: Object.values(temp)
-                };
+                this.response(200, Object.values(temp));
             } catch (err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get checker response time failed');
+                this.response(400, 'get checker response time failed');
             }
         }
 
@@ -142,18 +136,18 @@ module.exports = app => {
          * @since 1.0.0
          */
         async eventOpenTime() {
-            
+
             // eventTAT'S sysKey
             const sysKey = this.ctx.params.sysKey;
             const eventTAT = this.ctx.request.body;
             eventTAT.sysKey = sysKey;
 
             if (!await this.service.eventTAT.eventLog(eventTAT, 0)) {
-                this.ctx.body = this.service.util.generateResponse(403, 'log event open time failed');
+                this.response(403, 'log event open time failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'log event open time successed');
+            this.response(203, 'log evnet open time successed');
         }
 
 
@@ -169,14 +163,13 @@ module.exports = app => {
             const sysKey = this.ctx.params.sysKey;
             const eventTAT = this.ctx.request.body;
             eventTAT.sysKey = sysKey;
-            console.log(eventTAT);
 
             if (!await this.service.eventTAT.eventLog(eventTAT, 1)) {
-                this.ctx.body = this.service.util.generateResponse(403, 'log event store time failed');
+                this.response(403, 'log event store time failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'log event store time successed');
+            this.response(203, 'log event store time successed');
         }
 
 
@@ -194,11 +187,11 @@ module.exports = app => {
             eventTAT.sysKey = sysKey;
 
             if (!await this.service.eventTAT.eventLog(eventTAT, 2)) {
-                this.ctx.body = this.service.util.generateResponse(403, 'log event commit time failed');
+                this.response(403, 'log event commit time failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'log event commit time successed');
+            this.response(203, 'log event commit time successed');
         }
 
 
@@ -222,12 +215,12 @@ module.exports = app => {
 
             // exists event commit log failed
             if (!commit) {
-                this.ctx.body = this.service.util.generateResponse(403, 'log event commit time failed');
+                this.response(403, 'log event commit time failed');
                 return;
             }
 
             // all event commit log successed
-            this.ctx.body = this.service.util.generateResponse(201, 'log event commit time successed');
+            this.response(203, 'log event commit time successed');
         }
     }
 

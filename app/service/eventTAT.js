@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class EventTAT extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class EventTAT extends BaseService {
 
         /**
          * Constructor of class EventTAT
@@ -47,7 +50,7 @@ module.exports = app => {
         async exists(sysKey, type) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(sysKey) || !this.service.util.parameterExists(type)) {
+            if (!this.parameterExists(sysKey) || !this.parameterExists(type)) {
                 return false;
             }
 
@@ -80,8 +83,8 @@ module.exports = app => {
         async query(eventTAT, attributes = ['*']) {
 
             //format eventTAT's attributes and query attributes
-            eventTAT = this.service.util.setTableValue(this.table, eventTAT);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            eventTAT = this.setTableValue(this.table, eventTAT);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // eventTAT doesn't exist
             if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey, eventTAT.type || 0)) {
@@ -118,8 +121,8 @@ module.exports = app => {
         async count(eventTAT, attributes = ['*']) {
 
             // format eventTAT's attributes and query attributes
-            eventTAT = this.service.util.setTableValue(this.table, eventTAT);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            eventTAT = this.setTableValue(this.table, eventTAT);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dhHelp.count('eventTAT', attribute[0], eventTAT);
@@ -142,7 +145,7 @@ module.exports = app => {
         async insert(eventTAT) {
 
             // format eventTAT record's attributes
-            eventTAT = this.service.util.setTableValue(this.table, eventTAT);
+            eventTAT = this.setTableValue(this.table, eventTAT);
 
             // eventTAT.sysKey doesn't exist
             if (!eventTAT.sysKey) {
@@ -178,8 +181,8 @@ module.exports = app => {
         async update(eventTAT, wheres = { sysKey: eventTAT.sysKey }) {
 
             // format the eventTAT's attributes and where's attributes
-            eventTAT = this.service.util.setTableValue(this.table, eventTAT);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            eventTAT = this.setTableValue(this.table, eventTAT);
+            wheres = this.setTableValue(this.table, wheres);
 
             // eventTAT doesn't exist
             if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey,  eventTAT.type || 0)) {
@@ -209,7 +212,7 @@ module.exports = app => {
         async delete(eventTAT) {
 
             // format the eventTAT's attribute
-            eventTAT = this.service.util.setTableValue(this.table, eventTAT);
+            eventTAT = this.setTableValue(this.table, eventTAT);
 
             // eventTAT doesn't exist
             if (eventTAT.sysKey && !await this.exists(eventTAT.sysKey,  eventTAT.type || 0)) {
@@ -238,7 +241,7 @@ module.exports = app => {
         async log(eventTAT) {
 
             // format eventTAT record's attributes
-            eventTAT = this.service.util.setTableValue(this.table, eventTAT);
+            eventTAT = this.setTableValue(this.table, eventTAT);
 
             // eventTAT.sysKey doesn't exist
             if (!eventTAT.sysKey) {
@@ -275,7 +278,7 @@ module.exports = app => {
             if (type !== 0 && type !== 1 && type !== 2) {
                 type = 1;
             }
-            
+
             eventTAT.type = type;
             eventTAT.createAt = Date.parse(new Date());
 
@@ -285,7 +288,7 @@ module.exports = app => {
             if (type === 2) {
                 const str = `select max(createAt) tim from eventTAT where sysKey = $1 and type = $2`;
                 const openTime = await this.app.db.query(str, [eventTAT.sysKey, 0]);
-                eventTAT.duration = eventTAT.createAt - (openTime[0].tim || eventTAT.createAt); 
+                eventTAT.duration = eventTAT.createAt - (openTime[0].tim || eventTAT.createAt);
             }
 
             if (eventTAT.type === 0 || eventTAT.type === 2) {

@@ -1,9 +1,42 @@
+
+
 module.exports = app => {
-    class Test extends app.Controller {
-        async maxTs() {
-            // this.ctx.body = await this.service.cashierSalesInfo.maxTs();
-            const productId = await this.service.bills.query({ sysKey: '69921511367251000' }, ['productId']);
-            this.ctx.body = productId;
+
+    const BaseController = require('./baseController')(app);
+
+    class Test extends BaseController {
+
+        async test1() {
+            this.response(203, 'insert record successed');
+        }
+
+        async test2() {
+            this.response(400, 'get recode failed');
+        }
+
+        async test3() {
+            const student = {
+                id: '001',
+                name: 'xx',
+                sex: 'man'
+            };
+            this.response(200, student);
+        }
+
+        async test4() {
+            const students = [
+                {
+                    id: '001',
+                    name: 'xx',
+                    sex: 'man'
+                },
+                {
+                    id: '002',
+                    name: 'jj',
+                    sex: 'woman'
+                }
+            ];
+            this.response(200, students);
         }
     }
 

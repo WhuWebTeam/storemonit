@@ -1,23 +1,19 @@
+
+
 module.exports = app => {
 
-    class CounterTypeConf extends app.Controller {
+    const BaseController = require('./baseController')(app);
+
+    class CounterTypeConf extends BaseController {
 
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            }
+            this.response(200, 'index test successed');
         }
 
 
         async getCounterTypeConf() {
             const counterTypeConf = await this.service.dbHelp.query('counterTypeConf', ['*'], {});
-            this.ctx.body = {
-                code: 200,
-                data: counterTypeConf
-            }; 
+            this.response(200, counterTypeConf);
         }
     }
 

@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class EditResultList extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class EditResultList extends BaseController {
 
         /**
          * Index test
@@ -15,12 +18,7 @@ module.exports = app => {
          * @since 1.0.0
          */
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
@@ -32,11 +30,7 @@ module.exports = app => {
          */
         async getAllEditResult() {
             const editResults = await this.service.editResultList.query({}, ['id', 'name']);
-
-            this.ctx.body = {
-                code: 200,
-                data: editResults
-            };
+            this.response(200, editResults);
         }
 
 
@@ -47,13 +41,15 @@ module.exports = app => {
          * @since 1.0.0
          */
         async addEditResult() {
+
             const editResult = this.ctx.request.body;
+
             if (!await this.service.editResultList.insert(editResult)) {
                 this.ctx.body = this.service.util.generateResponse(404, 'add editResult failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'add eiditResult successed');
+            this.response(203, 'add editResult successed');
         }
     }
 

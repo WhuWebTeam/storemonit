@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class shopUser extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class shopUser extends BaseService {
 
         /**
          * Constructor of class shopUser
@@ -31,7 +34,7 @@ module.exports = app => {
 
         /**
          * Judge shopUser exists or not throught shopId and userId
-         * @param {String} userId - user's register code 
+         * @param {String} userId - user's register code
          * @param {String} shopId - counter's register id
          * @return {Promise<Boolean>}
          * true when userCounter exists
@@ -40,7 +43,7 @@ module.exports = app => {
         async exists(userId, shopId) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(userId) || !this.service.util.parameterExists(shopId)) {
+            if (!this.parameterExists(userId) || !this.parameterExists(shopId)) {
                 return false;
             }
 
@@ -71,7 +74,7 @@ module.exports = app => {
         async existsId(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -104,8 +107,8 @@ module.exports = app => {
         async query(shopUser, attributes = ['*']) {
 
             // format shopUser's attribute and query's attributes
-            shopUser = this.service.util.setTableValue(this.table, shopUser);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            shopUser = this.setTableValue(this.table, shopUser);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // shopUser doesn't exist through eventLsit.id
             if (shopUser.id && !await this.existsId(shopUser.id)) {
@@ -153,8 +156,8 @@ module.exports = app => {
         async count(shopUser, attributes = ['*']) {
 
             // format shopUser's attributes and query attributes
-            shopUser = this.service.util.setTableValue(this.table, shopUser);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            shopUser = this.setTableValue(this.table, shopUser);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('shopUser', attributes[0], shopUser);
@@ -178,7 +181,7 @@ module.exports = app => {
         async insert(shopUser, table) {
 
             // format shopUser's attributes
-            shopUser = this.service.util.setTableValue(this.table, shopUser);
+            shopUser = this.setTableValue(this.table, shopUser);
 
             // shopUser.shopId and countrUser.userId doesn't exist
             if (!shopUser.userId || !shopUser.shopId) {
@@ -228,8 +231,8 @@ module.exports = app => {
         async update(shopUser, wheres = { shopId: shopUser.shopId, userId: shopUser.userId }) {
 
             // format shopUser's attributes and query attributes
-            shopUser = this.service.util.setTableValue(this.table, shopUser);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            shopUser = this.setTableValue(this.table, shopUser);
+            wheres = this.setTableValue(this.table, wheres);
 
             // shopUser doesn't exists
             if (shopUser.shopId && shopUser.userId && !await this.exists(shopUser.userId, shopUser.shopId)) {
@@ -245,7 +248,7 @@ module.exports = app => {
             }
         }
 
-        
+
         /**
          * Delete shopUser satisfied some condition
          * @public
@@ -259,7 +262,7 @@ module.exports = app => {
         async delete(shopUser) {
 
             // format shopUser's attributes
-            shopUser = this.service.util.setTableValue(this.table, shopUser);
+            shopUser = this.setTableValue(this.table, shopUser);
 
             // shopUser doesn't exist
             if (shopUser.userId && shopUser.shopId && !await this.exists(shopUser.userId, shopUser.shopId)) {

@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class CounterUser extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class CounterUser extends BaseService {
 
         /**
          * Constructor of class CounterUser
@@ -31,7 +34,7 @@ module.exports = app => {
 
         /**
          * Judge counterUser exists or not throught counterId and userId
-         * @param {String} userId - user's register code 
+         * @param {String} userId - user's register code
          * @param {String} counterId - counter's register id
          * @return {Promise<Boolean>}
          * true when userCounter exists
@@ -40,7 +43,7 @@ module.exports = app => {
         async exists(userId, counterId) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(userId) || !this.service.util.parameterExists(counterId)) {
+            if (!this.parameterExists(userId) || !this.parameterExists(counterId)) {
                 return false;
             }
 
@@ -71,7 +74,7 @@ module.exports = app => {
         async existsId(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -104,8 +107,8 @@ module.exports = app => {
         async query(counterUser, attributes = ['*']) {
 
             // format counterUser's attribute and query's attributes
-            counterUser = this.service.util.setTableValue(this.table, counterUser);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            counterUser = this.setTableValue(this.table, counterUser);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // counterUser doesn't exist through eventLsit.id
             if (counterUser.id && !await this.existsId(counterUser.id)) {
@@ -153,8 +156,8 @@ module.exports = app => {
         async count(counterUser, attributes = ['*']) {
 
             // format counterUser's attributes and query attributes
-            counterUser = this.service.util.setTableValue(this.table, counterUser);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            counterUser = this.setTableValue(this.table, counterUser);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('counterUser', attributes[0], counterUser);
@@ -178,7 +181,7 @@ module.exports = app => {
         async insert(counterUser, table) {
 
             // format counterUser's attributes
-            counterUser = this.service.util.setTableValue(this.table, counterUser);
+            counterUser = this.setTableValue(this.table, counterUser);
 
             // counterUser.counterId and countrUser.userId doesn't exist
             if (!counterUser.userId || !counterUser.counterId) {
@@ -228,8 +231,8 @@ module.exports = app => {
         async update(counterUser, wheres = { counterId: counterUser.counterId, userId: counterUser.userId }) {
 
             // format counterUser's attributes and query attributes
-            counterUser = this.service.util.setTableValue(this.table, counterUser);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            counterUser = this.setTableValue(this.table, counterUser);
+            wheres = this.setTableValue(this.table, wheres);
 
             // counterUser doesn't exists
             if (counterUser.counterId && counterUser.userId && !await this.exists(counterUser.userId, CounterUser.counterId)) {
@@ -245,7 +248,7 @@ module.exports = app => {
             }
         }
 
-        
+
         /**
          * Delete counterUser satisfied some condition
          * @public
@@ -259,7 +262,7 @@ module.exports = app => {
         async delete(counterUser) {
 
             // format counterUser's attributes
-            counterUser = this.service.util.setTableValue(this.table, counterUser);
+            counterUser = this.setTableValue(this.table, counterUser);
 
             // counterUser doesn't exist
             if (counterUser.userId && counterUser.counterId && !await this.exists(counterUser.userId, counterUser.counterId)) {

@@ -1,28 +1,17 @@
 
+
 module.exports = app => {
+    class BaseService extends app.Service {
 
-    class Util extends app.Service {
-
-        // used to generate response formated by some information
-
-        generateResponse(code, message) {
-            if(code >= 400) {
-                return {
-                    code,
-                    message
-                };
-            } else {
-                return {
-                    code,
-                    data: { info: message }
-                };
-            }
+        // constructor of BaseService
+        constructor(app) {
+            super(app);
         }
 
 
         // get table attribute value to avoid parameter attack
         setTableValue(tableObj, paramObj) {
-            
+
             // parameter paramObj is not an object or cann't convert to object
             if (!paramObj) {
                 return;
@@ -79,7 +68,7 @@ module.exports = app => {
                     attributes.push(ele);
                 }
             });
-            
+
             if (attributes.length !== 0) {
                 return attributes;
             }
@@ -87,20 +76,20 @@ module.exports = app => {
             return ['*'];
         }
 
-        
+
         // validate parameter is whitespace or not
         parameterExists(param) {
-            
+
             // parameter doesn't exist
             if (param === '' || param === null || param == undefined) {
                 return false;
             }
-            
+
             // parameter exists
             return true;
-            
+
         }
     }
 
-    return Util;
+    return BaseService;
 }

@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class EventsList extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class EventsList extends BaseService {
 
         /**
          * Constructor of class eventsList
@@ -60,7 +63,7 @@ module.exports = app => {
         async exists(sysKey) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(sysKey)) {
+            if (!this.parameterExists(sysKey)) {
                 return false;
             }
 
@@ -91,7 +94,7 @@ module.exports = app => {
         async existsId(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -124,8 +127,8 @@ module.exports = app => {
         async query(eventList, attributes = ['*']) {
 
             // format eventList's attribute and query's attributes
-            eventList = this.service.util.setTableValue(this.table, eventList);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            eventList = this.setTableValue(this.table, eventList);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // eventList doesn't exist through eventLsit.id
             if (eventList.id && !await this.existsId(eventList.id)) {
@@ -173,8 +176,8 @@ module.exports = app => {
         async count(eventList, attributes = ['*']) {
 
             // format eventList's attributes and query attributes
-            eventList = this.service.util.setTableValue(this.table, eventList);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            eventList = this.setTableValue(this.table, eventList);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('eventsList', attributes[0], eventList);
@@ -197,7 +200,7 @@ module.exports = app => {
         async insert(eventList) {
 
             // format eventList's attributes
-            eventList = this.service.util.setTableValue(this.table, eventList);
+            eventList = this.setTableValue(this.table, eventList);
 
 
             // eventList.sysKey doesn't exist
@@ -234,8 +237,8 @@ module.exports = app => {
         async update(eventList, wheres = { sysKey: eventList.sysKey }) {
 
             // format eventList's attributes and query attributes
-            eventList = this.service.util.setTableValue(this.table, eventList);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            eventList = this.setTableValue(this.table, eventList);
+            wheres = this.setTableValue(this.table, wheres);
 
             // eventList doesn't exists
             if (eventList.sysKey && !await this.exists(eventList.sysKey)) {
@@ -251,7 +254,7 @@ module.exports = app => {
             }
         }
 
-        
+
         /**
          * Delete EventsList satisfied some condition
          * @public
@@ -265,7 +268,7 @@ module.exports = app => {
         async delete(eventList) {
 
             // format eventList's attributes
-            eventList = this.service.util.setTableValue(this.table, eventList);
+            eventList = this.setTableValue(this.table, eventList);
 
             // eventList doesn't exist
             if (eventList.sysKey && !await this.exists(eventList.sysKey)) {

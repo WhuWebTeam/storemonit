@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class ProductSalesInfo extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class ProductSalesInfo extends BaseService {
 
         /**
          * constructor of class ProductSalesInfo
@@ -46,7 +49,7 @@ module.exports = app => {
         async exists(ts) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(ts)) {
+            if (!this.parameterExists(ts)) {
                 return false;
             }
 
@@ -76,7 +79,7 @@ module.exports = app => {
         async existsId(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -109,8 +112,8 @@ module.exports = app => {
         async query(productSaleInfo, attributes = ['*']) {
 
             // format productSaleInfo and query's attrbutes
-            productSaleInfo = this.service.util.setTableValue(this.table, productSaleInfo);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            productSaleInfo = this.setTableValue(this.table, productSaleInfo);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // productSaleInfo doesn't exist through id
             if (productSaleInfo.id && !await this.existsId(productSaleInfo.id)) {
@@ -158,8 +161,8 @@ module.exports = app => {
         async count(productSaleInfo, attributes = ['*']) {
 
             // format productSaleInfo and query's attributes
-            productSaleInfo = this.service.util.setTableValue(this.table, productSaleInfo);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            productSaleInfo = this.setTableValue(this.table, productSaleInfo);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('productSalesInfo', attributes[0], productSaleInfo);
@@ -182,7 +185,7 @@ module.exports = app => {
         async insert(productSaleInfo) {
 
             // fromat productSaleInfo record's attributes
-            productSaleInfo = this.service.util.setTableValue(this.table, productSaleInfo);
+            productSaleInfo = this.setTableValue(this.table, productSaleInfo);
 
             // productSaleInfo's ts doesn't exist
             if (!productSaleInfo.ts) {
@@ -218,8 +221,8 @@ module.exports = app => {
         async update(productSaleInfo, wheres) {
 
             // format productSaleInfo and query's attributes
-            productSaleInfo = this.service.util.setTableValue(this.table, productSaleInfo);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            productSaleInfo = this.setTableValue(this.table, productSaleInfo);
+            wheres = this.setTableValue(this.table, wheres);
 
             // productSaleInfo doesn't exist
             if (productSaleInfo.ts && !await this.exists(productSaleInfo.ts)) {
@@ -248,7 +251,7 @@ module.exports = app => {
         async delete(productSaleInfo) {
 
             // formate productSaleInfo's attributes
-            productSaleInfo = this.service.util.setTableValue(this.table, productSaleInfo);
+            productSaleInfo = this.setTableValue(this.table, productSaleInfo);
 
             // productSaleInfo doesn't exist
             if (productSaleInfo.ts && !await this.exists(productSaleInfo.ts)) {

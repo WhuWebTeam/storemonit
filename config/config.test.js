@@ -47,9 +47,11 @@ module.exports = app => {
             user: 'company',
             password: '123',
             database: 'company',
-            host: '127.0.0.1',
-            port: '5432',
+            host: '121.201.13.217',
+            port: '25432',
             poolSize: 5,
         }
     };
+
+    return Config;
 }

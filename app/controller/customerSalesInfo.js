@@ -1,14 +1,14 @@
+
+
 module.exports = app => {
-    class CustomerSalesInfo extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class CustomerSalesInfo extends BaseController {
+
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
- 
     }
 
     return CustomerSalesInfo;

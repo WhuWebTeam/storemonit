@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Products extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Products extends BaseService {
 
         /**
          * Constructor of class Products
@@ -39,7 +42,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -73,8 +76,8 @@ module.exports = app => {
         async query(product, attributes = { id: product.id }) {
 
             // format product's attributes and query attributes
-            product = this.service.util.setTableValue(this.table, product);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            product = this.setTableValue(this.table, product);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // product doesn't exist specified by product id
             if (product.id && !await this.exists(product.id)) {
@@ -111,8 +114,8 @@ module.exports = app => {
         async count(product, attributes = ['*']) {
 
             // format product attributes and query attributes
-            product = this.service.util.setTableValue(this.table, product);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            product = this.setTableValue(this.table, product);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('products', attributes[0], product);
@@ -135,7 +138,7 @@ module.exports = app => {
         async insert(product) {
 
             // format product's attributes
-            product = this.service.util.setTableValue(this.table, product);
+            product = this.setTableValue(this.table, product);
 
             // product id doesn't exist
             if (!product.id) {
@@ -171,8 +174,8 @@ module.exports = app => {
         async update(product, wheres = { id: product.id }) {
 
             // format product's attributes and wheres' attributes
-            product = this.service.util.setTableValue(this.table, product);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            product = this.setTableValue(this.table, product);
+            wheres = this.setTableValue(this.table, wheres);
 
             // authority doesn't exists
             if (product.id && !await this.exists(product.id)) {
@@ -202,7 +205,7 @@ module.exports = app => {
         async delete(product) {
 
             // format product's attributes
-            product = this.service.util.setTableValue(this.table, product);
+            product = this.setTableValue(this.table, product);
 
             // product doesn't exist
             if (product.id && !await this.exists(product.id)) {

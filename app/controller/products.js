@@ -1,44 +1,42 @@
 
 
 module.exports = app => {
-    class Products extends app.Controller {
-        
+
+    const BaseController = require('./baseController')(app);
+
+    class Products extends BaseController {
+
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            }
+            this.response(200, 'index test successed');
         }
 
 
         // get info of all products
         async getProducts() {
-            this.ctx.body = await this.service.products.query({});
+            const products = await this.service.products.query({});
+            this.response(200, products);
         }
 
 
         // get info of some product specified by id or name
         async getProduct() {
             let product = this.ctx.request.body;
-
-            this.ctx.body = await this.service.products.query(product);
+            product = await this.service.products.query(product);
+            this.response(200, product);
         }
-        
+
 
         // add a new product info to database
         async addProduct() {
             const product = this.ctx.request.body;
-
             // product doesn't exists
             if (!await this.service.products.insert(product)) {
-                this.ctx.body = this.service.util.generateResponse(400, `product exists`);
+                this.response(404, 'product exists');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'add product successed');
+            this.response(200, 'add product successed');
         }
     }
 

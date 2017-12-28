@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class CashierSalesInfo extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class CashierSalesInfo extends BaseService {
 
         /**
          * Constructor of class CashierSalesInfo
@@ -45,7 +48,7 @@ module.exports = app => {
         async exists(ts) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(ts)) {
+            if (!this.parameterExists(ts)) {
                 return false;
             }
 
@@ -76,7 +79,7 @@ module.exports = app => {
         async existsId(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -109,8 +112,8 @@ module.exports = app => {
         async query(cashierSaleInfo, attributes = ['*']) {
 
             // setcashierSalesInfo's attributes and query attributes
-            cashierSaleInfo = this.service.util.setTableValue(this.table, cashierSaleInfo);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            cashierSaleInfo = this.setTableValue(this.table, cashierSaleInfo);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // cashierSaleInfo doesn't exist throught cashierSaleInfo.id
             if (cashierSaleInfo.id && !await this.existsId(cashierSaleInfo.id)) {
@@ -158,8 +161,8 @@ module.exports = app => {
         async count(cashierSaleInfo, attributes = ['*']) {
 
             // format cashierSaleInfo's attributes and query attributes
-            cashierSaleInfo = this.service.util.setTableValue(this.table, cashierSaleInfo);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            cashierSaleInfo = this.setTableValue(this.table, cashierSaleInfo);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('cashierSalesInfo', attributes[0], cashierSaleInfo);
@@ -182,7 +185,7 @@ module.exports = app => {
         async insert(cashierSaleInfo) {
 
             // format cashierSaleInfo's attributes
-            cashierSaleInfo = this.service.util.setTableValue(this.table, cashierSaleInfo);
+            cashierSaleInfo = this.setTableValue(this.table, cashierSaleInfo);
 
             // cashierSaleInfo's ts doesn't exist
             if (!cashierSaleInfo.ts) {
@@ -217,8 +220,8 @@ module.exports = app => {
         async update(cashierSaleInfo, wheres = { ts: cashierSaleInfo.ts }) {
 
             // format cashierSaleInfo's attributes and wheres' attributes
-            cashierSaleInfo = this.service.util.setTableValue(this.table, cashierSaleInfo);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            cashierSaleInfo = this.setTableValue(this.table, cashierSaleInfo);
+            wheres = this.setTableValue(this.table, wheres);
 
             // cashierSaleInfo doesn't exist
             if (cashierSaleInfo.ts && !await this.exists(cashierSaleInfo.ts)) {
@@ -247,7 +250,7 @@ module.exports = app => {
         async delete(cashierSaleInfo) {
 
             // format cashierSaleInfo's attributes
-            cashierSaleInfo = this.service.util.setTableValue(this.table, cashierSaleInfo);
+            cashierSaleInfo = this.setTableValue(this.table, cashierSaleInfo);
 
             // cashierSaleInfo doesn't exist
             if (cashierSaleInfo.ts && !await this.exists(cashierSaleInfo.ts)) {

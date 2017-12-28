@@ -1,42 +1,44 @@
+
+
 module.exports = app => {
-    class Cashiers extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class Cashiers extends BaseController {
 
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'inde test successed');
         }
 
 
         // get cashiers info
         async getCashiers() {
-            this.ctx.body = await this.service.cashiers.query({});
+            const cashiers = await this.service.cashiers.query({});
+            this.response(200, cashiers);
         }
 
 
         // get info of cashier specified by id or name
         async getCashier() {
             let cashier = this.ctx.request.body;
-            
-            this.ctx.body = await this.service.cashiers.query(cashier);
+
+            cashier = await this.service.cashiers.query(cashier);
+            this.response(200, cashier);
         }
 
-        
+
         // add a new cashier
         async addCashier() {
             const cashier = this.ctx.request.body;
 
             // cashier exists
             if (!await this.service.cashiers.insert(cashier)) {
-                this.ctx.body = this.service.util.generateResponse(400, `cashier exists`);
+                this.response(403, 'cashier exsits');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'add cashier record successed');
+            this.response(203, 'add new cashier info successed');
         }
     }
 

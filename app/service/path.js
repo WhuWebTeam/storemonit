@@ -1,32 +1,27 @@
+const fs = require('fs');
+
 /**
  * enclosure of file and directory's opration
  * realize judge a path exists or not and this path stand for file or directory,
  * create directory with the father directory of the directory specified by path doesn't exist,
  * open a file whoes father directory doesn't exist
  * @module path
- * 
+ *
  * @file StoreMonitor
  * @version 0.0.1
  */
-
-
-const fs = require('fs');
-
-/** path */
 module.exports = app => {
-    /**
-     * used to complete module path's function
-     * @class
-     * @extends app.Service
-     */
-    class Path extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Path extends BaseService {
 
         /**
          * judge specified path exists or not and judge is a file or directory
          * @public
          * @function pathExists
          * @param {string} path - file or directory's path waited to judge
-         * @return {Promise<Object>} 
+         * @return {Promise<Object>}
          * object with exists is true, file is true when path is a file and exists
          * object with exists is ture, file is false when path is a directory and exists
          * object with exists is false, file is false when path doesn't exists
@@ -43,7 +38,7 @@ module.exports = app => {
                                 file: true
                             });
                         }
-                        
+
                         // exists, a directory
                         if (exists) {
                             return resolve({
@@ -131,16 +126,16 @@ module.exports = app => {
          * will throw Exception when opration error
          * @public
          * @function openFile
-         * @param {string} path - path of file waited to be open 
+         * @param {string} path - path of file waited to be open
          * @param {string} mode - mode of opnning file
          * @return {Promise<int>} the file description of file opened
          */
         async openFile(path, mode) {
-            
+
             // file's father's path doesn't exists
             const fatherPath = path.substring(0, path.lastIndexOf('/'));
             await this.mkdir(fatherPath);
-        
+
             return new Promise((resolve, reject) => {
                 try {
                     fs.open(path, mode, (err, fd) => {
@@ -181,7 +176,7 @@ module.exports = app => {
                 // throw err;
             });
         }
-        
+
 
         async appendFile(path, content) {
 
