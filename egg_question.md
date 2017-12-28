@@ -1,4 +1,4 @@
 
 1. middleware:
 
-    [router](https://eggjs.org/zh-cn/basics/router.html#%E5%8F%82%E6%95%B0%E5%91%BD%E5%90%8D%E6%96%B9%E5%BC%8F#中间件的使用)
+    [router](https://eggjs.org/zh-cn/basics/router.html#%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8)
