@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Counters extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Counters extends BaseService {
 
         /**
          * Constructor of class Counters
@@ -51,7 +54,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -84,8 +87,8 @@ module.exports = app => {
         async query(counter, attributes = ['*']) {
 
             // format counter attributes and query attributes
-            counter = this.service.util.setTableValue(this.table, counter);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            counter = this.setTableValue(this.table, counter);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // counter doesn't exist
             if (counter.id && !await this.exists(counter.id)) {
@@ -122,8 +125,8 @@ module.exports = app => {
         async count(counter, attributes = ['*']) {
 
             // format counter's attributes and query attributes
-            counter = this.service.util.setTableValue(this.table, counter);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            counter = this.setTableValue(this.table, counter);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('counters', attributes[0], counter);
@@ -146,7 +149,7 @@ module.exports = app => {
         async insert(counter) {
 
             // format counter record's attributes
-            counter = this.service.util.setTableValue(this.table, counter);
+            counter = this.setTableValue(this.table, counter);
 
             // counter.id doesn't exist
             if (!counter.id) {
@@ -182,8 +185,8 @@ module.exports = app => {
         async update(counter, wheres = { id: counter.id }) {
 
             // formate counter's attributes and wheres attributes
-            counter = this.service.util.setTableValue(this.table, counter);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            counter = this.setTableValue(this.table, counter);
+            wheres = this.setTableValue(this.table, wheres);
 
             // counter doesn't exist
             if (counter.id && !await this.exists(counter.id)) {
@@ -217,7 +220,7 @@ module.exports = app => {
         async delete(counter) {
 
             // format counter's attributes
-            counter = this.service.util.setTableValue(this.table, counter);
+            counter = this.setTableValue(this.table, counter);
 
             // counter doen't exist
             if (counter.id && !await this.exists(counter.id)) {

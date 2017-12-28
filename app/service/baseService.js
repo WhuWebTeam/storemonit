@@ -2,10 +2,16 @@
 
 module.exports = app => {
     class BaseService extends app.Service {
-        
+
+        // constructor of BaseService
+        constructor(app) {
+            super(app);
+        }
+
+
         // get table attribute value to avoid parameter attack
         setTableValue(tableObj, paramObj) {
-            
+
             // parameter paramObj is not an object or cann't convert to object
             if (!paramObj) {
                 return;
@@ -62,7 +68,7 @@ module.exports = app => {
                     attributes.push(ele);
                 }
             });
-            
+
             if (attributes.length !== 0) {
                 return attributes;
             }
@@ -70,18 +76,18 @@ module.exports = app => {
             return ['*'];
         }
 
-        
+
         // validate parameter is whitespace or not
         parameterExists(param) {
-            
+
             // parameter doesn't exist
             if (param === '' || param === null || param == undefined) {
                 return false;
             }
-            
+
             // parameter exists
             return true;
-            
+
         }
     }
 

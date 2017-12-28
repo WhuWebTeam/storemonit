@@ -1,21 +1,21 @@
+
+
 module.exports = app => {
-    class ShopUser extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class ShopUser extends BaseController {
 
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed!'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
         // assigned shops to some user
         async assignedShops() {
+
             const user = this.ctx.params.userId;
             const shops = this.ctx.request.body;
-
             let assigned = true;
 
             for (const shop of shops.shops) {
@@ -25,11 +25,11 @@ module.exports = app => {
             }
 
             if (!assigned) {
-                this.ctx.body = this.service.util.generateResponse(403, 'assigned some shops failed');
+                this.response(403, 'assigned some shops failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(203, 'asigned shops successed');
+            this.response(203, 'assigned shops successed');
         }
 
 
@@ -38,7 +38,6 @@ module.exports = app => {
 
             const user = this.ctx.params.userId;
             const shops = this.ctx.request.body;
-
             let retrive = true;
 
             for (const shop of shops.shops) {
@@ -48,7 +47,7 @@ module.exports = app => {
             }
 
             if (!retrive) {
-                this.ctx.body = this.service.util.generateResponse(403, 'retrive some shops failed');
+                this.response(404, 'retrieve some shops failed');
                 return;
             }
 
@@ -58,14 +57,15 @@ module.exports = app => {
 
         // retrive some user's all shop
         async oneKeyRetrive() {
+
             const user = this.ctx.params.userId;
 
             if (!await this.service.shopUser.delete({ userId: user })) {
-                this.ctx.body = this.service.util.generateResponse(403, 'retrive shops failed');
+                this.response(404, 'retrieve shops failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(203, 'retrive shops successed');
+            this.response(204, 'retrieve shops successed');
         }
     }
 

@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Authorities extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Authorities extends BaseService {
 
         /**
          * Constructor of class authorities
@@ -41,7 +44,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter doesn't exists
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -74,8 +77,8 @@ module.exports = app => {
         async query(authority, attributes = ['*']) {
 
             // format authority's attributes and query attributes
-            authority = this.service.util.setTableValue(this.table, authority);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            authority = this.setTableValue(this.table, authority);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // authority doesn't exist
             if (authority.id && !await this.exists(authority.id)) {
@@ -112,8 +115,8 @@ module.exports = app => {
         async count(authority, attributes = ['*']) {
 
             // format authority's attributes and query attributes
-            authority = this.service.util.setTableValue(this.table, authority);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            authority = this.setTableValue(this.table, authority);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('authorities', attributes[0], authority);
@@ -136,7 +139,7 @@ module.exports = app => {
         async insert(authority) {
 
             // format authority record's attributes
-            authority = this.service.util.setTableValue(this.table, authority);
+            authority = this.setTableValue(this.table, authority);
 
             // authority.id doesn't exist
             if (!authority.id) {
@@ -171,8 +174,8 @@ module.exports = app => {
         async update(authority, wheres = { id: authority.id }) {
 
             // format authority's attributes and wheres' attributes
-            authority = this.service.util.setTableValue(this.table, authority);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            authority = this.setTableValue(this.table, authority);
+            wheres = this.setTableValue(this.table, wheres);
 
             // authority doesn't exist
             if (authority.id && !await this.exists(authority.id)) {
@@ -203,7 +206,7 @@ module.exports = app => {
         async delete(authority) {
 
             // format authority's attributes
-            authority = this.service.util.setTableValue(this.table, authority);
+            authority = this.setTableValue(this.table, authority);
 
             // authority doesn't exist
             if (authority.id && !await this.exists(authority.id)) {

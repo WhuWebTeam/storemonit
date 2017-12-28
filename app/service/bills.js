@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Bills extends app.Controller {
+
+    const BaseService = require('./baseService')(app);
+
+    class Bills extends BaseService {
 
         /**
          * Constructor of class Bills
@@ -52,7 +55,7 @@ module.exports = app => {
         async exists(sysKey) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(sysKey)) {
+            if (!this.parameterExists(sysKey)) {
                 return false;
             }
 
@@ -84,7 +87,7 @@ module.exports = app => {
         async existsId(id) {
 
             // parameter doesn't exist
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -101,7 +104,7 @@ module.exports = app => {
                 return false;
             }
         }
-        
+
 
         /**
          * Query info of bills with some condition
@@ -118,8 +121,8 @@ module.exports = app => {
         async query(bill, attributes = ['*']) {
 
             // format bill's attributes and query attributes
-            bill = this.service.util.setTableValue(this.table, bill);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            bill = this.setTableValue(this.table, bill);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // bill doesn't exist through id
             if (bill.id && !await this.existsId(bill.id)) {
@@ -168,8 +171,8 @@ module.exports = app => {
         async count(bill, attributes = ['*']) {
 
             // format bill's attributes and query attributes
-            bill = this.service.util.setTableValue(this.table, bill);
-            attributes = this.service.util.setQueryAttributes(this.table, bill);
+            bill = this.setTableValue(this.table, bill);
+            attributes = this.setQueryAttributes(this.table, bill);
 
             try {
                 return await this.service.dbHelp.count('bills', attributes[0], bill);
@@ -192,7 +195,7 @@ module.exports = app => {
         async insert(bill) {
 
             // format bill's attributes
-            bill = this.service.util.setTableValue(this.table, bill);
+            bill = this.setTableValue(this.table, bill);
 
             // bill.sysKey doesn't exists
             if (!bill.sysKey) {
@@ -228,8 +231,8 @@ module.exports = app => {
         async update(bill, wheres = { sysKey: bill.sysKey }) {
 
             // format bill's attributes and wheres' attributes
-            bill = this.service.util.setTableValue(this.table, bill);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            bill = this.setTableValue(this.table, bill);
+            wheres = this.setTableValue(this.table, wheres);
 
             // bill doesn't exist
             if (bill.sysKey && !await this.exists(bill.sysKey)) {
@@ -259,7 +262,7 @@ module.exports = app => {
         async delete(bill) {
 
             // format bill's attributes
-            bill = this.service.util.setTableValue(this.table, bill);
+            bill = this.setTableValue(this.table, bill);
 
             // bill doesn't exists
             if (bill.sysKey && !await this.exists(bill.sysKey)) {

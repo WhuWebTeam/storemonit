@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class Users extends app.Service {
+
+    const BaseService = require('./baseService')(app);
+
+    class Users extends BaseService {
 
         /**
          * Constructor of class Users
@@ -44,7 +47,7 @@ module.exports = app => {
         async exists(id) {
 
             // parameter is not exists
-            if (!this.service.util.parameterExists(id)) {
+            if (!this.parameterExists(id)) {
                 return false;
             }
 
@@ -76,7 +79,7 @@ module.exports = app => {
         async passwordRight(id, password) {
 
             // parameters don't exist
-            if (!this.service.util.parameterExists(id) || !this.service.util.parameterExists(password)) {
+            if (!this.parameterExists(id) || !this.parameterExists(password)) {
                 return false;
             }
 
@@ -109,8 +112,8 @@ module.exports = app => {
         async query(user, attributes = ['*']) {
 
             // format user's attributes and query attributes
-            user = this.service.util.setTableValue(this.table, user);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            user = this.setTableValue(this.table, user);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             // user doesn't exists
             if (user.id && !await this.exists(user.id)) {
@@ -147,8 +150,8 @@ module.exports = app => {
         async count(user, attributes = ['*']) {
 
             // format user's attributes and query attributes
-            area = this.service.util.setTableValue(this.table, user);
-            attributes = this.service.util.setQueryAttributes(this.table, attributes);
+            area = this.setTableValue(this.table, user);
+            attributes = this.setQueryAttributes(this.table, attributes);
 
             try {
                 return await this.service.dbHelp.count('users', attributes[0], user);
@@ -171,7 +174,7 @@ module.exports = app => {
         async insert(user) {
 
             // format user record's attributes
-            user = this.service.util.setTableValue(this.table, user);
+            user = this.setTableValue(this.table, user);
 
             // user.id doesn't exist
             if (!user.id) {
@@ -206,8 +209,8 @@ module.exports = app => {
         async update(user, wheres = { id: user.id }) {
 
             // format user's attributes and query attributes
-            user = this.service.util.setTableValue(this.table, user);
-            wheres = this.service.util.setTableValue(this.table, wheres);
+            user = this.setTableValue(this.table, user);
+            wheres = this.setTableValue(this.table, wheres);
 
             // user doesn't exists
             if (user.id && !await this.exists(user.id)) {
@@ -237,7 +240,7 @@ module.exports = app => {
         async delete(user) {
 
             // format the area's attributes
-            user = this.service.util.setTableValue(this.table, user);
+            user = this.setTableValue(this.table, user);
 
             // user doesn't exist
             if (user.id && !await this.exists(user.id)) {

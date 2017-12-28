@@ -1,5 +1,10 @@
+
+
 module.exports = app => {
-    class Index extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class Index extends BaseController {
 
         // Home page
         async home() {
@@ -36,11 +41,11 @@ module.exports = app => {
             // wu mei user is district manager
             if (level === this.app.config.userLevel.districtManager) {
                 const assigned = await this.service.shopUser.count({ userId }, ['id']);
-                if (assigned) {       
+                if (assigned) {
                     this.ctx.redirect(`/public/districtManager.html?userId=${userId}`);
                     return;
                 }
-                
+
                 this.ctx.redirect(`/public/addShop.html?userId=${userId}`);
                 return;
             }
@@ -51,19 +56,23 @@ module.exports = app => {
 
         // Clear all  record in database
         async clear() {
+
             const tables = [
                 'authorities', 'counterUser', 'counters', 'shops', 'areas', 'products', 'customers', 'shopUser',
                 'cashiers', 'bills', 'eventsList', 'cashierSalesInfo', 'customerSalesInfo', 'productSalesInfo', 'eventTAT',
                 'users', 'counterTypeConf'
             ];
 
-            tables.map(async table => {
-                const str = `delete from ${table}`;
+            try {
+                tables.map(async table => {
+                    const str = `delete from ${table}`;
+                    await this.app.db.query(str);
+                });
 
-                await this.app.db.query(str);
-            });
-
-            this.ctx.body = this.service.util.generateResponse(200, 'clear database successed');
+                this.response(204, 'clear database successed');
+            } catch (err) {
+                this.response(404, 'clear database failed');
+            }
         }
     }
 

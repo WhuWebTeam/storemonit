@@ -5,7 +5,7 @@ module.exports = app => {
     const BaseController = require('./baseController')(app);
 
     class Test extends BaseController {
-        
+
         async test1() {
             this.response(203, 'insert record successed');
         }

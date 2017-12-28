@@ -1,24 +1,24 @@
+
+
 module.exports = app => {
-    class Video extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class Video extends BaseController {
 
         // index test
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
         // get data from DVA system
         async getDVAData() {
+
             const DVA = this.ctx.request.body;
 
             /* parse DVA data and store them to database */
             // format counter
-
             let counter = {};
             counter.id = DVA.RegID || '0000000000';
             counter.type = DVA.RegType || 'pos';
@@ -105,7 +105,7 @@ module.exports = app => {
                 eventList.videoStartTime = billEle.Start || 0;
                 eventList.videoEndTime = billEle.End || 0;
                 eventList.productId = billEle.Sku || '0000000000';
-                eventList.productName = billEle.Text || '';   
+                eventList.productName = billEle.Text || '';
                 eventList.counterId = DVA.RegID || '0000000000';
                 eventList.counterType = DVA.RegType || 'pos';
                 eventList.cashierId = DVA.CashierID || '0000000000';

@@ -6,7 +6,10 @@
  * @since 1.0.0
  */
 module.exports = app => {
-    class EventsList extends app.Controller {
+
+    const BaseController = require('./baseController')(app);
+
+    class EventsList extends BaseController {
 
         /**
          * Index test
@@ -15,12 +18,7 @@ module.exports = app => {
          * @since 1.0.0
          */
         async index() {
-            this.ctx.body = {
-                code: 200,
-                data: {
-                    info: 'test successed'
-                }
-            };
+            this.response(200, 'index test successed');
         }
 
 
@@ -40,7 +38,7 @@ module.exports = app => {
                         inner join counters c on e.counterId = c.id and c.shopId = e.shopId
                         inner join counterUser cu on c.id = cu.counterId
                         where userId = $1 and e.status = $2 and to_timestamp(e.createAt) > now() - interval $3`;
-                        
+
             try {
                 let working = await this.app.db.query(str, [userId, 0, during]);
                 working = working[0] && +working[0].count || 0;
@@ -50,17 +48,14 @@ module.exports = app => {
 
                 let commit = await this.app.db.query(str, [userId, 2, during]);
                 commit = commit[0] && +commit[0].count || 0;
-            
-                this.ctx.body = {
-                    code: 200,
-                    data: {
-                        working,
-                        store,
-                        commit
-                    }
-                };
+
+                this.response(200, {
+                    working,
+                    store,
+                    commit
+                });
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, `get user's count statistics failed`);
+                this.response(400, `get user's eventsList count statistics failed`);
             }
         }
 
@@ -74,6 +69,7 @@ module.exports = app => {
 
             const user = this.ctx.params.userId;
             const day = this.ctx.params.day;
+
             let str = `select to_char(to_timestamp(e.ts/1000), $2) as t, count(e.id) from eventsList e
                       inner join shopUser su on su.shopId = e.shopId
                       where su.userId = $1
@@ -98,12 +94,9 @@ module.exports = app => {
 
             try {
                 const eventsList = await this.app.db.query(str, values);
-                this.ctx.body = {
-                    code: 200,
-                    data: eventsList
-                }
+                this.response(200, eventsList);
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get store count statistics eventsList status failed');
+                this.response(400, 'get sotre count statistics failed');
             }
        }
 
@@ -117,34 +110,31 @@ module.exports = app => {
         async getDayCount() {
 
             const user = this.ctx.params.userId;
-            
+
             try {
                 let str = `select count(transId) from eventsList e
                         inner join shopUser su on e.shopId = su.shopId
                         where su.userId = $1 and e.status != 2`;
-                
-                
+
+
                 let dealing = await this.app.db.query(str, [user]);
                 dealing = dealing[0] && dealing[0].count || 0;
-                
+
                 // get count of events completed the last day
                 str = `select count(et.sysKey) from eventTAT et
                       inner join shopUser su on et.shopId = su.shopId
                       where su.userId = $1 and et.type = 2 and to_timestamp(createAt) > now() - interval '1 d'`;
 
-            
+
                 let completed = await this.app.db.query(str, [user]);
                 completed = completed[0] && completed[0].count || 0;
 
-                this.ctx.body = {
-                    code: 200,
-                    data: {
-                        dealing,
-                        completed
-                    }
-                };
+                this.response(200, {
+                    dealing,
+                    completed
+                });
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get count statisitc of today failed');
+                this.response(400, 'get day count statistics of failed');
             }
         }
 
@@ -178,13 +168,13 @@ module.exports = app => {
             }
 
             try {
-                // get the count of bills during the limit time 
+                // get the count of bills during the limit time
                 let str = `select count(transId) from bills b
                           inner join shopUser su on su.shopId = b.shopId
                           where userId = $1 and to_timestamp(ts) > now() - interval '$2 day'`;
                 let bills = await this.app.db.query(str, values);
                 bills = bills[0] && bills[0].count || 0;
-            
+
 
                 // get the count of events during the limit time
                 str = `select count(transId) from eventsList e
@@ -193,17 +183,14 @@ module.exports = app => {
                 let events = await this.app.db.query(str, values);
                 events = events[0] && events[0].count || 0;
 
-                this.ctx.body = {
-                    code: 200,
-                    data: {
-                        bills,
-                        events
-                    }
-                }
+                this.response(200, {
+                    bills,
+                    events
+                });
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get events rate failed');
+                this.response(400, 'get events rate failed');
             }
-        } 
+        }
 
 
         async getErrorRateGraph() {
@@ -215,7 +202,7 @@ module.exports = app => {
             const rates = [];
             try {
                 const bills = await this.app.db.query(str, [user]);
-            
+
                 str = `select count(e.transId), e.shopId from  eventsList e
                       inner join shopUser su on e.shopId = su.shopId
                       where to_timestamp(ts) > now() - interval '6 m' and userId = $1
@@ -230,12 +217,9 @@ module.exports = app => {
                         rates.push(rate);
                     }
                 }
-                this.ctx.body = {
-                    code: 200,
-                    data: rates
-                };
+                this.response(200, rates);
         } catch (err) {
-            this.ctx.body = this.service.util.generateResponse(400, 'get store error rate statistics failed');
+            this.response(400, 'get store error rate statistics failed');
         }
     }
 
@@ -249,9 +233,9 @@ module.exports = app => {
 
             const user = this.ctx.params.userId;
             const time = this.ctx.params.day;
+            const values = [user];
 
             // set the duration time
-            const values = [user];
             switch(time.toLowerCase()) {
                 case 'week':
                     values.push(7);
@@ -275,20 +259,17 @@ module.exports = app => {
                                     select count(e.transId) error, e.shopId, e.cashierId from  eventsList e
                                     inner join shopUser su on e.shopId = su.shopId
                                     where to_timestamp(ts) > now() - interval '$2 d' and userId = $1
-                                    group by e.shopId, e.cashierId order by e.shopId, e.cashierId) err 
+                                    group by e.shopId, e.cashierId order by e.shopId, e.cashierId) err
                                 inner join (
                                     select count(b.transId) total, b.shopId, b.cashierId from  bills b
                                     inner join shopUser su on b.shopId = su.shopId
                                     where to_timestamp(ts) > now() - interval '$2 d' and userId = $1
                                     group by b.shopId, b.cashierId order by b.shopId, b.cashierId) tol on err.shopId = tol.shopId and err.cashierId = tol.cashierId
-                                    ) r on c.id = r.cashierId`;             
+                                    ) r on c.id = r.cashierId`;
                 const errorRate = await this.app.db.query(str, values);
-                this.ctx.body = {
-                    code: 200,
-                    data: errorRate
-                };
+                this.response(200, errorRate);
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, `get cashiers' event rate failed`);
+                this.response(400, `get cashiers event rate failed`);
             }
         }
 
@@ -312,12 +293,9 @@ module.exports = app => {
 
             try {
                 let eventsList = await this.app.db.query(str, [userId, during, status]);
-                this.ctx.body = {
-                    code: 200,
-                    data: eventsList
-                };
+                this.response(200, eventsList);
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get info of events count in some condition failed');
+                this.response(400, 'get info of events count in some condition failed');
             }
         }
 
@@ -341,12 +319,9 @@ module.exports = app => {
 
             try {
                 let eventsList = await this.app.db.query(str, [userId, during, status]);
-                this.ctx.body = {
-                    code: 200,
-                    data: eventsList
-                };
+                this.response(200, eventsList);
             } catch(err) {
-                this.ctx.body = this.service.util.generateResponse(400, 'get info of events count in some condition failed');
+                this.response(400, 'get info of events count in some condition failed');
             }
         }
 
@@ -364,10 +339,7 @@ module.exports = app => {
 
             const eventsList = await this.service.eventsList.query({ status, editResult }, ['sysKey', 'cashierId', 'cashierName',
                 'counterId', 'counterType', 'transId', 'createAt', 'editResult']);
-            this.ctx.body = {
-                code: 200,
-                data: eventsList
-            };
+            this.response(200, eventsList);
         }
 
 
@@ -381,10 +353,7 @@ module.exports = app => {
             const day = this.ctx.params.day || 'day';
 
             const eventsList = await this.service.eventsList.getEventsListGraph(day);
-            this.ctx.body = {
-                code: 200,
-                data: eventsList
-            };
+            this.response(200, eventsList);
         }
 
 
@@ -400,14 +369,11 @@ module.exports = app => {
 
             // get eventsList and price
             const eventList = await this.service.eventsList.query({ sysKey }, ['transId', 'createAt', 'editResult', 'status', 'videoUrl',
-            'comments', 'productName','cashierId', 'cashierName', 'shopId']);
+                'comments', 'productName','cashierId', 'cashierName', 'shopId']);
             const price = await this.service.bills.query( { sysKey }, ['price']);
             eventList.price = price && price.price || 0;
 
-            this.ctx.body = {
-                code: 200,
-                data: eventList
-            };
+            this.response(200, eventList);
         }
 
 
@@ -452,16 +418,16 @@ module.exports = app => {
 
             switch(flag) {
                 case 1:
-                    this.ctx.body = this.service.util.generateResponse(403, 'eventsList info update failed');
+                    this.response(403, 'update eventsList info failed');
                     return;
                 case 2:
-                    this.ctx.body = this.service.util.generateResponse(403, 'bills info update failed');
+                    this.response(403, 'update bill info failed');
                     return;
                 case 3:
-                    this.ctx.body = this.service.util.generateResponse(403, 'products info update failed');
+                    this.response(403, 'update product info failed');
                     return;
                 default:
-                    this.ctx.body = this.service.util.generateResponse(201, 'edit  eventList info successed');
+                    this.response(203, 'edit eventsList info successed');
             };
         }
 
@@ -478,11 +444,11 @@ module.exports = app => {
             const sysKey = this.ctx.params.sysKey;
 
             if (!await this.service.eventsList.update({ status: 2}, { sysKey })) {
-                this.ctx.body = this.service.util.generateResponse(403, 'commit eventList failed');
+                this.response(403, 'commit eventList failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'commit eventList successed');
+            this.response(203, 'commit eventList successed');
         }
 
 
@@ -498,11 +464,11 @@ module.exports = app => {
             const sysKey = this.ctx.params.sysKey;
 
             if (!await this.service.eventsList.update( {status: 1 }, { sysKey })) {
-                this.ctx.body = this.service.util.generateResponse(403, 'store eventList failed');
+                this.response(403, 'store eventList failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'store eventsList successed');
+            this.response(203, 'store eventsList successed');
         }
 
 
@@ -527,11 +493,11 @@ module.exports = app => {
             }
 
             if (!commit) {
-                this.ctx.body = this.service.util.generateResponse(403, 'commit some eventList failed');
+                this.response(403, 'commit some eventList failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'commit eventsList successed');
+            this.response(203, 'commit eventsList satisfied condition successed');
         }
 
 
@@ -556,11 +522,11 @@ module.exports = app => {
             }
 
             if (!store) {
-                this.ctx.body = this.service.util.generateResponse(403, 'store some eventList failed');
+                this.response(403, 'store some eventList failed');
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(201, 'store eventsList successed');
+            this.response(203, 'store eventsList successed');
         }
     }
 
