@@ -7,7 +7,7 @@ module.exports = app => {
     class Test extends BaseController {
 
         async test1() {
-            this.response(203, 'insert record successed');
+            this.response(200, { name: this.ctx.query.name });
         }
 
         async test2() {
