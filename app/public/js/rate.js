@@ -1,4 +1,4 @@
-var userId = getSearchString('userId');
+
 
 function headTable(ths){
     var tableHead = document.getElementById('tbHead');

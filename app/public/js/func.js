@@ -1,3 +1,11 @@
+// var socket = io("ws://127.0.0.1:3000");
+// socket.on('news', function (data) {  //响应类型为news的消息
+//   socket.emit('response', { result:'received' });
+//   window.location.reload(); 
+//   //发送类型为'my other event'的消息
+// });
+
+
 /*handle class*/
 	function hasClass(elem, cls) {
 	  cls = cls || '';

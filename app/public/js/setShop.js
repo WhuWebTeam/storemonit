@@ -1,7 +1,5 @@
 var set = document.getElementById('set');
 var shop = document.getElementById('shop');
-var cookie = new CookieStorage('/');
-var userId = cookie.getItem('userId');
 
 
 set.onclick = function(){
@@ -36,6 +34,7 @@ $('#retryShop').click(function(){
 
 $('#oneKeyRetry').click(function(){
 	if(confirm('您将解除与所有门店的绑定！')){
+		console.log(document.cookie);
 		$.ajax({
 			url:'/api/v1/shopUser/oneKeyRetrive/'+userId,
 			type:'delete',

@@ -1,3 +1,6 @@
+var userId = getSearchString('userId');
+
+
 window.onload = function(){
 
 	
