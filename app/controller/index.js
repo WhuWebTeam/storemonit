@@ -6,12 +6,6 @@ module.exports = app => {
 
     class Index extends BaseController {
 
-        // Home page
-        async home() {
-            this.ctx.redirect('/public/home3.html');
-        }
-
-
         // Wu mei redirect api
         async wmHome() {
 
