@@ -117,7 +117,7 @@ module.exports = app => {
                 }
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'add video record successed');
+            this.response(200, 'add video record successed');
         }
     }
 

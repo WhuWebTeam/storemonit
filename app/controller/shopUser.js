@@ -51,7 +51,7 @@ module.exports = app => {
                 return;
             }
 
-            this.ctx.body = this.service.util.generateResponse(200, 'retrive shops from user successed');
+            this.response(200, 'retrive shops from user successed');
         }
 
 
