@@ -1,6 +1,5 @@
 #!/bin/bash
 
-./pgpass.sh
 
 echo "user:"
 read user
@@ -10,7 +9,12 @@ echo "host:"
 read host
 echo "port:"
 read port
+echo "password"
+read password
 
+pgpass=${host}:${port}:*:${user}:${database}
+
+./pgpass.sh ${pgpass}
 
 psql -U ${user} -d ${database} -h ${host} -p ${port} --command "CREATE TABLE public.users
 (

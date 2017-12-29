@@ -1,8 +1,22 @@
 #!/bin/bash
 
-./pgpass.sh
+echo "user:"
+read user
+echo "database:"
+read database
+echo "host:"
+read host
+echo "port:"
+read port
+echo "password"
+read password
 
-psql -U ${1} -d ${2} -h ${3} -p ${4} --command "
+pgpass=${host}:${port}:*:${user}:${database}
+
+./pgpass.sh ${pgpass}
+
+
+psql -U 127.0.0.1 -d company -h 127.0.0.1 -p 5432 --command "
 drop table users;
 drop table userswm;
 drop table authorities;
