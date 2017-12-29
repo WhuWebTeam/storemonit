@@ -63,6 +63,8 @@ module.exports = appInfo => {
          */
         logger: {
             dir: path.join(appInfo.baseDir, `../${appInfo.name}Info/log/logs`),
+            encoding: 'gbk',
+            consoleLevel: 'DEBUG'
         },
 
 
