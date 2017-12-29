@@ -1,8 +1,40 @@
 
 
 module.exports = app => {
-    const Config = {};
+    const Config = {
 
+        /**
+         * Set info of server port
+         * @member {Object} Config#cluster
+         * @property {Object} listen 
+         *     - listennig optioins of server port
+         *     - see {@link https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback}
+         * @property {String} listen.path - set a unix path when server listen
+         * @property {Number} listen.port - set a port when server listen
+         * @property {String} listen.hostname - set a hostname binding server when server listen
+         * @since 1.0.0
+         */
+        cluster: {
+            listen: {
+                path: '',
+                port: 7002,
+                hostname: '',
+            },
+        },
+
+        
+        /**
+         * Security setting
+         * @member {Object} Config#security
+         * @property {Boolean} security.csrf - security's csrf setting
+         * @since 1.0.0
+         */
+        security: {
+            csrf: false
+        }
+    };
+
+    
     /**
      * The configuration of database when project running local
      * Just start project through `egg-bin dev` command

@@ -25,6 +25,17 @@ module.exports = app => {
                 port: 7002,
                 hostname: '',
             },
+        },
+
+        
+        /**
+         * Security setting
+         * @member {Object} Config#security
+         * @property {Boolean} security.csrf - security's csrf setting
+         * @since 1.0.0
+         */
+        security: {
+            csrf: false
         }
     };
 
