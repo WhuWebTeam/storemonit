@@ -24,36 +24,36 @@ module.exports = app => {
             counter.type = DVA.RegType || 'pos';
             counter.shopId = DVA.ShopID || '';
             if (!await this.service.counters.insert(counter)) {
-                this.app.logger.error('insert counter record to table counters failed');
+                this.logger.error('insert counter record to table counters failed');
             } else {
-                this.app.logger.info('insert counter record to table counters successed');
+                this.logger.info('insert counter record to table counters successed');
             }
 
             // format shop
             let shop = {};
             shop.id = DVA.ShopID || '0000000000';
             if (!await this.service.shops.insert(shop)) {
-                this.app.logger.error('insert shop record to table shops failed');
+                this.logger.error('insert shop record to table shops failed');
             } else {
-                this.app.logger.info('insert shops record to table successed');
+                this.logger.info('insert shops record to table successed');
             }
 
             // format cashier
             let cashier = {};
             cashier.id = DVA.CashierID || '0000000000';
             if (!await this.service.cashiers.insert(cashier)) {
-                this.app.logger.error('insert cashier record to table cashiers failed');
+                this.logger.error('insert cashier record to table cashiers failed');
             } else {
-                this.app.logger.info('insert cashier record to table cashiers successed');
+                this.logger.info('insert cashier record to table cashiers successed');
             }
 
             // format customer
             let customer = {};
             customer.id = DVA.CustomerID || '0000000000';
             if (!await this.service.customers.insert(customer)) {
-                this.app.logger.error('insert customer record to table customers failed');
+                this.logger.error('insert customer record to table customers failed');
             } else {
-                this.app.logger.info('insert customer record to table customers successed');
+                this.logger.info('insert customer record to table customers successed');
             }
 
             for (const [index, billEle] of DVA.Bills.entries()) {
@@ -63,9 +63,9 @@ module.exports = app => {
                 product.id = billEle.Sku || '0000000000';
                 product.name = billEle.Text || '';
                 if (!await this.service.products.insert(product)) {
-                    this.app.logger.error('insert product record to table products failed');
+                    this.logger.error('insert product record to table products failed');
                 } else {
-                    this.app.logger.info('insert product record to table products successed');
+                    this.logger.info('insert product record to table products successed');
                 }
 
 
@@ -85,9 +85,9 @@ module.exports = app => {
                 bill.productId = billEle.Sku || '0000000000';
                 bill.cashierId = DVA.CashierID || '0000000000';
                 if (!await this.service.bills.insert(bill)) {
-                    this.app.logger.error('insert bill record to table bills failed');
+                    this.logger.error('insert bill record to table bills failed');
                 } else {
-                    this.app.logger.info('insert bill record to table bills successed');
+                    this.logger.info('insert bill record to table bills successed');
                 }
 
 
@@ -113,7 +113,7 @@ module.exports = app => {
                 if (bill.eventFlag.toLowerCase() !== 'normal' &&  await this.service.eventsList.insert(eventList)) {
                     this.app.loggger.error('insert eventList record to table eventsList failed');
                 } else if (bill.eventFlag.toLowerCase() !== 'normal') {
-                    this.app.logger.info('insert eventList record to table eventsList successed');
+                    this.logger.info('insert eventList record to table eventsList successed');
                 }
             }
 
