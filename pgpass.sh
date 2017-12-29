@@ -1,10 +1,9 @@
 #!/bin/bash
 
 if [ -e ~/.pgpass ]
-then
-    echo ~/.pgpass file exists
+then 
     rm ~/.pgpass
 fi
 
-echo ${1} >> ~/.pgpass
+echo "127.0.0.1:5432:*:company:123" >> ~/.pgpass
 chmod 600 ~/.pgpass

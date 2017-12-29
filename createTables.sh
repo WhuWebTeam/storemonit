@@ -12,7 +12,7 @@ read port
 echo "password"
 read password
 
-pgpass=${host}:${port}:*:${user}:${database}
+pgpass=${host}:${port}:*:${user}:${password}
 
 ./pgpass.sh ${pgpass}
 
