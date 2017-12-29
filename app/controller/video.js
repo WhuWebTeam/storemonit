@@ -24,36 +24,36 @@ module.exports = app => {
             counter.type = DVA.RegType || 'pos';
             counter.shopId = DVA.ShopID || '';
             if (!await this.service.counters.insert(counter)) {
-                await this.service.logger.logDefault('error', `counter(${counter.id}) exists`);
+                this.app.logger.error('insert counter record to table counters failed');
             } else {
-                await this.service.logger.logDefault('running', `insert counter(${counter.id}) to counters successed`);
+                this.app.logger.info('insert counter record to table counters successed');
             }
 
             // format shop
             let shop = {};
             shop.id = DVA.ShopID || '0000000000';
             if (!await this.service.shops.insert(shop)) {
-                await this.service.logger.logDefault('error', `shop(${shop.id} exists`);
+                this.app.logger.error('insert shop record to table shops failed');
             } else {
-                await this.service.logger.logDefault('running', `insert shop(${shop.id}) to shops successed`);
+                this.app.logger.info('insert shops record to table successed');
             }
 
             // format cashier
             let cashier = {};
             cashier.id = DVA.CashierID || '0000000000';
             if (!await this.service.cashiers.insert(cashier)) {
-                await this.service.logger.logDefault('error', `cashier(${cashier.id}) exists`);
+                this.app.logger.error('insert cashier record to table cashiers failed');
             } else {
-                await this.service.logger.logDefault('running', `insert cashier(${cashier.id}) to cashiers successed`);
+                this.app.logger.info('insert cashier record to table cashiers successed');
             }
 
             // format customer
             let customer = {};
             customer.id = DVA.CustomerID || '0000000000';
             if (!await this.service.customers.insert(customer)) {
-                await this.service.logger.logDefault('error', `customer(${customer.id}) exists`);
+                this.app.logger.error('insert customer record to table customers failed');
             } else {
-                await this.service.logger.logDefault('running', `insert customer(${customer.id}) to customers successed`);
+                this.app.logger.info('insert customer record to table customers successed');
             }
 
             for (const [index, billEle] of DVA.Bills.entries()) {
@@ -63,9 +63,9 @@ module.exports = app => {
                 product.id = billEle.Sku || '0000000000';
                 product.name = billEle.Text || '';
                 if (!await this.service.products.insert(product)) {
-                    await this.service.logger.logDefault('error', `product(${product.id}) exists`);
+                    this.app.logger.error('insert product record to table products failed');
                 } else {
-                    await this.service.logger.logDefault('running', `insert product(${product.id}) to products successed`);
+                    this.app.logger.info('insert product record to table products successed');
                 }
 
 
@@ -85,9 +85,9 @@ module.exports = app => {
                 bill.productId = billEle.Sku || '0000000000';
                 bill.cashierId = DVA.CashierID || '0000000000';
                 if (!await this.service.bills.insert(bill)) {
-                    await this.service.logger.logDefault('error', `bill(${bill}) exists`);
+                    this.app.logger.error('insert bill record to table bills failed');
                 } else {
-                    await this.service.logger.logDefault('running', `insert bill(${bill}) to bills successed`);
+                    this.app.logger.info('insert bill record to table bills successed');
                 }
 
 
@@ -111,9 +111,9 @@ module.exports = app => {
                 eventList.cashierId = DVA.CashierID || '0000000000';
                 eventList.shopId = DVA.ShopID || '0000000000';
                 if (bill.eventFlag.toLowerCase() !== 'normal' &&  await this.service.eventsList.insert(eventList)) {
-                    await this.service.logger.logDefault('running', `insert bill(${eventList}) to bills successed`);
+                    this.app.loggger.error('insert eventList record to table eventsList failed');
                 } else if (bill.eventFlag.toLowerCase() !== 'normal') {
-                    await this.service.logger.logDefault('running', `bill(${eventList}) exists`);
+                    this.app.logger.info('insert eventList record to table eventsList successed');
                 }
             }
 
