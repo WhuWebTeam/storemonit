@@ -26,6 +26,7 @@ window.onload = function(){
 						$('#details').val(data[i].details);
 						$('#operation').val('edit');
 						$('#handleRecord')[0].style.display = 'block';
+						watchForm()
 					}
 				}
 			}
@@ -41,6 +42,7 @@ window.onload = function(){
 		$('#details').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
+		watchForm()
 	});
 
 	$('#delete').click(function(){
@@ -98,8 +100,41 @@ window.onload = function(){
 	})
 
 
+	function watchForm(){
+		if($('#operation').val() == 'edit'){
+			   $("#id").css('border','1px solid #ccc');
+			   $("#name").css('border','1px solid #ccc');
+			   $("#details").css('border','1px solid #ccc');
+			   $('#submit').removeAttr('disabled');
+		}else{
+			$("#id").css('border','1px solid red');
+			$("#name").css('border','1px solid red');
+			$("#details").css('border','1px solid red');
+			$('#submit').attr('disabled','');
+		}
+   }
 
 
+    $("#id").change(function(){
+ 	    this.style.border = $('#id').val()?'1px solid #ccc':'1px solid red';
+    })
+    $("#name").change(function(){
+ 	    this.style.border = $('#name').val()?'1px solid #ccc':'1px solid red';
+    })
+    $("#details").change(function(){
+	    this.style.border = $('#details').val()?'1px solid #ccc':'1px solid red';
+    })
+    $(":input").bind('input propertychange',function(){ 
+		var id = $('#id').val();
+		var name = $('#name').val() ;
+		var details = $('#details').val() ;
+
+		if(details&&name&&id){
+			$('#submit').removeAttr('disabled');
+		}else{
+			$('#submit').attr('disabled','');
+		} 
+	});
 
 	getList();
 }
