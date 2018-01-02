@@ -196,11 +196,7 @@ module.exports = app => {
             }
 
             // user doesn't exist
-            if (!table && !await this.service.users.exists(counterUser.userId)){
-                return false;
-            }
-
-            if (table && !await this.service.userswm.exists(counterUser.userId)) {
+            if (!await this.service.userswm.exists(counterUser.userId)) {
                 return false;
             }
 
@@ -214,7 +210,6 @@ module.exports = app => {
                 await this.service.dbHelp.insert('counterUser', counterUser);
                 return true;
             } catch (err) {
-                console.log(err);
                 return false;
             }
         }
