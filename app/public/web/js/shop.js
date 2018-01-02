@@ -51,6 +51,7 @@ window.onload = function(){
 						$('#details').val(data[i].details);
 						$('#operation').val('edit');
 						$('#handleRecord')[0].style.display = 'block';
+						watchForm();
 					}
 				}
 			}
@@ -65,6 +66,7 @@ window.onload = function(){
 		$('#details').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
+		watchForm();
 	});
 
 	$('#delete').click(function(){
@@ -123,6 +125,50 @@ window.onload = function(){
 	$('#back').click(function(){
 		$('#handleRecord')[0].style.display = 'none';
 	})
+
+	function watchForm(){
+		if($('#operation').val() == 'edit'){
+			   $("#id").css('border','1px solid #ccc');
+			   $("#areaname").css('border','1px solid #ccc');
+			   $("#shopname").css('border','1px solid #ccc');
+			   $("#details").css('border','1px solid #ccc');
+			   $('#submit').removeAttr('disabled');
+		}else{
+			$("#id").css('border','1px solid red');
+			$("#areaname").css('border','1px solid red');
+			$("#shopname").css('border','1px solid red');
+			$("#details").css('border','1px solid red');
+			$('#submit').attr('disabled','');
+		}
+   }
+
+
+    $("#id").change(function(){
+ 	    this.style.border = $('#id').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#areaname").change(function(){
+ 	    this.style.border = $('#areaname').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#shopname").change(function(){
+		this.style.border = $('#shopname').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#details").change(function(){
+		this.style.border = $('#details').val()?'1px solid #ccc':'1px solid red';
+    })
+    $(":input").bind('input propertychange',function(){ 
+		var id = $('#id').val();
+		var areaname = $('#areaname').val() ;
+		var shopname = $('#shopname').val() ;
+		var details = $('#details').val() ;
+
+		if(shopname&&areaname&&id&&details){
+			$('#submit').removeAttr('disabled');
+		}else{
+			$('#submit').attr('disabled','');
+		} 
+	});
+
+
 
 	getList();
 

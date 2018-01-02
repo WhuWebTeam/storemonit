@@ -97,6 +97,7 @@ window.onload = function(){
 						$('#posalarmport').val(data[i].posalarmport);
 						$('#operation').val('edit');
 						$('#handleRecord')[0].style.display = 'block';
+						watchForm();
 					}
 				}
 			}
@@ -118,6 +119,7 @@ window.onload = function(){
 		$('#posalarmport').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
+		watchForm();
 	});
 
 	$('#delete').click(function(){
@@ -201,5 +203,100 @@ window.onload = function(){
 		getCountsInfo( $("#shops").val() );
 		if($('#add').attr('disabled')) $('#add').removeAttr('disabled');
 	});
+
+
+	function watchForm(){
+		if($('#operation').val() == 'edit'){
+			$("#id").css('border','1px solid #ccc');
+			$("#type").css('border','1px solid #ccc');
+			$("#name").css('border','1px solid #ccc');
+			$("#cameraip").css('border','1px solid #ccc');
+			$("#alarmip").css('border','1px solid #ccc');
+			$("#alarmport").css('border','1px solid #ccc');
+			$("#posip").css('border','1px solid #ccc');
+			$("#posctlport").css('border','1px solid #ccc');
+			$("#posbillport").css('border','1px solid #ccc');
+			$("#posalarmport").css('border','1px solid #ccc');
+			$('#submit').removeAttr('disabled');
+		}else{
+			$("#id").css('border','1px solid red');
+			$("#type").css('border','1px solid red');
+			$("#name").css('border','1px solid red');
+			$("#cameraip").css('border','1px solid red');
+			$("#alarmip").css('border','1px solid red');
+			$("#alarmport").css('border','1px solid red');
+			$("#posip").css('border','1px solid red');
+			$("#posctlport").css('border','1px solid red');
+			$("#posbillport").css('border','1px solid red');
+			$("#posalarmport").css('border','1px solid red');
+			$('#submit').attr('disabled','');
+		}
+    }
+
+	const IpReg = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
+    $("#id").change(function(){
+ 	    this.style.border = $('#id').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#name").change(function(){
+		this.style.border = $('#name').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#type").change(function(){
+		this.style.border = '1px solid #ccc';
+	})
+	$("#cameraip").change(function(){
+		if(IpReg.test( $('#cameraip').val() )){
+			this.style.border = '1px solid #ccc';
+		}else{
+			this.style.border = '1px solid red';
+		}
+    })
+	$("#alarmip").change(function(){
+		if(IpReg.test( $('#alarmip').val() )){
+			this.style.border = '1px solid #ccc';
+		}else{
+			this.style.border = '1px solid red';
+		}
+	})
+	$("#alarmport").change(function(){
+		this.style.border = $('#alarmport').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#posip").change(function(){
+		if(IpReg.test( $('#posip').val() )){
+			this.style.border = '1px solid #ccc';
+		}else{
+			this.style.border = '1px solid red';
+		}
+	})
+	$("#posctlport").change(function(){
+		this.style.border = $('#posctlport').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#posbillport").change(function(){
+		this.style.border = $('#posbillport').val()?'1px solid #ccc':'1px solid red';
+	})
+	$("#posalarmport").change(function(){
+		this.style.border = $('#posalarmport').val()?'1px solid #ccc':'1px solid red';
+	})
+
+
+    $(":input").bind('input propertychange',function(){ 
+		var id = $('#id').val();
+		var name = $('#name').val() ;
+		var type = $('#type').val() ;
+		var cameraip = $('#cameraip').val() ;
+		var alarmip = $('#alarmip').val() ;
+		var alarmport = $('#alarmport').val() ;
+		var posip = $('#posip').val() ;
+		var posctlport = $('#posctlport').val() ;
+		var posbillport = $('#posbillport').val() ;
+		var posalarmport = $('#posalarmport').val() ;
+
+		if(id&&name&&id&&type&&alarmport&&posctlport&&posbillport&&posalarmport&&IpReg.test(cameraip)&&IpReg.test(alarmip)&&IpReg.test(posip)){
+			$('#submit').removeAttr('disabled');
+		}else{
+			$('#submit').attr('disabled','');
+		} 
+	});
+
+
 
 }
