@@ -10,6 +10,23 @@ module.exports = appInfo => {
     const Config = {
 
         /**
+         * Middlewares' name used in app
+         * @member {String[]} Config#middleware - predefine middleware name used in app
+         * @since 1.0.0
+         */
+        middleware: ['gzip'],
+
+        /**
+         * Middleware gzip
+         * @member {object} Config#gzip - options of middleware gzip
+         * @property {number} gzip.zipSize - the min limit length of body to compress
+         * @since 1.0.0
+         */
+        gzip: {
+            zipSize: 1024
+        }, 
+
+        /**
          * Key that sign cookies
          * @member {String} Config#keys
          * @since 1.0.0
