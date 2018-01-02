@@ -54,7 +54,7 @@ module.exports = app => {
             const tables = [
                 'authorities', 'counterUser', 'counters', 'shops', 'areas', 'products', 'customers', 'shopUser',
                 'cashiers', 'bills', 'eventsList', 'cashierSalesInfo', 'customerSalesInfo', 'productSalesInfo', 'eventTAT',
-                'users', 'counterTypeConf'
+                'users'
             ];
 
             try {
