@@ -80,7 +80,4 @@ window.onload = function(){
 			
 		}
 	})
-
-
-
 }
