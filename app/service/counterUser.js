@@ -178,11 +178,13 @@ module.exports = app => {
          * false when insert counterUser record failed
          * @since 1.0.0
          */
-        async insert(counterUser, table) {
+        async insert(counterUser) {
+            console.log(counterUser);
 
             // format counterUser's attributes
             counterUser = this.setTableValue(this.table, counterUser);
 
+            console.log(counterUser);
             // counterUser.counterId and countrUser.userId doesn't exist
             if (!counterUser.userId || !counterUser.counterId) {
                 return false;
@@ -212,6 +214,7 @@ module.exports = app => {
                 await this.service.dbHelp.insert('counterUser', counterUser);
                 return true;
             } catch (err) {
+                console.log(err);
                 return false;
             }
         }

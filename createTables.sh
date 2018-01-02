@@ -219,6 +219,8 @@ CREATE TABLE public.eventsList
     pic2Url varchar(200),
     pic3Url varchar(200),
     pic4Url varchar(200),
+    shopId varchar(50),
+    shopName varchar(50),
     productId varchar(50),
     productName varchar(50),
     counterId varchar(50),
