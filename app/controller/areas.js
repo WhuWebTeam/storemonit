@@ -76,7 +76,7 @@ module.exports = app => {
                 return;
             }
 
-            thi.response(204, 'delete all area satisfied condition successed');
+            this.response(204, 'delete all area satisfied condition successed');
         }
     }
 
