@@ -58,27 +58,25 @@ window.onload = function(){
 						isClick[i] = !isClick[i];
 					}
 				}
-
-				var submit = document.getElementById('confirm');
-				submit.onclick = (function(){
-					return 	function(){
-								if(counters.length){
-									$.ajax({
-										url:'/api/v1/counterUser/' + userId,
-										type:'POST',
-										data:{counters},
-										success:function(){
-											window.location = 'checker.html';
-										}
-									})
-								}else{
-									window.location = 'checker.html';
-								}
-							}
-				}(userId));
 			}
 
-
+			var submit = document.getElementById('confirm');
+			submit.onclick = (function(){
+				return 	function(){
+							if(counters.length){
+								$.ajax({
+									url:'/api/v1/counterUser/' + userId,
+									type:'POST',
+									data:{counters},
+									success:function(){
+										window.location = 'checker.html';
+									}
+								})
+							}else{
+								window.location = 'checker.html';
+							}
+						}
+			}(userId));
 			
 		}
 	})
