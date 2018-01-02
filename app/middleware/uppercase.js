@@ -1,11 +1,9 @@
 
 
-module.exports = app => {
+module.exports = (options, app) => {
     
-    async function uppercase(ctx, next) {
-        ctx.query.name = ctx.query.name && ctx.query.name.toUpperCase();
+    return async function uppercase(ctx, next) {
+        this.ctx.query = this.ctx.query.name && this.ctx.query.name.toUpperCase();
         await next();
     }
-
-    return uppercase;
 }
