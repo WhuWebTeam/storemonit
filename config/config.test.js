@@ -22,7 +22,7 @@ module.exports = app => {
         cluster: {
             listen: {
                 path: '',
-                port: 7002,
+                port: 7001,
                 hostname: '',
             },
         },

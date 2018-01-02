@@ -105,8 +105,8 @@ module.exports = app => {
             temp = temp.substr(0, temp.length - 2) + ')';
             str = str + ' values ' + temp;
 
-            // console.log(str);
-            // console.log(values);
+            console.log(str);
+            console.log(values);
             await this.app.db.query(str, values);
         }
 

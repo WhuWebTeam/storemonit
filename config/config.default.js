@@ -113,7 +113,7 @@ module.exports = appInfo => {
 
     
     /**
-     * level of wmuser
+     * Level of wmuser
      * @member {Object} Config#userLevel
      * @property {Number} userLevel.manager - manager level
      * @property {Number} userLevel.storeManager - storeManager level
@@ -137,6 +137,7 @@ module.exports = appInfo => {
         graphShowTime: '6 m',
         checkerResponseTime: [3, 5]
     }
+    
 
     Config.password = 'wesine027';
 

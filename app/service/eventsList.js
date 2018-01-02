@@ -202,7 +202,6 @@ module.exports = app => {
             // format eventList's attributes
             eventList = this.setTableValue(this.table, eventList);
 
-
             // eventList.sysKey doesn't exist
             if (!eventList.sysKey) {
                 return false;
