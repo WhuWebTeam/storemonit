@@ -7,7 +7,7 @@ module.exports = app => {
     class Test extends BaseController {
 
         async test1() {
-            this.response(200, 'index test successed');
+            this.response(200, this.app.config);
         }
 
         async test2() {
