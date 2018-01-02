@@ -23,7 +23,7 @@ module.exports = appInfo => {
          * @since 1.0.0
          */
         gzip: {
-            zipSize: 1024 * 10
+            zipSize: 1024
         }, 
 
         /**

@@ -7,13 +7,11 @@ module.exports = app => {
     class Test extends BaseController {
 
         async test1() {
-            this.response(200, {
-                name: this.ctx.query.name
-            });
+            this.response(200, 'index test successed');
         }
 
         async test2() {
-            this.response(400, 'get recode failed');
+            this.response(400, 'get recorde failed');
         }
 
         async test3() {
