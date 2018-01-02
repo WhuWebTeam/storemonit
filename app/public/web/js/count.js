@@ -97,6 +97,7 @@ window.onload = function(){
 						$('#posalarmport').val(data[i].posalarmport);
 						$('#operation').val('edit');
 						$('#handleRecord')[0].style.display = 'block';
+						$('#id').attr('disabled','');
 						watchForm();
 					}
 				}
@@ -119,6 +120,7 @@ window.onload = function(){
 		$('#posalarmport').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
+		$('#id').removeAttr('disabled');
 		watchForm();
 	});
 
@@ -157,7 +159,10 @@ window.onload = function(){
 				    'posBillPort': $('#posbillport').val(),
 				    'posAlarmPort': $('#posalarmport').val()
 				},
-				success:function(){
+				success:function(results){
+					if(results.code == 403){
+						alert('您输入的id号已存在,新增记录失败！');
+					}
 					$('#handleRecord')[0].style.display = 'none';
 					getCountsInfo( $("#shops").val() );
 				}
@@ -296,7 +301,4 @@ window.onload = function(){
 			$('#submit').attr('disabled','');
 		} 
 	});
-
-
-
 }

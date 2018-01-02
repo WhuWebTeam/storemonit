@@ -26,6 +26,7 @@ window.onload = function(){
 						$('#details').val(data[i].details);
 						$('#operation').val('edit');
 						$('#handleRecord')[0].style.display = 'block';
+						$('#id').attr('disabled','');
 						watchForm()
 					}
 				}
@@ -42,6 +43,7 @@ window.onload = function(){
 		$('#details').val('');
 		$('#operation').val('add');
 		$('#handleRecord')[0].style.display = 'block';
+		$('#id').removeAttr('disabled');
 		watchForm()
 	});
 
@@ -72,10 +74,12 @@ window.onload = function(){
 					'name': $('#name').val(),
 					'details': $('#details').val()
 				},
-				success:function(){
+				success:function(results){
+					if(results.code == 403){
+						alert('您输入的id号已存在,新增记录失败！');
+					}
 					$('#handleRecord')[0].style.display = 'none';
 					getList();
-
 				}
 			})
 		}
