@@ -62,6 +62,8 @@ window.onload = function(){
 
 			var submit = document.getElementById('confirm');
 			submit.onclick = function(){
+
+
 				if(counters.length){
 					$.ajax({
 						url:'/api/v1/counterUser/' + userId,
