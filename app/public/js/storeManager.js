@@ -1,230 +1,200 @@
 var userId = getSearchString('userId');
 
+window.onload = function () {
 
-window.onload = function(){
-
-	
 	/* get num of events */
-	function getNum(){
+	function getNum() {
 		$.ajax({
-			url:'/api/v1/eventsList/count/manager/'+userId,
-			type:'GET',
+			url: '/api/v1/eventsList/count/manager/' + userId,
+			type: 'GET',
 			//data:
-			success:function(results){
-				document.getElementById('event').children[0].children[0].innerHTML = results.data.dealing;  
-				document.getElementById('event').children[1].children[0].innerHTML = results.data.completed;  
+			success: function (results) {
+				document.getElementById('event').children[0].children[0].innerHTML = results.data.dealing;
+				document.getElementById('event').children[1].children[0].innerHTML = results.data.completed;
 			}
-		})
+		});
 	}
 	/* get num of events */
 
-	function getGraph(type){
+	function getGraph(type) {
 		//console.log(type);
 		$.ajax({
-			url:'/api/v1/eventsList/countGraph/manager/'+userId+'/'+type,
-			type:'get',
-			success:function(results){
+			url: '/api/v1/eventsList/countGraph/manager/' + userId + '/' + type,
+			type: 'get',
+			success: function (results) {
 				var graphData = results.data;
-				if(type=='week'){
-					sortFun(graphData,'y',true);
-					sortFun(graphData,'w',true);
-					draw(graphData,'y','w');
-				}else{
-					sortFun(graphData,'t',true);
-					draw(graphData,'t');
+				if (type == 'week') {
+					sortFun(graphData, 'y', true);
+					sortFun(graphData, 'w', true);
+					draw(graphData, 'y', 'w');
+				} else {
+					sortFun(graphData, 't', true);
+					draw(graphData, 't');
 				}
 			}
-		})
+		});
 	}
 	/*draw graph*/
 	var myChart;
-	function draw(graphData,attr1,attr2){
-			if (myChart != null && myChart != "" && myChart != undefined) {
-			        myChart.dispose();
-			}
-			myChart = echarts.init(document.getElementById('contentGraph'));
+	function draw(graphData, attr1, attr2) {
+		if (myChart != null && myChart != "" && myChart != undefined) {
+			myChart.dispose();
+		}
+		myChart = echarts.init(document.getElementById('contentGraph'));
 
-			option = {
-			            title : {
-			                subtext: '次数'
-			            },
-			            tooltip : {
-			                trigger: 'axis'
-			            },
-			            grid : {
-					        left : '15%', 
-					        right:   '15%',
-					    },
-			            // legend: {
-			            //     data:['最高气温','最低气温']
-			            // },
-			            // toolbox: {
-			            //     show : true,
-			            //     feature : {
-			            //         mark : {show: true},
-			            //         dataView : {show: true, readOnly: false},
-			            //         magicType : {show: true, type: ['line', 'bar']},
-			            //         restore : {show: true},
-			            //         //saveAsImage : {show: true}
-			            //     }
-			            // },
-			            calculable : true,
-			            xAxis : [
-			                {
-			                    type : 'category',
-			                    boundaryGap : false,
-			                    data : []
-			                    //data : ['周一','周二','周三','周四','周五','周六']
-			                }
-			            ],
-			            yAxis : [
-			                {
-			                    type : 'value',
-			                    axisLabel : {
-			                        formatter: '{value} '
-			                    }
-			                }
-			            ],
-			            series : [
-			                {
-			                    name:'防损事件次数',
-			                    type:'line',
-			                    //data:[11, 11, 15, 18, 12, 9],
-			                    data:[],
-			                    markPoint : {
-			                        data : [
-			                            {type : 'max', name: '最大值'},
-			                            {type : 'min', name: '最小值'}
-			                        ]
-			                    },
-			                    markLine : {
-			                        data : [
-			                            {type : 'average', name: '平均值'}
-			                        ]
-			                    }
-			                }
-			                 
-			            ]
-			        };
-		    option.xAxis[0].data =graphData.map(function(Item){
-		    	return Item[attr1] + (attr2?'第'+Item[attr2]+'周':'');
-		    })
-		    option.series[0].data =graphData.map(function(Item){
-		    	return Item.count;
-		    })
-		    myChart.setOption(option);
+		option = {
+			title: {
+				subtext: '次数'
+			},
+			tooltip: {
+				trigger: 'axis'
+			},
+			grid: {
+				left: '15%',
+				right: '15%'
+			},
+			// legend: {
+			//     data:['最高气温','最低气温']
+			// },
+			// toolbox: {
+			//     show : true,
+			//     feature : {
+			//         mark : {show: true},
+			//         dataView : {show: true, readOnly: false},
+			//         magicType : {show: true, type: ['line', 'bar']},
+			//         restore : {show: true},
+			//         //saveAsImage : {show: true}
+			//     }
+			// },
+			calculable: true,
+			xAxis: [{
+				type: 'category',
+				boundaryGap: false,
+				data: []
+				//data : ['周一','周二','周三','周四','周五','周六']
+			}],
+			yAxis: [{
+				type: 'value',
+				axisLabel: {
+					formatter: '{value} '
+				}
+			}],
+			series: [{
+				name: '防损事件次数',
+				type: 'line',
+				//data:[11, 11, 15, 18, 12, 9],
+				data: [],
+				markPoint: {
+					data: [{ type: 'max', name: '最大值' }, { type: 'min', name: '最小值' }]
+				},
+				markLine: {
+					data: [{ type: 'average', name: '平均值' }]
+				}
+			}]
+		};
+		option.xAxis[0].data = graphData.map(function (Item) {
+			return Item[attr1] + (attr2 ? '第' + Item[attr2] + '周' : '');
+		});
+		option.series[0].data = graphData.map(function (Item) {
+			return Item.count;
+		});
+		myChart.setOption(option);
 	}
-	
-    /*draw graph*/
 
+	/*draw graph*/
 
-    /* add press event of day week and month */
-    var btn = document.getElementById('graph').getElementsByTagName('button');
-   	Array.prototype.map.call(btn,function(item,index){
-    	item.onclick = function(){
-    		/*handle style*/
-    		var alr_down = document.getElementsByClassName('down')[0];
-    		if(alr_down !== this){
-    			removeClass(alr_down,'down');
-    			addClass(item,'down');
-    		}
-    		/*handle style*/
+	/* add press event of day week and month */
+	var btn = document.getElementById('graph').getElementsByTagName('button');
+	Array.prototype.map.call(btn, function (item, index) {
+		item.onclick = function () {
+			/*handle style*/
+			var alr_down = document.getElementsByClassName('down')[0];
+			if (alr_down !== this) {
+				removeClass(alr_down, 'down');
+				addClass(item, 'down');
+			}
+			/*handle style*/
 
-    		/*date_type of graph*/
-    		var type = item.className.split(/\s+/)[0]; 
-    		getGraph(type);
+			/*date_type of graph*/
+			var type = item.className.split(/\s+/)[0];
+			getGraph(type);
+		};
+	});
+	/* add press event of day week and month */
 
-
-    	}
-    });
-   	/* add press event of day week and month */
-
-
-	function getDot(){
+	function getDot() {
 		$.ajax({
-			url:'/api/v1/eventsList/errorRate/graph/'+userId,
-			type:'get',
-			success:function(results){
+			url: '/api/v1/eventsList/errorRate/graph/' + userId,
+			type: 'get',
+			success: function (results) {
 				var dotData = results.data;
 				drawDot(dotData);
 			}
-		})
+		});
 	}
 	/*draw graph*/
 	var myDot;
-	function drawDot(dotData){
-			if (myDot != null && myDot != "" && myDot != undefined) {
-			        myDot.dispose();
-			}
-			myDot = echarts.init(document.getElementById('contentDot'));
+	function drawDot(dotData) {
+		if (myDot != null && myDot != "" && myDot != undefined) {
+			myDot.dispose();
+		}
+		myDot = echarts.init(document.getElementById('contentDot'));
 
-			option = {
-			    title : {
-			        text: '差错率',
-			    },
-			    tooltip : {
-			        trigger: 'axis',
-			        showDelay : 0, 
-			        axisPointer:{
-			            show: true,
-			            type : 'cross',
-			            lineStyle: {
-			                type : 'dashed',
-			                width : 1
-			            }
-			        }
-			    },
-			    // toolbox: {
-			    //     show : true,
-			    //     feature : {
-			    //         mark : {show: true},
-			    //         dataZoom : {show: true},
-			    //         dataView : {show: true, readOnly: false},
-			    //         restore : {show: true}
-			    //     }
-			    // },
-			    xAxis : [
-			        {
-			            type : 'value',
-			            scale:true,
-			            axisLabel : {
-			                formatter: '{value} '
-			            }
-			        }
-			    ],
-			    yAxis : [
-			        {
-			            type : 'value',
-			            scale:true,
-			            axisLabel : {
-			                formatter: '{value} '
-			            }
-			        }
-			    ],
-			    series : [
-			        {
-			            name:'某门店',
-			            type:'scatter',
-			            // data: [[2000, 10], [3000, 24], [8000, 100],[4000, 36], [1000, 37]
-			            // ]
-			        }
-			    ]
-			};
-			
-			option.series[0].data = dotData.map(function(x){
-		    	return [x.total,x.error];
-		    });                   
+		option = {
+			title: {
+				text: '差错率'
+			},
+			tooltip: {
+				trigger: 'axis',
+				showDelay: 0,
+				axisPointer: {
+					show: true,
+					type: 'cross',
+					lineStyle: {
+						type: 'dashed',
+						width: 1
+					}
+				}
+			},
+			// toolbox: {
+			//     show : true,
+			//     feature : {
+			//         mark : {show: true},
+			//         dataZoom : {show: true},
+			//         dataView : {show: true, readOnly: false},
+			//         restore : {show: true}
+			//     }
+			// },
+			xAxis: [{
+				type: 'value',
+				scale: true,
+				axisLabel: {
+					formatter: '{value} '
+				}
+			}],
+			yAxis: [{
+				type: 'value',
+				scale: true,
+				axisLabel: {
+					formatter: '{value} '
+				}
+			}],
+			series: [{
+				name: '某门店',
+				type: 'scatter'
+				// data: [[2000, 10], [3000, 24], [8000, 100],[4000, 36], [1000, 37]
+				// ]
+			}]
+		};
 
-			myDot.setOption(option);
+		option.series[0].data = dotData.map(function (x) {
+			return [x.total, x.error];
+		});
 
+		myDot.setOption(option);
 	}
-	
 
-   
-
-
-
-   	getNum();
-   	getGraph('day');
-   	getDot();  
-}
+	getNum();
+	getGraph('day');
+	getDot();
+};
