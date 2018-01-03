@@ -178,11 +178,13 @@ module.exports = app => {
          * false when insert counterUser record failed
          * @since 1.0.0
          */
-        async insert(counterUser, table) {
+        async insert(counterUser) {
+            console.log(counterUser);
 
             // format counterUser's attributes
             counterUser = this.setTableValue(this.table, counterUser);
 
+            console.log(counterUser);
             // counterUser.counterId and countrUser.userId doesn't exist
             if (!counterUser.userId || !counterUser.counterId) {
                 return false;
@@ -194,11 +196,7 @@ module.exports = app => {
             }
 
             // user doesn't exist
-            if (!table && !await this.service.users.exists(counterUser.userId)){
-                return false;
-            }
-
-            if (table && !await this.service.userswm.exists(counterUser.userId)) {
+            if (!await this.service.userswm.exists(counterUser.userId)) {
                 return false;
             }
 

@@ -91,6 +91,7 @@ module.exports = app => {
                 }
 
 
+                this.logger.info('xxxxxx');
                 // format eventList
                 let eventList = {};
                 eventList.sysKey = bill.sysKey;
@@ -111,9 +112,9 @@ module.exports = app => {
                 eventList.cashierId = DVA.CashierID || '0000000000';
                 eventList.shopId = DVA.ShopID || '0000000000';
                 if (bill.eventFlag.toLowerCase() !== 'normal' &&  await this.service.eventsList.insert(eventList)) {
-                    this.app.loggger.error('insert eventList record to table eventsList failed');
+                    this.app.logger.error('insert eventList record to table eventsList successed');
                 } else if (bill.eventFlag.toLowerCase() !== 'normal') {
-                    this.logger.info('insert eventList record to table eventsList successed');
+                    this.logger.info('insert eventList record to table eventsList failed');
                 }
             }
 

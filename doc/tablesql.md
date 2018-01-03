@@ -114,6 +114,23 @@ ALTER TABLE public.counters
 ```
 
 
+#### counterTypeConf
+
+```postgre
+
+CREATE TABLE public.counterTypeConf
+(
+    id varchar(50) primary key,
+    type varchar(50)
+) 
+WITH (
+  OIDS = FALSE
+);
+ALTER TABLE public.counterTypeConf
+  OWNER TO company;
+
+```
+
 
 ###
 
@@ -145,7 +162,8 @@ CREATE TABLE public.shops
     id varchar(50) primary key,
     areaId varchar(50),
     name varchar(50),
-    details varchar(500)
+    details varchar(500),
+    type varchar(50)
 )
 WITH (
   OIDS = FALSE
@@ -288,6 +306,8 @@ CREATE TABLE public.eventsList
     pic2Url varchar(200),
     pic3Url varchar(200),
     pic4Url varchar(200),
+    shopId varchar(50),
+    shopName varchar(50),
     productId varchar(50),
     productName varchar(50),
     counterId varchar(50),
@@ -302,7 +322,6 @@ ALTER TABLE public.eventsList
   OWNER TO company;
 
 ```
-
 
 
 ### editResultList
