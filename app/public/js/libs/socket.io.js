@@ -7,6 +7,7 @@
     }var n = {};return e.m = t, e.c = n, e.p = "", e(0);
   }([function (t, e, n) {
     "use strict";
+
     function r(t, e) {
       "object" === ("undefined" == typeof t ? "undefined" : o(t)) && (e = t, t = void 0), e = e || {};var n,
           r = i(t),
@@ -27,6 +28,7 @@
   }, function (t, e, n) {
     (function (e) {
       "use strict";
+
       function r(t, n) {
         var r = t;n = n || e.location, null == t && (t = n.protocol + "//" + n.host), "string" == typeof t && ("/" === t.charAt(0) && (t = "/" === t.charAt(1) ? n.protocol + t : n.host + t), /^(https?|wss?):\/\//.test(t) || (i("protocol-less url %s", t), t = "undefined" != typeof n ? n.protocol + "//" + t : "https://" + t), i("parse %s", t), r = o(t)), r.port || (/^(http|ws)$/.test(r.protocol) ? r.port = "80" : /^(http|ws)s$/.test(r.protocol) && (r.port = "443")), r.path = r.path || "/";var s = r.host.indexOf(":") !== -1,
             a = s ? "[" + r.host + "]" : r.host;return r.id = r.protocol + "://" + a + ":" + r.port, r.href = r.protocol + "://" + a + (n && n.port === r.port ? "" : ":" + r.port), r;
@@ -335,6 +337,7 @@
     }());
   }, function (t, e, n) {
     "use strict";
+
     function r(t, e) {
       if (!(this instanceof r)) return new r(t, e);t && "object" === ("undefined" == typeof t ? "undefined" : o(t)) && (e = t, t = void 0), e = e || {}, e.path = e.path || "/socket.io", this.nsps = {}, this.subs = [], this.opts = e, this.reconnection(e.reconnection !== !1), this.reconnectionAttempts(e.reconnectionAttempts || 1 / 0), this.reconnectionDelay(e.reconnectionDelay || 1e3), this.reconnectionDelayMax(e.reconnectionDelayMax || 5e3), this.randomizationFactor(e.randomizationFactor || .5), this.backoff = new l({ min: this.reconnectionDelay(), max: this.reconnectionDelayMax(), jitter: this.randomizationFactor() }), this.timeout(null == e.timeout ? 2e4 : e.timeout), this.readyState = "closed", this.uri = t, this.connecting = [], this.lastPing = null, this.encoding = !1, this.packetBuffer = [];var n = e.parser || c;this.encoder = new n.Encoder(), this.decoder = new n.Decoder(), this.autoConnect = e.autoConnect !== !1, this.autoConnect && this.open();
     }var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
@@ -933,6 +936,7 @@
   }, function (t, e) {
     !function () {
       "use strict";
+
       for (var t = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", n = new Uint8Array(256), r = 0; r < t.length; r++) n[t.charCodeAt(r)] = r;e.encode = function (e) {
         var n,
             r = new Uint8Array(e),
@@ -999,6 +1003,7 @@
     };
   }, function (t, e) {
     "use strict";
+
     function n(t) {
       var e = "";do e = s[t % a] + e, t = Math.floor(t / a); while (t > 0);return e;
     }function r(t) {
@@ -1124,6 +1129,7 @@
     };
   }, function (t, e, n) {
     "use strict";
+
     function r(t, e, n) {
       this.io = t, this.nsp = e, this.json = this, this.ids = 0, this.acks = {}, this.receiveBuffer = [], this.sendBuffer = [], this.connected = !1, this.disconnected = !0, n && n.query && (this.query = n.query), this.io.autoConnect && this.open();
     }var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
@@ -1198,6 +1204,7 @@
     }t.exports = n;
   }, function (t, e) {
     "use strict";
+
     function n(t, e, n) {
       return t.on(e, n), { destroy: function () {
           t.removeListener(e, n);

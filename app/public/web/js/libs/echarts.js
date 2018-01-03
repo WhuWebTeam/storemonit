@@ -8260,8 +8260,8 @@ each$11(renderResult.willDeleteEls,function(store,storageName){each$11(store,fun
 var target;if(reRoot&&reRoot.direction==='drillDown'){target=parent===reRoot.rootNodeGroup// This is the content element of view root.
 // Only `content` will enter this branch, because
 // `background` and `nodeGroup` will not be deleted.
-?{shape:{x:0,y:0,width:parent.__tmNodeWidth,height:parent.__tmNodeHeight},style:{opacity:0}// Others.
-}:{style:{opacity:0}};}else{var targetX=0;var targetY=0;if(!parent.__tmWillDelete){// Let node animate to right-bottom corner, cooperating with fadeout,
+?{shape:{x:0,y:0,width:parent.__tmNodeWidth,height:parent.__tmNodeHeight},style:{opacity:0// Others.
+}}:{style:{opacity:0}};}else{var targetX=0;var targetY=0;if(!parent.__tmWillDelete){// Let node animate to right-bottom corner, cooperating with fadeout,
 // which is appropriate for user understanding.
 // Divided by 2 for reRoot rolling up effect.
 targetX=parent.__tmNodeWidth/2;targetY=parent.__tmNodeHeight/2;}target=storageName==='nodeGroup'?{position:[targetX,targetY],style:{opacity:0}}:{shape:{x:targetX,y:targetY,width:0,height:0},style:{opacity:0}};}target&&animationWrap.add(el,target,duration,easing);});});// Make other animations
@@ -13086,9 +13086,9 @@ symbol.updateTransform();return symbol;}function pointerMoveTo(pointer,dataIndex
  * DataZoom component entry
  */registerPreprocessor(preprocessor$3);var ToolboxModel=extendComponentModel({type:'toolbox',layoutMode:{type:'box',ignoreSize:true},mergeDefaultAndTheme:function(option){ToolboxModel.superApply(this,'mergeDefaultAndTheme',arguments);each$1(this.option.feature,function(featureOpt,featureName){var Feature=get$5(featureName);Feature&&merge(featureOpt,Feature.defaultOption);});},defaultOption:{show:true,z:6,zlevel:0,orient:'horizontal',left:'right',top:'top',// right
 // bottom
-backgroundColor:'transparent',borderColor:'#ccc',borderRadius:0,borderWidth:0,padding:5,itemSize:15,itemGap:8,showTitle:true,iconStyle:{normal:{borderColor:'#666',color:'none'},emphasis:{borderColor:'#3E98C5'}// textStyle: {},
+backgroundColor:'transparent',borderColor:'#ccc',borderRadius:0,borderWidth:0,padding:5,itemSize:15,itemGap:8,showTitle:true,iconStyle:{normal:{borderColor:'#666',color:'none'},emphasis:{borderColor:'#3E98C5'// textStyle: {},
 // feature
-}}});extendComponentView({type:'toolbox',render:function(toolboxModel,ecModel,api,payload){var group=this.group;group.removeAll();if(!toolboxModel.get('show')){return;}var itemSize=+toolboxModel.get('itemSize');var featureOpts=toolboxModel.get('feature')||{};var features=this._features||(this._features={});var featureNames=[];each$1(featureOpts,function(opt,name){featureNames.push(name);});new DataDiffer(this._featureNames||[],featureNames).add(processFeature).update(processFeature).remove(curry(processFeature,null)).execute();// Keep for diff.
+}}}});extendComponentView({type:'toolbox',render:function(toolboxModel,ecModel,api,payload){var group=this.group;group.removeAll();if(!toolboxModel.get('show')){return;}var itemSize=+toolboxModel.get('itemSize');var featureOpts=toolboxModel.get('feature')||{};var features=this._features||(this._features={});var featureNames=[];each$1(featureOpts,function(opt,name){featureNames.push(name);});new DataDiffer(this._featureNames||[],featureNames).add(processFeature).update(processFeature).remove(curry(processFeature,null)).execute();// Keep for diff.
 this._featureNames=featureNames;function processFeature(newIndex,oldIndex){var featureName=featureNames[newIndex];var oldName=featureNames[oldIndex];var featureOpt=featureOpts[featureName];var featureModel=new Model(featureOpt,toolboxModel,toolboxModel.ecModel);var feature;if(featureName&&!oldName){// Create
 if(isUserFeatureName(featureName)){feature={model:featureModel,onclick:featureModel.option.onclick,featureName:featureName};}else{var Feature=get$5(featureName);if(!Feature){return;}feature=new Feature(featureModel,ecModel,api);}features[featureName]=feature;}else{feature=features[oldName];// If feature does not exsit.
 if(!feature){return;}feature.model=featureModel;feature.ecModel=ecModel;feature.api=api;}if(!featureName&&oldName){feature.dispose&&feature.dispose(ecModel,api);return;}if(!featureModel.get('show')||feature.unusable){feature.remove&&feature.remove(ecModel,api);return;}createIconPaths(featureModel,feature,featureName);featureModel.setIconStatus=function(iconName,status){var option=this.option;var iconPaths=this.iconPaths;option.iconStatus=option.iconStatus||{};option.iconStatus[iconName]=status;// FIXME

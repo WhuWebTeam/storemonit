@@ -69,9 +69,9 @@ function showTable(freq) {
 
                     let name = results.data[i].checkerName || results.data[i].checkerId;
                     let total = parseInt(results.data[i].count1) + parseInt(results.data[i].count2) + parseInt(results.data[i].count3);
-                    let time1Rate = total ? 100 * parseFloat(results.data[i].count1 / total) + '%' : 0;
-                    let time2Rate = total ? 100 * parseFloat(results.data[i].count2 / total) + '%' : 0;
-                    let time3Rate = total ? 100 * parseFloat(results.data[i].count3 / total) + '%' : 0;
+                    let time1Rate = total ? 100 * parseFloat(results.data[i].count1 / total).toFixed(2) + '%' : 0;
+                    let time2Rate = total ? 100 * parseFloat(results.data[i].count2 / total).toFixed(2)+ '%' : 0;
+                    let time3Rate = total ? 100 * parseFloat(results.data[i].count3 / total).toFixed(2) + '%' : 0;
 
                     tr.innerHTML = `
                         <td class="text-center">${name}</td>
