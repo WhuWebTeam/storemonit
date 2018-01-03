@@ -1,4 +1,4 @@
-
+'use strict';
 
 // var socket = io("ws://127.0.0.1:3000");
 // socket.on('news', function (data) {  //响应类型为news的消息
@@ -61,11 +61,11 @@ $.ajaxSetup({
 
 /*stop propagation*/
 function preventBubble(event) {
-    var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容  
-    if (e && e.stopPropagation) {
-        e.stopPropagation();
-    } else if (window.event) {
-        window.event.cancelBubble = true;
+    event = event || window.event;
+    if(event.stopPropagation){
+        event.stopPropagation();
+    }else{
+        event.cancelBubble = true;
     }
 }
 /*stop propagation*/
