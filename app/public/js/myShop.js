@@ -1,3 +1,5 @@
+'use strict';
+
 window.onload = function () {
 	//const userId = getSearchString('userId');
 	var cookie = new CookieStorage('/');
@@ -6,7 +8,7 @@ window.onload = function () {
 	$.ajax({
 		url: '/api/v1/shops/manager/' + userId,
 		type: 'GET',
-		success: function (results) {
+		success: function success(results) {
 
 			results = results.data;
 			if (results.length == 0) {
@@ -17,11 +19,11 @@ window.onload = function () {
 				document.getElementById('list').appendChild(mes);
 			}
 			sortFun(results, 'id', true);
-			for (let i = 0; i < results.length; i++) {
+			for (var i = 0; i < results.length; i++) {
 				var p = document.createElement('p');
 				p.setAttribute('class', 'li');
 				var num = results[i].id;
-				p.innerHTML = `门店:<span id='num'>${num}</span>`;
+				p.innerHTML = '\u95E8\u5E97:<span id=\'num\'>' + num + '</span>';
 				p.style.backgroundColor = 'rgb(93,156,236)';
 				p.style.color = 'white';
 				document.getElementById('list').appendChild(p);

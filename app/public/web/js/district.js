@@ -1,3 +1,5 @@
+'use strict';
+
 window.onload = function () {
 	function getList() {
 		var tbody = document.getElementsByTagName('tbody')[0];
@@ -5,20 +7,17 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/areas/info/areas',
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				data = results.data;
-				for (let i = 0; i < data.length; i++) {
-					var tr = document.createElement('tr');
-					tr.innerHTML = `
-						<td><input type="checkbox" value="${data[i].id}"></td>
-						<td>${data[i].id}</td>
-						<td>${data[i].name}</td>
-						<td>${data[i].details}</td>
-						<td><button class="btn btn-info btn-sm">编辑</button></td>
-					`;
+
+				var _loop = function _loop(i) {
+					tr = document.createElement('tr');
+
+					tr.innerHTML = '\n\t\t\t\t\t\t<td><input type="checkbox" value="' + data[i].id + '"></td>\n\t\t\t\t\t\t<td>' + data[i].id + '</td>\n\t\t\t\t\t\t<td>' + data[i].name + '</td>\n\t\t\t\t\t\t<td>' + data[i].details + '</td>\n\t\t\t\t\t\t<td><button class="btn btn-info btn-sm">\u7F16\u8F91</button></td>\n\t\t\t\t\t';
 					tbody.appendChild(tr);
 
-					var edit = tr.getElementsByTagName('button')[0];
+					edit = tr.getElementsByTagName('button')[0];
+
 					edit.onclick = function () {
 						$('#handleRecord p').html('编辑区域');
 						$('#id').val(data[i].id);
@@ -29,6 +28,13 @@ window.onload = function () {
 						$('#id').attr('disabled', '');
 						watchForm();
 					};
+				};
+
+				for (var i = 0; i < data.length; i++) {
+					var tr;
+					var edit;
+
+					_loop(i);
 				}
 			}
 		});
@@ -55,8 +61,8 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/areas',
 			type: 'delete',
-			data: { areas },
-			success: function () {
+			data: { areas: areas },
+			success: function success() {
 				getList();
 			}
 		});
@@ -71,7 +77,7 @@ window.onload = function () {
 					'name': $('#name').val(),
 					'details': $('#details').val()
 				},
-				success: function (results) {
+				success: function success(results) {
 					if (results.code == 403) {
 						alert('您输入的id号已存在,新增记录失败！');
 					}
@@ -88,7 +94,7 @@ window.onload = function () {
 					'name': $('#name').val(),
 					'details': $('#details').val()
 				},
-				success: function () {
+				success: function success() {
 					$('#handleRecord')[0].style.display = 'none';
 					getList();
 				}

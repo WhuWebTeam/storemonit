@@ -1,3 +1,5 @@
+'use strict';
+
 // var socket = io("ws://127.0.0.1:3000");
 // socket.on('news', function (data) {  //响应类型为news的消息
 //   socket.emit('response', { result:'received' });
@@ -49,7 +51,7 @@ function csrfSafeMethod(method) {
     );
 }
 $.ajaxSetup({
-    beforeSend: function (xhr, settings) {
+    beforeSend: function beforeSend(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader('x-csrf-token', csrftoken);
         }
@@ -117,9 +119,9 @@ function CookieStorage(path, maxage) {
 
     // Collect the cookie names in an array
     var keys = [];
-    for (var key in cookies) keys.push(key);
-
-    // Now define the public properties and methods of the Storage API
+    for (var key in cookies) {
+        keys.push(key);
+    } // Now define the public properties and methods of the Storage API
 
     // The number of stored cookies
     this.length = keys.length;
@@ -185,8 +187,9 @@ function CookieStorage(path, maxage) {
     // Remove all cookies
     this.clear = function () {
         // Loop through the keys, removing the cookies
-        for (var i = 0; i < keys.length; i++) document.cookie = keys[i] + "=; max-age=0";
-        // Reset our internal state
+        for (var i = 0; i < keys.length; i++) {
+            document.cookie = keys[i] + "=; max-age=0";
+        } // Reset our internal state
         cookies = {};
         keys = [];
         this.length = 0;
@@ -209,7 +212,7 @@ function sortFun(arr, attr) {
     });
 }
 
-const pairs = {
+var pairs = {
     '0': '未处置',
     '1': '待提交',
     '2': '已完成'

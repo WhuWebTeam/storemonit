@@ -1,11 +1,13 @@
+'use strict';
+
 window.onload = function () {
 	var cookie = new CookieStorage('/');
-	const userId = cookie.getItem('userId');
+	var userId = cookie.getItem('userId');
 
 	$.ajax({
 		url: '/api/v1/counters/myCounter/' + userId,
 		type: 'GET',
-		success: function (results) {
+		success: function success(results) {
 			var counters = [];
 			var isClick = [];
 			results = results.data;
@@ -17,11 +19,14 @@ window.onload = function () {
 				document.getElementById('list').appendChild(mes);
 			}
 			sortFun(results, 'id', true);
-			for (let i = 0; i < results.length; i++) {
-				var p = document.createElement('p');
+
+			var _loop = function _loop(i) {
+				p = document.createElement('p');
+
 				p.setAttribute('class', 'li');
-				var num = results[i].id;
-				p.innerHTML = `款台:<span id='num'>${num}</span>`;
+				num = results[i].id;
+
+				p.innerHTML = '\u6B3E\u53F0:<span id=\'num\'>' + num + '</span>';
 				p.style.backgroundColor = 'rgb(93,156,236)';
 				p.style.color = 'white';
 				document.getElementById('list').appendChild(p);
@@ -40,6 +45,13 @@ window.onload = function () {
 					}
 					isClick[i] = !isClick[i];
 				};
+			};
+
+			for (var i = 0; i < results.length; i++) {
+				var p;
+				var num;
+
+				_loop(i);
 			}
 
 			var submit = document.getElementById('confirm');
@@ -53,8 +65,8 @@ window.onload = function () {
 						$.ajax({
 							url: '/api/v1/counterUser/' + userId,
 							type: 'delete',
-							data: { counters },
-							success: function () {
+							data: { counters: counters },
+							success: function success() {
 								window.location = 'checker.html';
 							}
 						});

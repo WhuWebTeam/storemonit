@@ -1,4 +1,4 @@
-
+'use strict';
 
 function headTable(ths) {
     var tableHead = document.getElementById('tbHead');
@@ -13,9 +13,9 @@ function headTable(ths) {
     tableHead.appendChild(tr);
 }
 
-const cashList = ["收银员", "收银次数", "事件次数", "出错率"];
-const checkerList = ["防损员", "事件次数", "3分钟内", "5分钟内", "5分钟以上"];
-const timeObj = ['week', 'month', '3month', '6month'];
+var cashList = ["收银员", "收银次数", "事件次数", "出错率"];
+var checkerList = ["防损员", "事件次数", "3分钟内", "5分钟内", "5分钟以上"];
+var timeObj = ['week', 'month', '3month', '6month'];
 
 var time = document.getElementById('timeSel').getElementsByTagName('span');
 Array.prototype.forEach.call(time, function (item, index) {
@@ -35,23 +35,18 @@ function showTable(freq) {
         $.ajax({
             url: "/api/v1/eventsList/errorRate/list/" + userId + '/' + freq,
             type: 'GET',
-            success: function (results) {
+            success: function success(results) {
                 var tbody = document.getElementById('tbMain');
                 tbody.innerHTML = "";
-                for (let i = 0; i < results.data.length; i++) {
+                for (var i = 0; i < results.data.length; i++) {
                     var tr = document.createElement('tr');
 
-                    let name = results.data[i].name || results.data[i].id;
-                    let total = results.data[i].total;
-                    let error = results.data[i].error;
-                    let errorrate = (100 * parseInt(error) / parseInt(total)).toFixed(2) + "%";
+                    var name = results.data[i].name || results.data[i].id;
+                    var total = results.data[i].total;
+                    var error = results.data[i].error;
+                    var errorrate = (100 * parseInt(error) / parseInt(total)).toFixed(2) + "%";
 
-                    tr.innerHTML = `
-                        <td class="text-center">${name}</td>
-                        <td class="text-center">${total}</td>
-                        <td class="text-center">${error}</td>
-                        <td class="text-center">${errorrate}</td>
-                    `;
+                    tr.innerHTML = '\n                        <td class="text-center">' + name + '</td>\n                        <td class="text-center">' + total + '</td>\n                        <td class="text-center">' + error + '</td>\n                        <td class="text-center">' + errorrate + '</td>\n                    ';
                     tbody.appendChild(tr);
                 }
             }
@@ -61,25 +56,19 @@ function showTable(freq) {
         $.ajax({
             url: "/api/v1/eventTAT/responseTime/" + userId + '/' + freq,
             type: 'GET',
-            success: function (results) {
+            success: function success(results) {
                 var tbody = document.getElementById('tbMain');
                 tbody.innerHTML = "";
-                for (let i = 0; i < results.data.length; i++) {
+                for (var i = 0; i < results.data.length; i++) {
                     var tr = document.createElement('tr');
 
-                    let name = results.data[i].checkerName || results.data[i].checkerId;
-                    let total = parseInt(results.data[i].count1) + parseInt(results.data[i].count2) + parseInt(results.data[i].count3);
-                    let time1Rate = total ? 100 * parseFloat(results.data[i].count1 / total).toFixed(2) + '%' : 0;
-                    let time2Rate = total ? 100 * parseFloat(results.data[i].count2 / total).toFixed(2)+ '%' : 0;
-                    let time3Rate = total ? 100 * parseFloat(results.data[i].count3 / total).toFixed(2) + '%' : 0;
+                    var name = results.data[i].checkerName || results.data[i].checkerId;
+                    var total = parseInt(results.data[i].count1) + parseInt(results.data[i].count2) + parseInt(results.data[i].count3);
+                    var time1Rate = total ? 100 * parseFloat(results.data[i].count1 / total).toFixed(2) + '%' : 0;
+                    var time2Rate = total ? 100 * parseFloat(results.data[i].count2 / total).toFixed(2) + '%' : 0;
+                    var time3Rate = total ? 100 * parseFloat(results.data[i].count3 / total).toFixed(2) + '%' : 0;
 
-                    tr.innerHTML = `
-                        <td class="text-center">${name}</td>
-                        <td class="text-center">${total}</td>
-                        <td class="text-center">${time1Rate}</td>
-                        <td class="text-center">${time2Rate}</td>
-                        <td class="text-center">${time3Rate}</td>
-                    `;
+                    tr.innerHTML = '\n                        <td class="text-center">' + name + '</td>\n                        <td class="text-center">' + total + '</td>\n                        <td class="text-center">' + time1Rate + '</td>\n                        <td class="text-center">' + time2Rate + '</td>\n                        <td class="text-center">' + time3Rate + '</td>\n                    ';
                     tbody.appendChild(tr);
                 }
             }
@@ -92,7 +81,7 @@ function drawPie(freq) {
     $.ajax({
         url: "/api/v1/eventsList/rate/" + userId + '/' + freq,
         type: 'GET',
-        success: function (results) {
+        success: function success(results) {
             if (myPie != null && myPie != "" && myPie != undefined) {
                 myPie.dispose();
             }

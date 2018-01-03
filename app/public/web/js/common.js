@@ -1,3 +1,4 @@
+'use strict';
 
 var pages = ['district', 'shop', 'count', 'system', 'server'];
 var navLists = document.getElementsByTagName('nav')[0].getElementsByTagName('ul')[0].getElementsByTagName('li');

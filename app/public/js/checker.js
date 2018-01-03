@@ -1,3 +1,5 @@
+'use strict';
+
 if (getSearchString('userId')) {
 	var userId = getSearchString('userId');
 	var cookie = new CookieStorage('/');
@@ -9,14 +11,14 @@ if (getSearchString('userId')) {
 
 window.onload = function () {
 
-	const listType = getSearchString('listType');
+	var listType = getSearchString('listType');
 	/* get num of events */
 	function getNum() {
 		$.ajax({
 			url: '/api/v1/eventsList/count/checker/' + userId,
 			type: 'GET',
 			//data:
-			success: function (results) {
+			success: function success(results) {
 				document.getElementById('event').children[0].children[0].innerHTML = results.data.working;
 				document.getElementById('event').children[1].children[0].innerHTML = results.data.store;
 				document.getElementById('event').children[2].children[0].innerHTML = results.data.commit;
@@ -49,7 +51,7 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/eventsList/list/checker/common/' + type + '/' + userId,
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				var results = results.data;
 				var sysArr1 = [];
 				var sysArr2 = [];
@@ -57,7 +59,7 @@ window.onload = function () {
 					var mes = document.createElement('p');
 					//addClass(mes,'no');
 					mes.setAttribute('class', 'no');
-					mes.innerHTML = `没有${pairs[type]}的事件`;
+					mes.innerHTML = '\u6CA1\u6709' + pairs[type] + '\u7684\u4E8B\u4EF6';
 					//$('#list').prepend(mes);
 					document.getElementById('list').appendChild(mes);
 				}
@@ -70,7 +72,7 @@ window.onload = function () {
 					document.getElementById('list').appendChild(btn);
 				}
 				sortFun(results, 'createat', -1);
-				for (let i = 0; i < results.length; i++) {
+				for (var i = 0; i < results.length; i++) {
 
 					var syskey = results[i].syskey;
 					var shopId = results[i].shopid;
@@ -88,16 +90,9 @@ window.onload = function () {
 					var name = results[i].cashiername ? results[i].cashiername : results[i].cashierid ? results[i].cashierid : results[i].countertype;
 
 					if (type == 1) {
-						div.innerHTML = `
-								<p class="top"><span>${time}</span><span>${results[i].transid}</span><span class="glyphicon ${glyphiconType}" aria-hidden="true"></span></p>
-								
-								<p class="bottom"><span>${name}</span><span>款台: ${results[i].counterid}</span><span>结果:${results[i].editresult ? results[i].editresult : ' 暂无'}</span><button class = "btn btn-sm btn-primary">提交</button</p>
-						`;
+						div.innerHTML = '\n\t\t\t\t\t\t\t\t<p class="top"><span>' + time + '</span><span>' + results[i].transid + '</span><span class="glyphicon ' + glyphiconType + '" aria-hidden="true"></span></p>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<p class="bottom"><span>' + name + '</span><span>\u6B3E\u53F0: ' + results[i].counterid + '</span><span>\u7ED3\u679C:' + (results[i].editresult ? results[i].editresult : ' 暂无') + '</span><button class = "btn btn-sm btn-primary">\u63D0\u4EA4</button</p>\n\t\t\t\t\t\t';
 					} else {
-						div.innerHTML = `
-								<p class="top"><span>${time}</span><span>${results[i].transid}</span><span class="glyphicon ${glyphiconType}" aria-hidden="true"></span></p>
-								<p class="bottom"><span>${name}</span><span>款台: ${results[i].counterid}</span><span>结果:${results[i].editresult ? results[i].editresult : ' 暂无'}</span></p>
-						`;
+						div.innerHTML = '\n\t\t\t\t\t\t\t\t<p class="top"><span>' + time + '</span><span>' + results[i].transid + '</span><span class="glyphicon ' + glyphiconType + '" aria-hidden="true"></span></p>\n\t\t\t\t\t\t\t\t<p class="bottom"><span>' + name + '</span><span>\u6B3E\u53F0: ' + results[i].counterid + '</span><span>\u7ED3\u679C:' + (results[i].editresult ? results[i].editresult : ' 暂无') + '</span></p>\n\t\t\t\t\t\t';
 					}
 
 					document.getElementById('list').appendChild(div);
@@ -110,9 +105,9 @@ window.onload = function () {
 									"shopId": shopId,
 									"checkerId": userId
 								},
-								success: function () {}
+								success: function success() {}
 							});
-							window.location = `details.html?syskey=${sys}&status=${type}&shopId=${shopId}`;
+							window.location = 'details.html?syskey=' + sys + '&status=' + type + '&shopId=' + shopId;
 						};
 					}(syskey, shopId);
 
@@ -120,14 +115,14 @@ window.onload = function () {
 					if (type == 1) {
 						var btn = div.getElementsByTagName('button')[0];
 
-						btn.onclick = ((sys, shopId) => {
+						btn.onclick = function (sys, shopId) {
 							return function (event) {
 								// window.event? window.event.cancelBubble = true : event.stopPropagation();
 								preventBubble(event);
 								$.ajax({
 									url: '/api/v1/eventsList/status/commit/' + sys,
 									type: 'put',
-									success: function (results) {
+									success: function success(results) {
 										getNum();
 										getList(1);
 									}
@@ -139,12 +134,12 @@ window.onload = function () {
 										"shopId": shopId,
 										"checkerId": userId
 									},
-									success: function () {
+									success: function success() {
 										//console.log(this.url);
 									}
 								});
 							};
-						})(syskey, shopId);
+						}(syskey, shopId);
 					}
 				}
 
@@ -156,7 +151,7 @@ window.onload = function () {
 								url: '/api/v1/eventsList/status/commit',
 								type: 'put',
 								data: { sysArr: sysArr1 },
-								success: function (results) {
+								success: function success(results) {
 									getNum();
 									getList(1);
 								}
@@ -165,7 +160,7 @@ window.onload = function () {
 								url: '/api/v1/eventTAT/oneKeyCommit',
 								type: 'POST',
 								data: { sysArr: sysArr2 },
-								success: function () {
+								success: function success() {
 									//console.log(this.url);
 								}
 							});
@@ -181,7 +176,7 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/eventsList/countGraph/checker/' + type,
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				var graphData = results.data;
 				if (type == 'week') {
 					sortFun(graphData, 'y', true);
@@ -197,7 +192,9 @@ window.onload = function () {
 	/*draw graph*/
 
 	var myChart;
-	function draw(graphData, attr1, attr2 = false) {
+	function draw(graphData, attr1) {
+		var attr2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
 		if (myChart != null && myChart != "" && myChart != undefined) {
 			myChart.dispose();
 		}

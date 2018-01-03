@@ -1,14 +1,16 @@
+'use strict';
+
 window.onload = function () {
 
-	var select = `<option disabled selected style='display:none;'>所属区域选择</option>`;;
+	var select = '<option disabled selected style=\'display:none;\'>\u6240\u5C5E\u533A\u57DF\u9009\u62E9</option>';;
 	function getAreasInfo() {
 		$.ajax({
 			url: '/api/v1/areas/info/areas',
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				data = results.data;
-				for (let i = 0; i < data.length; i++) {
-					select += `<option value="${data[i].id}">${data[i].name}</option>`;
+				for (var i = 0; i < data.length; i++) {
+					select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
 			}
 		});
@@ -21,21 +23,17 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/shops/info/shops',
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				data = results.data;
-				for (let i = 0; i < data.length; i++) {
-					var tr = document.createElement('tr');
-					tr.innerHTML = `
-						<td><input type="checkbox" value="${data[i].id}"></td>
-						<td>${data[i].id}</td>
-						<td>${data[i].shopname}</td>
-						<td>${data[i].areaname}</td>
-						<td>${data[i].details}</td>
-						<td><button class="btn btn-info btn-sm">编辑</button></td>
-					`;
+
+				var _loop = function _loop(i) {
+					tr = document.createElement('tr');
+
+					tr.innerHTML = '\n\t\t\t\t\t\t<td><input type="checkbox" value="' + data[i].id + '"></td>\n\t\t\t\t\t\t<td>' + data[i].id + '</td>\n\t\t\t\t\t\t<td>' + data[i].shopname + '</td>\n\t\t\t\t\t\t<td>' + data[i].areaname + '</td>\n\t\t\t\t\t\t<td>' + data[i].details + '</td>\n\t\t\t\t\t\t<td><button class="btn btn-info btn-sm">\u7F16\u8F91</button></td>\n\t\t\t\t\t';
 					tbody.appendChild(tr);
 
-					var edit = tr.getElementsByTagName('button')[0];
+					edit = tr.getElementsByTagName('button')[0];
+
 					edit.onclick = function () {
 						$('#handleRecord p').html('编辑门店');
 						$('#id').val(data[i].id);
@@ -54,6 +52,13 @@ window.onload = function () {
 						$('#id').attr('disabled', '');
 						watchForm();
 					};
+				};
+
+				for (var i = 0; i < data.length; i++) {
+					var tr;
+					var edit;
+
+					_loop(i);
 				}
 			}
 		});
@@ -81,8 +86,8 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/shops',
 			type: 'delete',
-			data: { shops },
-			success: function () {
+			data: { shops: shops },
+			success: function success() {
 				getList();
 			}
 		});
@@ -98,7 +103,7 @@ window.onload = function () {
 					'name': $('#shopname').val(),
 					'details': $('#details').val()
 				},
-				success: function (results) {
+				success: function success(results) {
 					if (results.code == 403) {
 						alert('您输入的id号已存在,新增记录失败！');
 					}
@@ -116,7 +121,7 @@ window.onload = function () {
 					'name': $('#shopname').val(),
 					'details': $('#details').val()
 				},
-				success: function () {
+				success: function success() {
 					$('#handleRecord')[0].style.display = 'none';
 					getList();
 				}

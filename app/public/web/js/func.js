@@ -1,3 +1,5 @@
+'use strict';
+
 /*handle class*/
 function hasClass(elem, cls) {
   cls = cls || '';
@@ -41,7 +43,7 @@ function csrfSafeMethod(method) {
   );
 }
 $.ajaxSetup({
-  beforeSend: function (xhr, settings) {
+  beforeSend: function beforeSend(xhr, settings) {
     if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
       xhr.setRequestHeader('x-csrf-token', csrftoken);
     }
@@ -109,9 +111,9 @@ function CookieStorage(path, maxage) {
 
   // Collect the cookie names in an array
   var keys = [];
-  for (var key in cookies) keys.push(key);
-
-  // Now define the public properties and methods of the Storage API
+  for (var key in cookies) {
+    keys.push(key);
+  } // Now define the public properties and methods of the Storage API
 
   // The number of stored cookies
   this.length = keys.length;
@@ -177,8 +179,9 @@ function CookieStorage(path, maxage) {
   // Remove all cookies
   this.clear = function () {
     // Loop through the keys, removing the cookies
-    for (var i = 0; i < keys.length; i++) document.cookie = keys[i] + "=; max-age=0";
-    // Reset our internal state
+    for (var i = 0; i < keys.length; i++) {
+      document.cookie = keys[i] + "=; max-age=0";
+    } // Reset our internal state
     cookies = {};
     keys = [];
     this.length = 0;

@@ -1,12 +1,14 @@
+'use strict';
+
 window.onload = function () {
 	//const userId = getSearchString('userId');
 	var cookie = new CookieStorage('/');
-	const userId = cookie.getItem('userId');
+	var userId = cookie.getItem('userId');
 
 	$.ajax({
 		url: '/api/v1/counters/myCounter/' + userId,
 		type: 'GET',
-		success: function (results) {
+		success: function success(results) {
 
 			results = results.data;
 			if (results.length == 0) {
@@ -16,13 +18,13 @@ window.onload = function () {
 				document.getElementById('list').appendChild(mes);
 			}
 			sortFun(results, 'id', true);
-			for (let i = 0; i < results.length; i++) {
+			for (var i = 0; i < results.length; i++) {
 				var p = document.createElement('p');
 				p.setAttribute('class', 'li');
 				p.style.backgroundColor = 'rgb(93,156,236)';
 				p.style.color = 'white';
 				var num = results[i].id;
-				p.innerHTML = `款台:<span id='num'>${num}</span>`;
+				p.innerHTML = '\u6B3E\u53F0:<span id=\'num\'>' + num + '</span>';
 				document.getElementById('list').appendChild(p);
 			}
 

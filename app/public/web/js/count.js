@@ -1,13 +1,15 @@
+'use strict';
+
 window.onload = function () {
 	function getAreasInfo() {
 		$.ajax({
 			url: '/api/v1/areas/info/areas',
 			type: 'get',
-			success: function (results) {
-				var select = `<option disabled selected style='display:none;'>区域选择</option>`;
+			success: function success(results) {
+				var select = '<option disabled selected style=\'display:none;\'>\u533A\u57DF\u9009\u62E9</option>';
 				data = results.data;
-				for (let i = 0; i < data.length; i++) {
-					select += `<option value="${data[i].id}">${data[i].name}</option>`;
+				for (var i = 0; i < data.length; i++) {
+					select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
 				$('#areas').html(select);
 			}
@@ -18,26 +20,26 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/shops/area/' + areaId,
 			type: 'get',
-			success: function (results) {
-				var select = `<option disabled selected style='display:none;'>门店选择</option>`;
+			success: function success(results) {
+				var select = '<option disabled selected style=\'display:none;\'>\u95E8\u5E97\u9009\u62E9</option>';
 				data = results.data;
-				for (let i = 0; i < data.length; i++) {
-					select += `<option value="${data[i].id}">${data[i].name}</option>`;
+				for (var i = 0; i < data.length; i++) {
+					select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
 				$('#shops').html(select);
 			}
 		});
 	} /* get shops info  by area id*/
 
-	var CounterTypes = `<option disabled selected style='display:none;'>款台类型选择</option>`;
+	var CounterTypes = '<option disabled selected style=\'display:none;\'>\u6B3E\u53F0\u7C7B\u578B\u9009\u62E9</option>';
 	function getCounterTypes() {
 		$.ajax({
 			url: '/api/v1/counterTypeConf/info',
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				data = results.data;
-				for (let i = 0; i < data.length; i++) {
-					CounterTypes += `<option value="${data[i].id}">${data[i].type}</option>`;
+				for (var i = 0; i < data.length; i++) {
+					CounterTypes += '<option value="' + data[i].id + '">' + data[i].type + '</option>';
 				}
 			}
 		});
@@ -48,30 +50,19 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/counters/shop/' + shopId,
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				var tbody = document.getElementsByTagName('tbody')[0];
 				tbody.innerHTML = '';
 				data = results.data;
 
-				for (let i = 0; i < data.length; i++) {
-					var tr = document.createElement('tr');
-					tr.innerHTML = `
-						<td><input type="checkbox" value="${data[i].id}"></td>
-						<td>${data[i].id}</td>
-						<td>${data[i].name}</td>
-						<td>${data[i].type}</td>
-						<td>${data[i].cameraip}</td>
-						<td>${data[i].alarmip}</td>
-						<td>${data[i].alarmport}</td>
-						<td>${data[i].posip}</td>
-						<td>${data[i].posctlport}</td>
-						<td>${data[i].posbillport}</td>
-						<td>${data[i].posalarmport}</td>
-						<td style="background-color: rgb(91,192,222)"><span>编辑</span ></td>
-					`;
+				var _loop = function _loop(i) {
+					tr = document.createElement('tr');
+
+					tr.innerHTML = '\n\t\t\t\t\t\t<td><input type="checkbox" value="' + data[i].id + '"></td>\n\t\t\t\t\t\t<td>' + data[i].id + '</td>\n\t\t\t\t\t\t<td>' + data[i].name + '</td>\n\t\t\t\t\t\t<td>' + data[i].type + '</td>\n\t\t\t\t\t\t<td>' + data[i].cameraip + '</td>\n\t\t\t\t\t\t<td>' + data[i].alarmip + '</td>\n\t\t\t\t\t\t<td>' + data[i].alarmport + '</td>\n\t\t\t\t\t\t<td>' + data[i].posip + '</td>\n\t\t\t\t\t\t<td>' + data[i].posctlport + '</td>\n\t\t\t\t\t\t<td>' + data[i].posbillport + '</td>\n\t\t\t\t\t\t<td>' + data[i].posalarmport + '</td>\n\t\t\t\t\t\t<td style="background-color: rgb(91,192,222)"><span>\u7F16\u8F91</span ></td>\n\t\t\t\t\t';
 					tbody.appendChild(tr);
 
-					var edit = tr.getElementsByTagName('span')[0].parentNode;
+					edit = tr.getElementsByTagName('span')[0].parentNode;
+
 					edit.onclick = function () {
 						$('#handleRecord p').html('编辑款台');
 						$('#id').val(data[i].id);
@@ -94,6 +85,13 @@ window.onload = function () {
 						$('#id').attr('disabled', '');
 						watchForm();
 					};
+				};
+
+				for (var i = 0; i < data.length; i++) {
+					var tr;
+					var edit;
+
+					_loop(i);
 				}
 			}
 		});
@@ -127,8 +125,8 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/counters',
 			type: 'delete',
-			data: { counters },
-			success: function () {
+			data: { counters: counters },
+			success: function success() {
 				getCountsInfo($("#shops").val());
 			}
 		});
@@ -151,7 +149,7 @@ window.onload = function () {
 					'posBillPort': $('#posbillport').val(),
 					'posAlarmPort': $('#posalarmport').val()
 				},
-				success: function (results) {
+				success: function success(results) {
 					if (results.code == 403) {
 						alert('您输入的id号已存在,新增记录失败！');
 					}
@@ -176,7 +174,7 @@ window.onload = function () {
 					'posBillPort': $('#posbillport').val(),
 					'posAlarmPort': $('#posalarmport').val()
 				},
-				success: function () {
+				success: function success() {
 					$('#handleRecord')[0].style.display = 'none';
 					getCountsInfo($("#shops").val());
 				}
@@ -226,7 +224,7 @@ window.onload = function () {
 		}
 	}
 
-	const IpReg = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
+	var IpReg = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
 	$("#id").change(function () {
 		this.style.border = $('#id').val() ? '1px solid #ccc' : '1px solid red';
 	});

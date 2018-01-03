@@ -1,3 +1,5 @@
+'use strict';
+
 window.onload = function () {
 
 	var status = getSearchString('status');
@@ -11,7 +13,7 @@ window.onload = function () {
 		$.ajax({
 			url: "/api/v1/editResultList",
 			type: 'GET',
-			success: function (results) {
+			success: function success(results) {
 				var data = results.data;
 				var select = document.getElementById('result');
 				if (preResult) {
@@ -20,7 +22,7 @@ window.onload = function () {
 					option.innerHTML = preResult;
 					select.appendChild(option);
 				}
-				for (let i = 0; i < data.length; i++) {
+				for (var i = 0; i < data.length; i++) {
 					if (data[i].name == preResult) continue;
 					var option = document.createElement('option');
 					option.innerHTML = data[i].name;
@@ -34,7 +36,7 @@ window.onload = function () {
 		$.ajax({
 			url: "/api/v1/eventsList/editInfo/" + syskey,
 			type: 'GET',
-			success: function (results) {
+			success: function success(results) {
 				var data = results.data;
 				$('#date').html(handleTime(data.createat));
 				$('#status').html(pairs[data.status]);
@@ -56,7 +58,7 @@ window.onload = function () {
 		var price = $('#price').val();
 
 		if (status == 2) {
-			window.location = `checker.html?listType=2`;
+			window.location = 'checker.html?listType=2';
 		} else {
 			$.ajax({
 				url: "/api/v1/eventsList/editInfo/" + syskey,
@@ -67,7 +69,7 @@ window.onload = function () {
 					'productName': productName,
 					'price': price
 				},
-				success: function (data) {
+				success: function success(data) {
 					$.ajax({
 						url: '/api/v1/eventsList/status/store/' + syskey,
 						type: 'put'
@@ -80,7 +82,7 @@ window.onload = function () {
 						},
 						type: 'POST'
 					});
-					window.location = `checker.html?listType=1`;
+					window.location = 'checker.html?listType=1';
 				}
 			});
 		}
@@ -89,7 +91,7 @@ window.onload = function () {
 	getInfo();
 	$('#scan').css('height', $('#scan').css('width'));
 	$('#back').click(function () {
-		window.location = `checker.html?listType=${status}`;
+		window.location = 'checker.html?listType=' + status;
 	});
 	$('#btn').click(submit);
 

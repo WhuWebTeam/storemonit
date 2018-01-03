@@ -1,3 +1,5 @@
+'use strict';
+
 if (getSearchString('userId')) {
 	var userId = getSearchString('userId');
 	var cookie = new CookieStorage('/');
@@ -14,7 +16,7 @@ window.onload = function () {
 			url: '/api/v1/eventsList/count/manager/' + userId,
 			type: 'GET',
 			//data:
-			success: function (results) {
+			success: function success(results) {
 				document.getElementById('event').children[0].children[0].innerHTML = results.data.dealing;
 				document.getElementById('event').children[1].children[0].innerHTML = results.data.completed;
 			}
@@ -27,7 +29,7 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/eventsList/countGraph/manager/' + userId + '/' + type,
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				var graphData = results.data;
 				if (type == 'week') {
 					sortFun(graphData, 'y', true);
@@ -132,7 +134,7 @@ window.onload = function () {
 		$.ajax({
 			url: '/api/v1/eventsList/errorRate/graph/' + userId,
 			type: 'get',
-			success: function (results) {
+			success: function success(results) {
 				var dotData = results.data;
 				drawDot(dotData);
 			}

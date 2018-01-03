@@ -1,3 +1,5 @@
+'use strict';
+
 var set = document.getElementById('set');
 var counter = document.getElementById('counter');
 
@@ -19,15 +21,15 @@ document.body.onclick = function () {
 /*bind button to achive page jump*/
 
 $('#myCounter').click(function () {
-	window.location = `myCounter.html`;
+	window.location = 'myCounter.html';
 });
 
 $('#addCounter').click(function () {
-	window.location = `checkout.html`;
+	window.location = 'checkout.html';
 });
 
 $('#retryCounter').click(function () {
-	window.location = `retryCounter.html`;
+	window.location = 'retryCounter.html';
 });
 
 $('#oneKeyRetry').click(function () {
@@ -36,7 +38,7 @@ $('#oneKeyRetry').click(function () {
 		$.ajax({
 			url: '/api/v1/counterUser/onKeyRetrive/' + userId,
 			type: 'delete',
-			success: function () {
+			success: function success() {
 				// if(confirm('成功删除所有绑定！,点击确定进入新增款台页，点击取消回到主页')){
 				// 	window.location = 'checkout.html';
 				// }else{

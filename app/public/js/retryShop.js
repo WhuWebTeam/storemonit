@@ -1,11 +1,13 @@
+'use strict';
+
 window.onload = function () {
 	var cookie = new CookieStorage('/');
-	const userId = cookie.getItem('userId');
+	var userId = cookie.getItem('userId');
 
 	$.ajax({
 		url: '/api/v1/shops/manager/' + userId,
 		type: 'GET',
-		success: function (results) {
+		success: function success(results) {
 			var shops = [];
 			var isClick = [];
 			results = results.data;
@@ -17,11 +19,14 @@ window.onload = function () {
 				document.getElementById('list').appendChild(mes);
 			}
 			sortFun(results, 'id', true);
-			for (let i = 0; i < results.length; i++) {
-				var p = document.createElement('p');
+
+			var _loop = function _loop(i) {
+				p = document.createElement('p');
+
 				p.setAttribute('class', 'li');
-				var num = results[i].id;
-				p.innerHTML = `门店:<span id='num'>${num}</span>`;
+				num = results[i].id;
+
+				p.innerHTML = '\u95E8\u5E97:<span id=\'num\'>' + num + '</span>';
 				document.getElementById('list').appendChild(p);
 				p.style.backgroundColor = 'rgb(93,156,236)';
 				p.style.color = 'white';
@@ -40,6 +45,13 @@ window.onload = function () {
 					}
 					isClick[i] = !isClick[i];
 				};
+			};
+
+			for (var i = 0; i < results.length; i++) {
+				var p;
+				var num;
+
+				_loop(i);
 			}
 
 			var submit = document.getElementById('confirm');
@@ -53,8 +65,8 @@ window.onload = function () {
 						$.ajax({
 							url: '/api/v1/shopUser/retrive/' + userId,
 							type: 'delete',
-							data: { shops },
-							success: function () {
+							data: { shops: shops },
+							success: function success() {
 								window.location = 'districtManager.html';
 							}
 						});

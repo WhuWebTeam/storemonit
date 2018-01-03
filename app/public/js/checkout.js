@@ -1,3 +1,4 @@
+'use strict';
 
 window.onload = function () {
 	// 192.168.216.132:7001/api/v1/wmHomePage/2
@@ -16,7 +17,7 @@ window.onload = function () {
 	$.ajax({
 		url: '/api/v1/counters/checker/notAssaigned',
 		type: 'GET',
-		success: function (results) {
+		success: function success(results) {
 
 			var counters = [];
 			var isClick = [];
@@ -29,13 +30,16 @@ window.onload = function () {
 				document.getElementById('list').appendChild(mes);
 			} else {
 				sortFun(results, 'id', 1);
-				for (let i = 0; i < results.length; i++) {
-					var p = document.createElement('p');
+
+				var _loop = function _loop(i) {
+					p = document.createElement('p');
+
 					p.setAttribute('class', 'li');
 					p.style.backgroundColor = 'white';
 					p.style.color = 'black';
-					var num = results[i].id;
-					p.innerHTML = `款台:<span id='num'>${num}</span>`;
+					num = results[i].id;
+
+					p.innerHTML = '\u6B3E\u53F0:<span id=\'num\'>' + num + '</span>';
 					document.getElementById('list').appendChild(p);
 
 					isClick[i] = false;
@@ -54,6 +58,13 @@ window.onload = function () {
 						}
 						isClick[i] = !isClick[i];
 					};
+				};
+
+				for (var i = 0; i < results.length; i++) {
+					var p;
+					var num;
+
+					_loop(i);
 				}
 			}
 
@@ -63,8 +74,8 @@ window.onload = function () {
 					$.ajax({
 						url: '/api/v1/counterUser/' + userId,
 						type: 'POST',
-						data: { counters },
-						success: function () {
+						data: { counters: counters },
+						success: function success() {
 							window.location = 'checker.html';
 						}
 					});

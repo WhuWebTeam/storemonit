@@ -1,3 +1,5 @@
+'use strict';
+
 window.onload = function () {
 	// 192.168.216.132:7001/api/v1/wmHomePage/4
 	// http://121.201.13.217:27002/api/v1/wmHomePage/4
@@ -14,7 +16,7 @@ window.onload = function () {
 	$.ajax({
 		url: '/api/v1/shops/checker/notAssigned',
 		type: 'GET',
-		success: function (results) {
+		success: function success(results) {
 
 			var shops = [];
 			var isClick = [];
@@ -29,11 +31,13 @@ window.onload = function () {
 
 			sortFun(results, 'id', true);
 
-			for (let i = 0; i < results.length; i++) {
-				var p = document.createElement('p');
+			var _loop = function _loop(i) {
+				p = document.createElement('p');
+
 				p.setAttribute('class', 'li');
-				var num = results[i].id;
-				p.innerHTML = `店号:<span id='num'>${num}</span>`;
+				num = results[i].id;
+
+				p.innerHTML = '\u5E97\u53F7:<span id=\'num\'>' + num + '</span>';
 				p.style.backgroundColor = 'white';
 				p.style.color = 'black';
 				document.getElementById('list').appendChild(p);
@@ -53,6 +57,13 @@ window.onload = function () {
 					}
 					isClick[i] = !isClick[i];
 				};
+			};
+
+			for (var i = 0; i < results.length; i++) {
+				var p;
+				var num;
+
+				_loop(i);
 			}
 
 			var submit = document.getElementById('confirm');
@@ -62,8 +73,8 @@ window.onload = function () {
 						$.ajax({
 							url: '/api/v1/shopUser/' + userId,
 							type: 'POST',
-							data: { shops },
-							success: function () {
+							data: { shops: shops },
+							success: function success() {
 								window.location = 'districtManager.html';
 							}
 						});
