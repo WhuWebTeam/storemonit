@@ -1,3 +1,3 @@
-window.onload = function(){
-	document.getElementById('')
-}
+window.onload = function () {
+	document.getElementById('');
+};
