@@ -9,7 +9,7 @@
     "cov": "egg-bin cov",
     "debug": "egg-bin debug",
     "dev": "egg-bin dev",
-    "start": "egg-scripts start --daemon --works=4",
+    "start": "egg-scripts start --daemon --works=4 --env=prod",
     "stop": "egg-scripts stop"
   },
   "author": "",
