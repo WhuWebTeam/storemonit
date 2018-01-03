@@ -86,7 +86,7 @@ function drawPie(freq) {
                 myPie.dispose();
             }
             myPie = echarts.init(document.getElementById('pie'));
-            option = {
+            var option = {
                 title: {
                     text: '',
                     subtext: '',
@@ -120,6 +120,7 @@ function drawPie(freq) {
     }); //内容需要跟换
 }
 
+var role;
 $('#cashier').click(function () {
     $('#checker').removeClass('rdown');
     $('#cashier').addClass('rdown');

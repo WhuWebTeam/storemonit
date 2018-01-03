@@ -50,7 +50,7 @@ window.onload = function () {
 		}
 		myChart = echarts.init(document.getElementById('contentGraph'));
 
-		option = {
+		var option = {
 			title: {
 				subtext: '次数'
 			},
@@ -148,7 +148,7 @@ window.onload = function () {
 		}
 		myDot = echarts.init(document.getElementById('contentDot'));
 
-		option = {
+		var option = {
 			title: {
 				subtext: '错误次数'
 			},

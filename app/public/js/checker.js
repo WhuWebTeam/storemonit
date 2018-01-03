@@ -200,7 +200,7 @@ window.onload = function () {
 		}
 		myChart = echarts.init(document.getElementById('content'));
 
-		option = {
+		var option = {
 			title: {
 				// text: '防损事件统计表',
 				subtext: '次数'
