@@ -1,4 +1,4 @@
-'use strict';
+
 
 // var socket = io("ws://127.0.0.1:3000");
 // socket.on('news', function (data) {  //响应类型为news的消息
