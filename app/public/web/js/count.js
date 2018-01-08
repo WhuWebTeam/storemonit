@@ -7,7 +7,7 @@ window.onload = function () {
 			type: 'get',
 			success: function success(results) {
 				var select = '<option disabled selected style=\'display:none;\'>\u533A\u57DF\u9009\u62E9</option>';
-				data = results.data;
+				var data = results.data;
 				for (var i = 0; i < data.length; i++) {
 					select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
@@ -22,7 +22,7 @@ window.onload = function () {
 			type: 'get',
 			success: function success(results) {
 				var select = '<option disabled selected style=\'display:none;\'>\u95E8\u5E97\u9009\u62E9</option>';
-				data = results.data;
+				var data = results.data;
 				for (var i = 0; i < data.length; i++) {
 					select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
@@ -37,7 +37,7 @@ window.onload = function () {
 			url: '/api/v1/counterTypeConf/info',
 			type: 'get',
 			success: function success(results) {
-				data = results.data;
+				var data = results.data;
 				for (var i = 0; i < data.length; i++) {
 					CounterTypes += '<option value="' + data[i].id + '">' + data[i].type + '</option>';
 				}
@@ -53,7 +53,7 @@ window.onload = function () {
 			success: function success(results) {
 				var tbody = document.getElementsByTagName('tbody')[0];
 				tbody.innerHTML = '';
-				data = results.data;
+				var data = results.data;
 
 				var _loop = function _loop(i) {
 					tr = document.createElement('tr');

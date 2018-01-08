@@ -8,7 +8,7 @@ window.onload = function () {
 			url: '/api/v1/areas/info/areas',
 			type: 'get',
 			success: function success(results) {
-				data = results.data;
+				var data = results.data;
 				for (var i = 0; i < data.length; i++) {
 					select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
@@ -24,7 +24,7 @@ window.onload = function () {
 			url: '/api/v1/shops/info/shops',
 			type: 'get',
 			success: function success(results) {
-				data = results.data;
+				var data = results.data;
 
 				var _loop = function _loop(i) {
 					tr = document.createElement('tr');
