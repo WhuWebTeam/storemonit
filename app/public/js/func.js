@@ -206,7 +206,7 @@ function CookieStorage(path, maxage) {
 
 function sortFun(arr, attr) {
     var upDown = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
+    upDown = (upDown == 1 || upDown == true) ? 1 :-1;
     arr.sort(function (a, b) {
         return a[attr] > b[attr] ? upDown : -upDown;
     });

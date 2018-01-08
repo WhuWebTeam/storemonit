@@ -179,8 +179,8 @@ window.onload = function () {
 			success: function success(results) {
 				var graphData = results.data;
 				if (type == 'week') {
-					sortFun(graphData, 'y', true);
 					sortFun(graphData, 'w', true);
+					sortFun(graphData, 'y', true);
 					draw(graphData, 'y', 'w');
 				} else {
 					sortFun(graphData, 't', true);
