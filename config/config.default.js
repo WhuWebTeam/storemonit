@@ -14,7 +14,7 @@ module.exports = appInfo => {
          * @member {String[]} Config#middleware - predefine middleware name used in app
          * @since 1.0.0
          */
-        middleware: ['gzip'],
+        middleware: ['gzip', 'response'],
 
         /**
          * Middleware gzip
