@@ -9,7 +9,6 @@ module.exports = app => {
 	// wm supermarket api manager
 	app.get('/api/v1/wmHomePage/2', 'index.manager'); // ?userid:=string&name:=string&shopid:=string&token:=string
 
-
 	// wm supermarket api chief
 	app.get('/api/v1/wmHomePage/3', 'index.chief');   // ?userid:=string&name:=string&shopid:=string&token:=string
 
