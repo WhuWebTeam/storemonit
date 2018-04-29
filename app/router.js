@@ -10,7 +10,7 @@
 module.exports = app => {
 
     // url test instance
-    require('./router/test')(app);
+    // require('./router/test')(app);
 
     require('./router/index')(app); 
     require('./router/users')(app);               //

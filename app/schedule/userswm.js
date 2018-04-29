@@ -1,10 +1,10 @@
 module.exports = app => {
     return {
         schedule: {
-            cron: '* * */1 * * *',
+            interval: '1s',
             type: 'all',
             immediate: false,
-            disable: app.config.env === 'local'
+            disable: false
         },
 
         async task(ctx) {
